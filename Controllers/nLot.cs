@@ -35,7 +35,7 @@ public class nLot
             case 1: Add(); Menu(); break;
             case 2: Modify(Select()); Menu(); break;
             case 3:
-                if (Parking.Program.lots.Count > 0)
+                if (Program.lots.Count > 0)
                 { Erase(); }
                 else
                 {

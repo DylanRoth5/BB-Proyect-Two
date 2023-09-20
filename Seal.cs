@@ -82,7 +82,7 @@ namespace Parking;
                 return int.Parse(text);
             }
 
-            return IngresoEnteros();
+            return ReadInt();
         }
         public static float ReadFloat() => float.Parse(Read());
         public static bool Judge()

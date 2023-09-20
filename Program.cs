@@ -5,12 +5,12 @@ namespace Parking
     internal class Program
     {
         public static List<Lot> lots;
-        public static List<spot> spots;
+        public static List<Spot> spots;
         
         static void Main(string[] args)
         {
             lots = new List<Lot>();
-            spots = new List<spot>();
+            spots = new List<Spot>();
             Menu();
         }
         public static void Menu()

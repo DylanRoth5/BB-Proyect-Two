@@ -1,18 +1,19 @@
+using Parking.Entities;
+
 namespace Parking.Controllers;
 
 public class nSpot
 {
     public static void Add()
     {
-        Console.Write("Ingrese el ID del estacionamiento: ");
-        int Id = Seal.ReadInt();
-        Console.Write("Ingrese la posición en X: ");
-        int PositionX = Seal.ReadInt();
-        Console.Write("Ingrese la posición en Y: ");
-        int PositionY = Seal.ReadInt();
-        Spot spot = new Spot(Id, PositionX, PositionY);
-        Program.spots.Add(spot);
+        Program.spots.Add(new Spot(
+            Seal.ReadInt("Ingrese el ID del estacionamiento: "),
+            Seal.ReadInt("Ingrese la posición en X: "),
+            Seal.ReadInt("Ingrese la posición en Y: "),
+            false
+        ));
     }
+    public static void Add(int id, int x, int y) => Program.spots.Add(new Spot(id, x, y, false));
 
     public static void List()
     {
