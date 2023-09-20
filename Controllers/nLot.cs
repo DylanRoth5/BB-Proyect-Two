@@ -17,8 +17,8 @@ public class nLot
         }
     }
         
-    public static void Erase(){
-        int index = Select();
+    public static void Erase(int i){
+        int index = i;
         Lot key = new Lot();
         foreach( Lot lot in Program.lots){
             if(lot.Id == index){
@@ -53,24 +53,28 @@ public class nLot
     public static int Select()
     {
         List();
-        return int.Parse(Tools.ReadLine("Enter id the lot you want to select: "));
-        
+        return int.Parse(Tools.ReadLine("Enter id the lot you want to select: "));   
     }
+
+    public static bool ThereAre() { if (Program.lots.Count > 0) { return true; } return false; }
+
     public static void Menu(){
         string[] options = new string[] { "Add", "Modify", "Erase", "List" };
         int selection = Tools.Menu("Lot Menu", options);
         switch (selection){
             case 1: Add(); Menu(); break;
-            case 2: Modify(Select()); Menu(); break;
+            case 2: 
+                if (ThereAre()){ Modify(Select()); }
+                else{Console.WriteLine("No existen datos a modificar");Console.ReadKey();} 
+                Menu(); break;
             case 3:
-                if (Program.lots.Count > 0)
-                { Erase(); }
-                else
-                {
-                    Console.WriteLine("No existen datos a eliminar");
-                    Console.ReadKey();
-                }; Menu(); break;
-            case 4: List(); Console.ReadKey(); Menu(); break;
+                if (ThereAre()){ Erase(Select()); }
+                else{Console.WriteLine("No existen datos a eliminar");Console.ReadKey();} 
+                Menu(); break;
+            case 4: 
+                if (ThereAre()){ List(); }
+                else{Console.WriteLine("No existen datos");} 
+                Console.ReadKey(); Menu(); break;
             case 0: break;
         }
     }
