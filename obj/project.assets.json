@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dylan\\BlackBox\\Parking\\Parking\\Parking.csproj",
+      "projectUniqueName": "C:\\Users\\dylan\\OneDrive\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
       "projectName": "Parking",
-      "projectPath": "C:\\Users\\dylan\\BlackBox\\Parking\\Parking\\Parking.csproj",
+      "projectPath": "C:\\Users\\dylan\\OneDrive\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
       "packagesPath": "C:\\Users\\dylan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dylan\\BlackBox\\Parking\\Parking\\obj\\",
+      "outputPath": "C:\\Users\\dylan\\OneDrive\\Documents\\GitHub\\BB-Proyect-Two\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -12,3 +12,17 @@ C:\Users\dylan\BlackBox\Parking\Parking\obj\Debug\net7.0\refint\Parking.dll
 C:\Users\dylan\BlackBox\Parking\Parking\obj\Debug\net7.0\Parking.pdb
 C:\Users\dylan\BlackBox\Parking\Parking\obj\Debug\net7.0\Parking.genruntimeconfig.cache
 C:\Users\dylan\BlackBox\Parking\Parking\obj\Debug\net7.0\ref\Parking.dll
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.exe
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.deps.json
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.runtimeconfig.json
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.dll
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.pdb
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.AssemblyInfoInputs.cache
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.AssemblyInfo.cs
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.csproj.CoreCompileInputs.cache
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.dll
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\refint\Parking.dll
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.pdb
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.genruntimeconfig.cache
+C:\Users\dylan\OneDrive\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\ref\Parking.dll
