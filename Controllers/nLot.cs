@@ -3,7 +3,7 @@ namespace Parking.Controllers;
 public class nLot
 {
     public static void Add () {
-
+        
     }
 
     public static void List(){

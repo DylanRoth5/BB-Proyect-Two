@@ -4,7 +4,14 @@ public class nSpot
 {
     public static void Add()
     {
-
+        Console.Write("Ingrese el ID del estacionamiento: ");
+        int Id = int.Parse(Console.ReadLine());
+        Console.Write("Ingrese el número del versiculo: ");
+        int NumeroDeVersiculo = Herramientas.IngresoEnteros();
+        Console.Write("Ingrese el versiculo: ");
+        string TextoVersiculo = Console.ReadLine();
+        Versiculo versiculo = new Versiculo(Id, NumeroDeVersiculo, TextoVersiculo);
+        Program.versiculos.Add(versiculo);
     }
 
     public static void List()
