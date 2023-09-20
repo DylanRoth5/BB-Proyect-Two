@@ -1,4 +1,4 @@
-namespace Parking
+namespace Parking.Entities
 {
     internal class Lot
     {   
