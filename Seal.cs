@@ -32,7 +32,7 @@ namespace Parking;
         public static void SpotX(int x) => Console.CursorLeft = x;
         public static void SpotY(int y) => Console.CursorTop = y;
         public static void Say(string? word = "") => Console.Write("" + word);
-        public static string Flick() => Console.ReadLine();
+        public static string Read() => Console.ReadLine();
         public static void Clear() => Console.Clear();
         public static ConsoleKeyInfo Catch() => Console.ReadKey(intercept: true); 
         public static void SayAt(int x,int y, string? word)
@@ -50,15 +50,16 @@ namespace Parking;
                 Spot(nx, ny);
             }
         }
-        public static string Flick(string? word = "")
+        public static string Read(string? word = "")
         {
             if (word.Length > 0) { SayLine(word); }
-            return Flick();
+            return Read();
         }
-        public static int Count() => int.Parse(Flick());
+        public static int ReadInt() => int.Parse(Read());
+        public static float ReadFloat() => float.Parse(Read());
         public static bool Judge()
         {
-            string answer = Flick();
+            string answer = Read();
             if (answer == "yes"||answer == "si"){
                 return true;
             } else {
@@ -71,10 +72,15 @@ namespace Parking;
             if (word.Length > 0) { SayLine(word); }
             return Judge();
         }
-        public static int Count(string? word = "")
+        public static int ReadInt(string? word = "")
         {
             if (word.Length > 0) { SayLine(word); }
-            return Count();
+            return ReadInt();
+        }
+        public static float ReadFloat(string? word = "")
+        {
+            if (word.Length > 0) { SayLine(word); }
+            return ReadFloat();
         }
         public static void CatchClear()
         {
