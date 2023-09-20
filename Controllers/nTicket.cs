@@ -30,7 +30,7 @@ public class nTicket
     public static void Menu()
     {
         string[] opciones = new string[] { "Add", "Modify", "Erase", "List" };
-        int seleccion = Seal.Menu("Ticket Menu", opciones);
+        int seleccion = Tools.Menu("Ticket Menu", opciones);
         switch (seleccion)
         {
             case 1:

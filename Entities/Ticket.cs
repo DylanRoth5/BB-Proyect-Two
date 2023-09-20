@@ -6,7 +6,7 @@ public class Ticket
     public DateTime Entry { get; set; }
     public DateTime Exit { get; set; }
     public Spot Spot { get; set; }
-
+    
     public Ticket() { }
     public Ticket(int Id, DateTime Entry, DateTime Exit,  Spot Spot)
     {

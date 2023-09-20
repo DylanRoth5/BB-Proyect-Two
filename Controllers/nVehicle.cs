@@ -30,7 +30,7 @@ public class nVehicle
     public static void Menu()
     {
         string[] opciones = new string[] { "Add", "Modify", "Erase", "List" };
-        int seleccion = Seal.Menu("Vehicle Menu", opciones);
+        int seleccion = Tools.Menu("Vehicle Menu", opciones);
         switch (seleccion)
         {
             case 1:

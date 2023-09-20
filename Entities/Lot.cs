@@ -6,18 +6,17 @@ public class Lot
     public string Address { get; set; }
     public float HourPrice { get; set; }
     public string Plate { get; set; }
-    public List<List<Spot>> Spots {get; set; }
+    public List<List<Spot>> spots {get; set; }
 
     public Lot()
     {     
-        Spots = new List<List<Spot>>();
+        spots = new List<List<Spot>>();
     }
     public Lot(int Id, string Address, float HourPrice)
     {
         this.Id = Id;
         this.Address = Address;
         this.HourPrice = HourPrice;
-        this.Plate = Plate;
-        Spots = new List<List<Spot>>();
+        spots = new List<List<Spot>>();
     }
 }

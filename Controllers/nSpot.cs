@@ -7,9 +7,9 @@ public class nSpot
     public static void Add()
     {
         Program.spots.Add(new Spot(
-            Seal.ReadInt("Ingrese el ID del estacionamiento: "),
-            Seal.ReadInt("Ingrese la posición en X: "),
-            Seal.ReadInt("Ingrese la posición en Y: "),
+            int.Parse(Tools.ReadLine("Ingrese el ID del estacionamiento: ")),
+            int.Parse(Tools.ReadLine("Ingrese la posición en X: ")),
+            int.Parse(Tools.ReadLine("Ingrese la posición en Y: ")),
             false
         ));
     }
@@ -38,7 +38,7 @@ public class nSpot
     public static void Menu()
     {
         string[] opciones = new string[] { "Add", "Modify", "Erase", "List" };
-        int seleccion = Seal.Menu("Spot Menu", opciones);
+        int seleccion = Tools.Menu("Spot Menu", opciones);
         switch (seleccion)
         {
             case 1:

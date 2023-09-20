@@ -16,7 +16,7 @@ namespace Parking
         public static void Menu()
         {
             string[] options = {"Lot","Spot","Ticket","Vehicle"};
-            int result = Seal.Menu("Parking Menu", options);
+            int result = Tools.Menu("Parking Menu", options);
             switch (result){
                 case 1: nLot.Menu(); Menu(); break;
                 case 2: nSpot.Menu(); Menu(); break;

@@ -6,9 +6,9 @@ public class nLot
 {
     public static void Add () {
         Program.lots.Add( new Lot(
-        Seal.ReadInt("Enter id of the Lot: "), 
-        Seal.Read("Enter address of the lot: "), 
-        Seal.ReadFloat("Enter the price per hour of the lot: ")));
+        int.Parse(Tools.ReadLine("Enter id of the Lot: ")), 
+        Tools.ReadLine("Enter address of the lot: "), 
+        float.Parse(Tools.ReadLine("Enter the price per hour of the lot: "))));
     }
 
     public static void List(){
@@ -29,7 +29,7 @@ public class nLot
         
     public static void Menu(){
         string[] options = new string[] { "Add", "Modify", "Erase", "List" };
-        int selection = Seal.Menu("Lot Menu", options);
+        int selection = Tools.Menu("Lot Menu", options);
         switch (selection)
         {
             case 1: Add(); Menu(); break;
@@ -39,10 +39,10 @@ public class nLot
                 { Erase(); }
                 else
                 {
-                    Seal.SayLine("No existen datos a eliminar");
-                    Seal.Catch();
+                    Console.WriteLine("No existen datos a eliminar");
+                    Console.ReadKey();
                 }; Menu(); break;
-            case 4: List(); Seal.Catch(); Menu(); break;
+            case 4: List(); Console.ReadKey(); Menu(); break;
             case 0: break;
         }
     }
