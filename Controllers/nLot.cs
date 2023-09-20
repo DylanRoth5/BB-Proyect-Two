@@ -18,17 +18,32 @@ public class nLot
     }
         
     public static void Erase(){
-        Program.lots.RemoveAt(Select());
+        Program.lots.Remove(Program.lots[nLot.Select()]);
     }
         
     public static void Modify(int i){
         int index = Select();
-        
+        string[] options = new string[] { "id", "Address", "Price x Hour" };
+        int selection = Tools.Menu("Modification Menu", options);
+        switch (selection)
+        {
+            case 1: 
+                Program.lots[nLot.Select()].Id = int.Parse(Tools.ReadLine("Enter id of the Lot: "));
+                Menu(); break;
+            case 2:  
+                Program.lots[nLot.Select()].Address = Tools.ReadLine("Enter id of the Lot: ");
+                Menu(); break;
+            case 3:
+                Program.lots[nLot.Select()].HourPrice = float.Parse(Tools.ReadLine("Enter the price per hour of the lot: "));
+                Menu(); break;
+            case 0: break;
+        }
     }
     public static int Select()
     {
         List();
         return int.Parse(Tools.ReadLine("Enter id the lot you want to select: "));
+        
     }
         
     public static void Menu(){
