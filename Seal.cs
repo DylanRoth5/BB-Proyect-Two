@@ -1,5 +1,5 @@
-namespace Parking
-{
+namespace Parking;
+
     public class Seal
     {
         public static char ValidateLetter(){
@@ -373,4 +373,3 @@ namespace Parking
             if (end.HasValue) { Say("" + end); }
         }
     }
-}
