@@ -5,13 +5,13 @@ public class nSpot
     public static void Add()
     {
         Console.Write("Ingrese el ID del estacionamiento: ");
-        int Id = int.Parse(Console.ReadLine());
-        Console.Write("Ingrese el número del versiculo: ");
-        int NumeroDeVersiculo = Herramientas.IngresoEnteros();
-        Console.Write("Ingrese el versiculo: ");
-        string TextoVersiculo = Console.ReadLine();
-        Versiculo versiculo = new Versiculo(Id, NumeroDeVersiculo, TextoVersiculo);
-        Program.versiculos.Add(versiculo);
+        int Id = Seal.ReadInt();
+        Console.Write("Ingrese la posición en X: ");
+        int PositionX = Seal.ReadInt();
+        Console.Write("Ingrese la posición en Y: ");
+        int PositionY = Seal.ReadInt();
+        Spot spot = new Spot(Id, PositionX, PositionY);
+        Program.spots.Add(spot);
     }
 
     public static void List()

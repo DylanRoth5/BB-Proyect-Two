@@ -55,7 +55,35 @@ namespace Parking;
             if (word.Length > 0) { SayLine(word); }
             return Read();
         }
-        public static int ReadInt() => int.Parse(Read());
+        public static int ReadInt()
+        {
+            string text = "";
+            ConsoleKeyInfo consoleKeyInfo;
+            do
+            {
+                consoleKeyInfo = Console.ReadKey(intercept: true);
+                if (consoleKeyInfo.KeyChar > '/' && consoleKeyInfo.KeyChar < ':')
+                {
+                    Console.Write(consoleKeyInfo.KeyChar);
+                    text += consoleKeyInfo.KeyChar;
+                }
+
+                if (consoleKeyInfo.Key == ConsoleKey.Backspace && text.Length > 0)
+                {
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                    text = text.Substring(0, text.Length - 1);
+                }
+            }
+            while (consoleKeyInfo.Key != ConsoleKey.Enter || text.Length == 0);
+            if (text.Length > 0)
+            {
+                return int.Parse(text);
+            }
+
+            return IngresoEnteros();
+        }
         public static float ReadFloat() => float.Parse(Read());
         public static bool Judge()
         {
