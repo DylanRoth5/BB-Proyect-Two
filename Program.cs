@@ -6,11 +6,15 @@ namespace Parking
     {
         public static List<Lot> lots;
         public static List<Spot> spots;
+        public static List<Ticket> tickets;
+        public static List<Vehicle> vehicles;
         
         static void Main(string[] args)
         {
             lots = new List<Lot>();
             spots = new List<Spot>();
+            tickets = new List<Ticket>();
+            vehicles = new List<Vehicle>();
             Menu();
         }
         public static void Menu()

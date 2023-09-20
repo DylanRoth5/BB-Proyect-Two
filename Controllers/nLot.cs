@@ -12,19 +12,23 @@ public class nLot
     }
 
     public static void List(){
-
+        foreach( Lot lot in Program.lots){
+            Console.WriteLine(lot);
+        }
     }
         
     public static void Erase(){
-
+        Program.lots.RemoveAt(Select());
     }
         
     public static void Modify(int i){
-            
+        int index = Select();
+        
     }
     public static int Select()
     {
-        return 0;
+        List();
+        return int.Parse(Tools.ReadLine("Enter id the lot you want to select: "));
     }
         
     public static void Menu(){

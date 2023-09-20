@@ -17,7 +17,9 @@ public class nSpot
 
     public static void List()
     {
-
+        foreach( Spot spot in Program.spots){
+            Console.WriteLine(spot);
+        }
     }
 
     public static void Erase()

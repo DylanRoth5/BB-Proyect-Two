@@ -1,15 +1,22 @@
+using Parking.Entities;
 namespace Parking.Controllers;
 
 public class nVehicle
 {
     public static void Add()
     {
-
+        Program.vehicles.Add( new Vehicle(
+        int.Parse(Tools.ReadLine("Enter id of the vehicle: ")), 
+        Tools.ReadLine("Enter model of the vehicle: "),  
+        Tools.ReadLine("Enter brand of the vehicle: "),  
+        Tools.ReadLine("Enter plate of the vehicle: ")));
     }
 
     public static void List()
     {
-
+        foreach( Vehicle vehicle in Program.vehicles){
+            Console.WriteLine(vehicle);
+        }
     }
 
     public static void Erase()
