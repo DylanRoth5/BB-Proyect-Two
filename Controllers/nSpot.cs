@@ -4,22 +4,25 @@ namespace Parking.Controllers;
 
 public class nSpot
 {
-    public static void Add()
+    public static void Add(int i)
     {
-        Program.spots.Add(new Spot(
-            int.Parse(Tools.ReadLine("Ingrese el ID del estacionamiento: ")),
-            int.Parse(Tools.ReadLine("Ingrese la posición en X: ")),
-            int.Parse(Tools.ReadLine("Ingrese la posición en Y: "))
-        ));
-    }
-    public static void Add(int id, int x, int y) => Program.spots.Add(new Spot(id, x, y));
-
-    public static void List()
-    {
+        int index = i;
         foreach( Lot lot in Program.lots){
-            Console.WriteLine($"[{lot.Id}] [{lot.Address}] [{lot.HourPrice}]");
-            foreach( Spot spot in lot.spots){
-                Console.WriteLine($"    [{spot.Id}] [{spot.PositionX}] [{spot.PositionY}] [{spot.Occupied}]");
+            if(lot.Id == index){
+                nLot.List(true);
+                lot.spots.Add(new Spot(
+                int.Parse(Tools.ReadLine("Ingrese el ID del estacionamiento: ")),
+                Tools.ReadLine("Ingrese la zona: "),
+                int.Parse(Tools.ReadLine("Ingrese la posición en Y: "))));
+            }
+        }
+    }
+    public static void List(int i)
+    {
+        int index = i;
+        foreach( Lot lot in Program.lots){
+            if(lot.Id == index){
+                nLot.List(true);
             }
         }
     }
@@ -46,7 +49,7 @@ public class nSpot
         switch (seleccion)
         {
             case 1:
-                Add();
+                Add(nLot.Select());
                 Menu();
                 break;
             case 2:
@@ -58,7 +61,7 @@ public class nSpot
                 Menu();
                 break;
             case 4:
-                List();
+                List(nLot.Select()); Console.ReadKey();
                 Menu();
                 break;
             case 0: break;

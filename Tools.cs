@@ -3,7 +3,7 @@ namespace Parking;
     public class Tools
     {
         public static string ReadLine(string word){
-            Console.WriteLine(word);
+            Console.Write(word);
             return Console.ReadLine();
         }
         public static void point(int x, int y, char symbol){

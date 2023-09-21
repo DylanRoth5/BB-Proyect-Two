@@ -10,20 +10,32 @@ public class nLot
         Tools.ReadLine("Enter address of the lot: "), 
         float.Parse(Tools.ReadLine("Enter the price per hour of the lot: ")));
         int columns = int.Parse(Tools.ReadLine("Enter the amount of zones the lot has: ")); 
-        int rows = int.Parse(Tools.ReadLine("Enter the amount of rows the lot has: "));
         int id2=0;
         for (int i=0;i<columns;i++){
+            string zone = Tools.ReadLine("Enter a character or group of characters to identify the zone: ");
+            int rows = int.Parse(Tools.ReadLine("Enter the amount of spots this zone has: "));
             for (int j=0;j<rows;j++){
                 id2++;
-                lot.spots.Add(new Spot(id2,i,j));
+                lot.spots.Add(new Spot(id2,zone,j));
             }
         }
         Program.lots.Add(lot);
     }
 
-    public static void List(){
+    public static void List(bool showSpots){
         foreach( Lot lot in Program.lots){
             Console.WriteLine($"[{lot.Id}] [{lot.Address}] [{lot.HourPrice}]");
+            if(showSpots){
+            string column="";
+                foreach( Spot spot in lot.spots){
+                    if (spot.PositionX!=column){Console.WriteLine(); column = spot.PositionX;}
+                    if(spot.Occupied){Console.ForegroundColor = ConsoleColor.Red;}
+                    else{Console.ForegroundColor = ConsoleColor.Green;}
+                    Console.Write($"    {spot.Id}[{spot.PositionX}{spot.PositionY}]");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                Console.WriteLine();
+            }
         }
     }
         
@@ -48,21 +60,19 @@ public class nLot
                     if(lot.Id == index){
                         lot.Address = Tools.ReadLine("Enter new Address of the Lot: ");
                     }
-                }
-                Menu(); break;
+                }break;
             case 2:
                 foreach( Lot lot in Program.lots){
                     if(lot.Id == index){
                         lot.HourPrice = float.Parse(Tools.ReadLine("Enter the new price per hour of the lot: "));
                     }
-                }
-                Menu(); break;
+                }break;
             case 0: break;
         }
     }
     public static int Select()
     {
-        List();
+        List(false);
         return int.Parse(Tools.ReadLine("Enter id the lot you want to select: "));   
     }
 
@@ -82,7 +92,7 @@ public class nLot
                 else{Console.WriteLine("No existen datos a eliminar");Console.ReadKey();} 
                 Menu(); break;
             case 4: 
-                if (ThereAre()){ List(); }
+                if (ThereAre()){ List(false); }
                 else{Console.WriteLine("No existen datos");} 
                 Console.ReadKey(); Menu(); break;
             case 0: break;
