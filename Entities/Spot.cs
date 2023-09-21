@@ -9,11 +9,10 @@ public class Spot
 
     public Spot(){}
 
-    public Spot(int Id, int PositionX, int PositionY, bool Occupied)
+    public Spot(int Id, int PositionX, int PositionY)
     {
         this.Id = Id;
         this.PositionX = PositionX;
         this.PositionY = PositionY;
-        this.Occupied = Occupied;
     }
 }

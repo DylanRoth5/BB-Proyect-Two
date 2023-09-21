@@ -5,10 +5,20 @@ namespace Parking.Controllers;
 public class nLot
 {
     public static void Add () {
-        Program.lots.Add( new Lot(
+        Lot lot = new Lot(
         int.Parse(Tools.ReadLine("Enter id of the Lot: ")), 
         Tools.ReadLine("Enter address of the lot: "), 
-        float.Parse(Tools.ReadLine("Enter the price per hour of the lot: "))));
+        float.Parse(Tools.ReadLine("Enter the price per hour of the lot: ")));
+        int columns = int.Parse(Tools.ReadLine("Enter the amount of zones the lot has: ")); 
+        int rows = int.Parse(Tools.ReadLine("Enter the amount of rows the lot has: "));
+        int id2=0;
+        for (int i=0;i<columns;i++){
+            for (int j=0;j<rows;j++){
+                id2++;
+                lot.spots.Add(new Spot(id2,i,j));
+            }
+        }
+        Program.lots.Add(lot);
     }
 
     public static void List(){

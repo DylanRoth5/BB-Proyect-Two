@@ -9,16 +9,18 @@ public class nSpot
         Program.spots.Add(new Spot(
             int.Parse(Tools.ReadLine("Ingrese el ID del estacionamiento: ")),
             int.Parse(Tools.ReadLine("Ingrese la posición en X: ")),
-            int.Parse(Tools.ReadLine("Ingrese la posición en Y: ")),
-            false
+            int.Parse(Tools.ReadLine("Ingrese la posición en Y: "))
         ));
     }
-    public static void Add(int id, int x, int y) => Program.spots.Add(new Spot(id, x, y, false));
+    public static void Add(int id, int x, int y) => Program.spots.Add(new Spot(id, x, y));
 
     public static void List()
     {
-        foreach( Spot spot in Program.spots){
-            Console.WriteLine(spot);
+        foreach( Lot lot in Program.lots){
+            Console.WriteLine($"[{lot.Id}] [{lot.Address}] [{lot.HourPrice}]");
+            foreach( Spot spot in lot.spots){
+                Console.WriteLine($"    [{spot.Id}] [{spot.PositionX}] [{spot.PositionY}] [{spot.Occupied}]");
+            }
         }
     }
 
