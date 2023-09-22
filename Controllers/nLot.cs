@@ -5,15 +5,21 @@ namespace Parking.Controllers;
 public class nLot
 {
     public static void Add () {
-        Lot lot = new Lot(
-        int.Parse(Tools.ReadLine("Enter id of the Lot: ")), 
-        Tools.ReadLine("Enter address of the lot: "), 
-        float.Parse(Tools.ReadLine("Enter the price per hour of the lot: ")));
-        int columns = int.Parse(Tools.ReadLine("Enter the amount of zones the lot has: ")); 
+        Console.WriteLine("Enter id of the Lot: ");
+        int Id = Tools.ValidateInt();
+        Console.WriteLine("Enter address of the lot: ");
+        string Address = Console.ReadLine();
+        Console.WriteLine("Enter the price per hour of the lot: ");
+        float HourPrice = Tools.ValidateInt();
+        Console.WriteLine("Enter the amount of zones the lot has: ");
+        int columns = Tools.ValidateInt();
         int id2=0;
+        Lot lot = new Lot(Id, Address, HourPrice);
         for (int i=0;i<columns;i++){
-            string zone = Tools.ReadLine("Enter a character or group of characters to identify the zone: ");
-            int rows = int.Parse(Tools.ReadLine("Enter the amount of spots this zone has: "));
+            Console.WriteLine("Enter a character or group of characters to identify the zone: ");
+            string zone = Console.ReadLine();
+            Console.WriteLine("Enter the amount of spots this zone has: ");
+            int rows = Tools.ValidateInt();
             for (int j=0;j<rows;j++){
                 id2++;
                 lot.spots.Add(new Spot(id2,zone,j));
@@ -28,9 +34,18 @@ public class nLot
             if(showSpots){
             string column="";
                 foreach( Spot spot in lot.spots){
-                    if (spot.PositionX!=column){Console.WriteLine(); column = spot.PositionX;}
-                    if(spot.Occupied){Console.ForegroundColor = ConsoleColor.Red;}
-                    else{Console.ForegroundColor = ConsoleColor.Green;}
+                    if (spot.PositionX!=column)
+                    {
+                        Console.WriteLine(); column = spot.PositionX;
+                    }
+                    if(spot.Occupied)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
                     Console.Write($"    {spot.Id}[{spot.PositionX}{spot.PositionY}]");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
@@ -58,13 +73,15 @@ public class nLot
             case 1:  
                 foreach( Lot lot in Program.lots){
                     if(lot.Id == index){
-                        lot.Address = Tools.ReadLine("Enter new Address of the Lot: ");
+                        Console.WriteLine("Enter new Address of the Lot: ");
+                        lot.Address = Console.ReadLine();
                     }
                 }break;
             case 2:
                 foreach( Lot lot in Program.lots){
                     if(lot.Id == index){
-                        lot.HourPrice = float.Parse(Tools.ReadLine("Enter the new price per hour of the lot: "));
+                        Console.WriteLine("Enter the new price per hour of the lot: ");
+                        lot.HourPrice = Tools.ValidateInt();
                     }
                 }break;
             case 0: break;
@@ -73,10 +90,18 @@ public class nLot
     public static int Select()
     {
         List(false);
-        return int.Parse(Tools.ReadLine("Enter id the lot you want to select: "));   
+        Console.WriteLine("Enter id the lot you want to select: ");
+        int option = Tools.ValidateInt();
+        return option;
     }
 
-    public static bool ThereAre() { if (Program.lots.Count > 0) { return true; } return false; }
+    public static bool ThereAre() { 
+        if (Program.lots.Count > 0) 
+        { 
+            return true; 
+        } 
+        return false; 
+        }
 
     public static void Menu(){
         string[] options = new string[] { "Add", "Modify", "Erase", "List" };

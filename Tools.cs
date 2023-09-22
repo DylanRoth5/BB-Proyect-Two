@@ -2,10 +2,53 @@ namespace Parking;
 
     public class Tools
     {
-        public static string ReadLine(string word){
-            Console.Write(word);
-            return Console.ReadLine();
+        public static char ValidateLetter(){
+            //Convert the letter to ASCII
+            char letter = ' ';
+            ConsoleKeyInfo consoleKeyInfo;
+            do {
+                consoleKeyInfo = Console.ReadKey(intercept: true);
+                int ASCII = Convert.ToInt32(consoleKeyInfo.KeyChar);
+                if((ASCII >= 97 && ASCII <= 122)||(ASCII >= 65 && ASCII<=90)){
+                    letter = consoleKeyInfo.KeyChar;
+                }
+            }while(letter == ' ');
+            if(letter != ' '){
+                return char.ToLower(letter);
+            }
+            //If it is not a letter, it recursively executes it again until a letter is selected
+            return ValidateLetter();
         }
+        public static int ValidateInt()
+        {
+            string text = "";
+            ConsoleKeyInfo consoleKeyInfo;
+            do
+            {
+                consoleKeyInfo = Console.ReadKey(intercept: true);
+                if (consoleKeyInfo.KeyChar > '/' && consoleKeyInfo.KeyChar < ':')
+                {
+                    Console.Write(consoleKeyInfo.KeyChar);
+                    text += consoleKeyInfo.KeyChar;
+                }
+
+                if (consoleKeyInfo.Key == ConsoleKey.Backspace && text.Length > 0)
+                {
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                    text = text.Substring(0, text.Length - 1);
+                }
+            }
+            while (consoleKeyInfo.Key != ConsoleKey.Enter || text.Length == 0);
+            if (text.Length > 0)
+            {
+                return int.Parse(text);
+            }
+
+            return ValidateInt();
+        }
+
         public static void point(int x, int y, char symbol){
             Console.SetCursorPosition(x, y);
             Console.Write("" + symbol); 

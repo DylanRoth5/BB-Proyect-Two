@@ -10,10 +10,14 @@ public class nSpot
         foreach( Lot lot in Program.lots){
             if(lot.Id == index){
                 nLot.List(true);
-                lot.spots.Add(new Spot(
-                int.Parse(Tools.ReadLine("Ingrese el ID del estacionamiento: ")),
-                Tools.ReadLine("Ingrese la zona: "),
-                int.Parse(Tools.ReadLine("Ingrese la posición en Y: "))));
+                Console.WriteLine("Ingrese el ID del estacionamiento: ");
+                int Id = Tools.ValidateInt();
+                Console.WriteLine("Ingrese la zona: ");
+                string Zone = Console.ReadLine();
+                Console.ReadLine();
+                Console.WriteLine("Ingrese la posición en Y: ");
+                int PosY = Tools.ValidateInt();
+                lot.spots.Add(new Spot(Id, Zone, PosY));
             }
         }
     }
@@ -30,6 +34,7 @@ public class nSpot
     public static void Erase()
     {
 
+
     }
 
     public static void Modify(int i)
@@ -39,6 +44,7 @@ public class nSpot
 
     public static int Select()
     {
+        Console.WriteLine();
         return 0;
     }
 
