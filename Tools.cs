@@ -12,6 +12,7 @@ namespace Parking;
                 flag = false;
                 try
                 {
+                    Console.WriteLine("Por favor, ingrese una fecha y hora en el formato dd/MM/yyyy HH:mm:ss: ");
                     result = DateTime.Parse(Console.ReadLine());
                 }
                 catch

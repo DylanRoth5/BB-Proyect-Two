@@ -32,7 +32,7 @@ namespace Parking.Controllers
                     // Column : it's given by the variable j that loop through
                     // the columns plus one so there is no spot "0" (A1, A2,...,An).
                     // LotId: the same Id vale previously initialized is passed here
-                    temp.Add(NSpot.Create(alphabet[i], j+1, Id));
+                    temp.Add(nSpot.Create(alphabet[i], j+1, Id));
                 }
                 // The new row is added to the matrix of spots
                 lot.SpotsMatrix.Add(temp);
