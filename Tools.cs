@@ -2,6 +2,27 @@ namespace Parking;
 
     public class Tools
     {
+        
+        public static DateTime InputDate()
+        {
+            DateTime result = default(DateTime);
+            bool flag = false;
+            do
+            {
+                flag = false;
+                try
+                {
+                    result = DateTime.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine("Formato incorrecto, intente de nuevo...");
+                    flag = true;
+                }
+            }
+            while (flag);
+            return result;
+        }
         public static char ValidateLetter(){
             //Convert the letter to ASCII
             char letter = ' ';
