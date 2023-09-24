@@ -3,13 +3,19 @@ namespace Parking.Controllers;
 
 public class nTicket
 {
-    public static void Add()
+    public static Ticket Add()
     {
-        Program.tickets.Add( new Ticket(
-        int.Parse(Tools.ReadLine("Enter id of the vehicle: ")), 
-        DateTime.Parse(Tools.ReadLine("Enter enter date and time: ")),  
-        DateTime.Parse(Tools.ReadLine("Enter exit date and time: ")), 
-        Program.spots[nSpot.Select()]));
+        Console.WriteLine("Ingresar Id: ");
+        int Id = Tools.ValidateInt();
+        Console.WriteLine("Enter start date and time: ");
+        DateTime startDate = Tools.InputDate();
+        Console.WriteLine("Enter end date and time: ");
+        DateTime endDate = Tools.InputDate();
+        Spot spot =  nLot.SelectSpot(nLot.Select());
+        Vehicle vehicle = Program.vehicles[nVehicle.Select()];
+        Ticket parkingTicket = new Ticket(Id, startDate, endDate, spot, vehicle);
+        
+        return parkingTicket;
     }
 
     public static void List()

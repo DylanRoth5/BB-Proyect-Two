@@ -7,7 +7,10 @@ public class Spot
     public int PositionY { get; set; }
     public bool Occupied { get; set; }
 
-    public Spot(){}
+    public Spot()
+    {
+        
+    }
 
     public Spot(int Id, string PositionX, int PositionY)
     {
