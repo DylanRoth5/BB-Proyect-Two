@@ -93,6 +93,7 @@ namespace Parking.Controllers{
                     break;
                 case 2:
                     Modify(Select());
+                    Console.ReadKey();
                     Menu();
                     break;
                 case 3:
@@ -103,7 +104,7 @@ namespace Parking.Controllers{
                     else
                     {
                         Console.WriteLine("No existen datos a eliminar"); 
-                        Console.ReadKey(true);
+                        Console.ReadKey();
                     }; 
                     Menu(); 
                     break;

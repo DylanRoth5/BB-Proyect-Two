@@ -1,4 +1,5 @@
 using Parking.Entities;
+
 namespace Parking.Controllers{
     public class nTicket
     {
@@ -10,8 +11,9 @@ namespace Parking.Controllers{
             DateTime startDate = Tools.InputDate();
             Console.WriteLine("Enter end date and time: ");
             DateTime endDate = Tools.InputDate();
-            Spot spot =  nLot.SelectSpot(nLot.Select());
+            Spot spot = Program.spots[nLot.SelectSpot(nLot.Select())];
             Vehicle vehicle = Program.vehicles[nVehicle.Select()];
+            float Total = 
             Ticket parkingTicket = new Ticket(Id, startDate, endDate, spot, vehicle);
             
             return parkingTicket;
