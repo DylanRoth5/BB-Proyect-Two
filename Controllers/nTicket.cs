@@ -20,9 +20,22 @@ public class nTicket
 
     public static void List()
     {
-        foreach( Ticket ticket in Program.tickets){
-            Console.WriteLine(ticket);
+        // Declarar la matriz sin inicializarla con datos
+        string[,] matriz;
+        string[] options = new string[] {"Id", "Model", "Brand", "Plate"}; 
+        matriz = new string[Program.vehicles.Count, 4]; // Inicializar la matriz con las dimensiones calculadas
+        foreach(Vehicle vehicle in Program.vehicles){
+            for (int fila = 0; fila < Program.vehicles.Count; fila++)
+            {
+                for (int columna = 0; columna < 4; columna++)
+                {
+                    var propertyInfo = vehicle.GetType().GetProperty(options[columna]);
+                    matriz[fila, columna] = propertyInfo.GetValue(vehicle)?.ToString()?? " ";
+                }
+            }
         }
+        // Llama a la función para dibujar la tabla con la matriz de datos
+        Tools.DrawTable(matriz);
     }
 
     public static void Erase()
