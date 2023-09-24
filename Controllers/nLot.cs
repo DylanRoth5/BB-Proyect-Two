@@ -40,7 +40,11 @@ namespace Parking.Controllers
             // Add the new lot to the global list... quite an important step
             Program.lots.Add(lot);
         }
-        public static void Print()
+        public static void Update()
+        {
+            
+        }
+        public static void List()
         {
             string[,] table = new string[Program.lots.Count + 1, 4];
             int row = 1;
@@ -57,7 +61,7 @@ namespace Parking.Controllers
         public static int Select()
         {
             Console.WriteLine();
-            Print();
+            List();
             Console.WriteLine("Seleccione una playa: ");
             int selected = Tools.ValidateInt(1, Program.lots.Count);
             return selected - 1;
@@ -119,25 +123,29 @@ namespace Parking.Controllers
         //     return false; 
         //     }
 
-        // public static void Menu(){
-        //     string[] options = new string[] { "Add", "Modify", "Erase", "List" };
-        //     int selection = Tools.Menu("Lot Menu", options);
-        //     switch (selection){
-        //         case 1: Add(); Menu(); break;
-        //         case 2: 
-        //             if (ThereAre()){ Modify(Select()); }
-        //             else{Console.WriteLine("No existen datos a modificar");Console.ReadKey();} 
-        //             Menu(); break;
-        //         case 3:
-        //             if (ThereAre()){ Erase(Select()); }
-        //             else{Console.WriteLine("No existen datos a eliminar");Console.ReadKey();} 
-        //             Menu(); break;
-        //         case 4: 
-        //             if (ThereAre()){ List(false); }
-        //             else{Console.WriteLine("No existen datos");} 
-        //             Console.ReadKey(); Menu(); break;
-        //         case 0: break;
-        //     }
-        // }
+        public static void Menu(){
+            string[] options = new string[] { "Exit", "Create",  "List", "Update", "Delete" };
+            int selection = Tools.Menu("Lot Menu", options);
+            switch (selection){
+                case 0: break;
+                case 1: Create(); Menu(); break;
+                case 2: 
+                    // if (ThereAre()){ Modify(Select()); }
+                    // else{Console.WriteLine("No existen datos a modificar");Console.ReadKey();} 
+                    // Menu();
+                    break;
+                case 3:
+                    if (Program.lots.Count > 0) 
+                    { 
+                        Delete();
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is not data to be deleted");
+                        Console.ReadKey();
+                    } 
+                    Menu(); break;
+            }
+        }
     }
 }
