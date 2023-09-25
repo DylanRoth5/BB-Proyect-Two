@@ -49,7 +49,9 @@ namespace Parking
                 string[] data = item.Split(',');
                 foreach(Lot lote in lots){
                     if(lote.Id == int.Parse(data[3])){
-                        // lote.SpotsMatrix.Add(new Spot(int.Parse(data[0]),char.Parse(data[1]),int.Parse(data[2]),int.Parse(data[3])));
+                        Spot spot = new Spot(int.Parse(data[0]),char.Parse(data[1]),int.Parse(data[2]),int.Parse(data[3]));
+                        spots.Add(spot);
+                        lote.SpotsMatrix[char.Parse(data[1])].Add(nSpot.Create(char.Parse(data[1]),int.Parse(data[2]),int.Parse(data[3])));
                     }
                 }
             }
