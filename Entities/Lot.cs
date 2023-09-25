@@ -18,6 +18,7 @@ public class Lot
     public Lot(int Id, string Name, string Address, decimal HourPrice)
     {
         this.Id = Id;
+        this.Name = Name;
         this.Address = Address;
         this.HourPrice = HourPrice;
         this.SpotsMatrix = new List<List<Spot>>();
