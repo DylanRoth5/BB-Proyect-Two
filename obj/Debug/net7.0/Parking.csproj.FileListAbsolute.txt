@@ -33,3 +33,10 @@ C:\Users\UD\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.csproj.Core
 C:\Users\UD\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.dll
 C:\Users\UD\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\refint\Parking.dll
 C:\Users\UD\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.pdb
+C:\Users\UD\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.exe
+C:\Users\UD\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.deps.json
+C:\Users\UD\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.runtimeconfig.json
+C:\Users\UD\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.dll
+C:\Users\UD\Documents\GitHub\BB-Proyect-Two\bin\Debug\net7.0\Parking.pdb
+C:\Users\UD\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\Parking.genruntimeconfig.cache
+C:\Users\UD\Documents\GitHub\BB-Proyect-Two\obj\Debug\net7.0\ref\Parking.dll

@@ -86,6 +86,21 @@ namespace Parking.Controllers
         }
         public static void List()
         {
+            string[] options = { "Order by Income, Order by Free Spots"};
+            Console.WriteLine("Choose an order option:");
+            Tools.Menu("Order Options", options);
+            int choice = Tools.ValidateInt(1, options.Length);
+            Console.Clear();
+            switch (choice)
+            {
+                case 1:
+                    SortLotsByIncome();
+                    break;
+                case 2:
+                    SortByFreeSpots();
+                    break;
+            }
+
             string[,] table = new string[Program.lots.Count + 1, 4];
             table[0, 0] = "ID";
             table[0, 1] = "Name";
@@ -102,6 +117,17 @@ namespace Parking.Controllers
             }
             Tools.DrawTable(table);
         }
+
+        public static void SortLotsByIncome()
+        {
+            Program.lots = Program.lots.OrderByDescending(lot => lot.getIncome()).ToList();
+        }
+        
+        public static void SortByFreeSpots()
+        {
+            Program.lots = Program.lots.OrderByDescending(lot => lot.FreeSpot()).ToList();
+        }
+
         public static int Select()
         {
             Console.WriteLine();

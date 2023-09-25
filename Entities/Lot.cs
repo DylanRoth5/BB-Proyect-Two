@@ -1,3 +1,4 @@
+
 namespace Parking.Entities;
 
 public class Lot
@@ -21,5 +22,31 @@ public class Lot
         this.HourPrice = HourPrice;
         this.SpotsMatrix = new List<List<Spot>>();
         this.Tickets = new List<Ticket>();
+    }
+
+    public decimal getIncome()
+        {
+            decimal totalGains = 0;
+            foreach (Ticket ticket in Program.tickets)
+            {
+                totalGains += ticket.Total;
+            }
+            return totalGains;
+
+        }
+
+    public int FreeSpot()
+    {
+        int totalSpots = 0;
+
+        foreach(Spot spot in Program.spots)
+        {
+            if(spot.Occupied == false)
+            {
+                totalSpots ++;
+            }
+        }
+
+        return totalSpots;
     }
 }
