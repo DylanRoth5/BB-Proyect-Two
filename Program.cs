@@ -17,9 +17,34 @@ namespace Parking
             tickets = new List<Ticket>();
             vehicles = new List<Vehicle>();
             List<string> lotes = Tools.FileGetType("Lot","Data.txt");
-            foreach(string lote in lotes){
-                string[] data = lote.Split(',');
+            List<string> lugares = Tools.FileGetType("Spot","Data.txt");
+            List<string> facturas = Tools.FileGetType("Ticket","Data.txt");
+            List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
+            
+            Tools.HaltProgramExecution();
+            foreach(string item in lotes){
+                string[] data = item.Split(',');
+                // Console.WriteLine($"{int.Parse(data[0])},{data[1]},{data[2]},{decimal.Parse(data[3])}");
                 lots.Add(new Lot(int.Parse(data[0]),data[1],data[2],decimal.Parse(data[3])));
+            }
+            
+            foreach(string item in lugares){
+                string[] data = item.Split(',');
+                foreach(Lot lote in lots){
+                    if(lote.Id == int.Parse(data[3])){
+                        // lote.SpotsMatrix.Add(new Spot(int.Parse(data[0]),char.Parse(data[1]),int.Parse(data[2]),int.Parse(data[3])));
+                    }
+                }
+            }
+            
+            foreach(string item in facturas){
+                string[] data = item.Split(',');
+                tickets.Add(new Ticket(int.Parse(data[0]),DateTime.Parse(data[1]),DateTime.Parse(data[2]),decimal.Parse(data[3])));
+            }
+            
+            foreach(string item in vehiculos){
+                string[] data = item.Split(',');
+                vehicles.Add(new Vehicle(int.Parse(data[0])));
             }
             Tools.HaltProgramExecution();
             Menu();
