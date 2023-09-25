@@ -147,7 +147,7 @@ namespace Parking.Controllers
 
         }
         public static void Menu(){
-            string[] options = new string[] { "Exit", "Create",  "List", "Update", "Delete" };
+            string[] options = new string[] { "Create",  "List", "Update", "Delete" };
             int selection = Tools.Menu("Lot Menu", options);
             switch (selection){
                 case 0: break;
