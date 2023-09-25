@@ -7,12 +7,12 @@ public class Lot
     public string Name { get; set; }
     public string Address { get; set; }
     public decimal HourPrice { get; set; }
-    public List<List<Spot>> SpotsMatrix {get; set; }
+    public List<List<Spot>> SpotsMatrix { get; set; }
 
-    public List<Ticket> Tickets {get; set; }
+    public List<Ticket> Tickets { get; set; }
 
     public Lot()
-    {     
+    {
         SpotsMatrix = new List<List<Spot>>();
     }
     public Lot(int Id, string Name, string Address, decimal HourPrice)
@@ -23,7 +23,6 @@ public class Lot
         this.SpotsMatrix = new List<List<Spot>>();
         this.Tickets = new List<Ticket>();
     }
-
     public decimal getIncome()
     {
         decimal totalGains = 0;
@@ -33,17 +32,16 @@ public class Lot
         }
         return totalGains;
     }
-
     public int FreeSpot()
     {
-        int totalSpots = 0;
-        // foreach(Spot spot in SpotsMatrix)
-        // {
-        //     if(spot.Occupied == false)
-        //     {
-        //         totalSpots ++;
-        //     }
-        // }
-        return totalSpots;
+        int freeSpots = 0;
+        foreach (List<Spot> row in SpotsMatrix)
+        {
+            foreach (Spot spot in row)
+            {
+                freeSpots += spot.Occupied ? 0 : 1;
+            }
+        }
+        return freeSpots;
     }
 }
