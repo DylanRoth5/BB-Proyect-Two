@@ -10,6 +10,29 @@ namespace Parking;
             }
             return null;
         }
+        public static string[] FileReadAllLines(string filepath){
+            if(File.Exists(@filepath)){
+            string[] file = File.ReadAllLines(@filepath);
+            return file;
+            }
+            return null;
+        }
+        public static List<string> FileGetType(string type,string filepath){
+            List<string> result = new List<string>();
+            if(File.Exists(@filepath)){
+                string[] file = File.ReadAllLines(@filepath);
+                for (int i=0;i<file.Length;i++){
+                    string[] fields = file[i].Split(':');
+                    if(recordMatcheType(type,fields,0)){
+                        string info = $"{fields[0]}:{fields[1]}";
+                        result.Add(info);
+                    }
+                }
+                return result;
+            }
+            Console.WriteLine("Record not Found");
+            return null;
+        }
         public static string[] FileRead(string type,int id,string filepath){
             if(File.Exists(@filepath)){
                 string[] file = File.ReadAllLines(@filepath);

@@ -16,6 +16,11 @@ namespace Parking
             spots = new List<Spot>();
             tickets = new List<Ticket>();
             vehicles = new List<Vehicle>();
+            List<string> lotes = Tools.FileGetType("Lot","Data.txt");
+            foreach(string lote in lotes){
+                Console.WriteLine(lote);
+            }
+            Console.ReadKey();
             Menu();
         }
         public static void Menu()
