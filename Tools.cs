@@ -153,6 +153,7 @@ namespace Parking;
         while (consoleKeyInfo.Key != ConsoleKey.Enter || text.Length == 0);
         if (text.Length > 0)
         {
+            Console.WriteLine("");
             return int.Parse(text);
         }
 

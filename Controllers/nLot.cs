@@ -6,7 +6,7 @@ namespace Parking.Controllers
     {
         public static void Create()
         {
-            int Id = Program.lots.Count();
+            int Id = Program.lots.Count() + 1;
             string Name = Tools.ValidateString("Ingrese el nombre de la playa");
             string Address = Tools.ValidateString("Ingrese la dirección de la playa: ");
             decimal HourPrice = Tools.ValidateDecimal("Ingrese el precio por hora de la playa: ");
@@ -87,45 +87,52 @@ namespace Parking.Controllers
         }
         public static void List()
         {
+            // string[] options = { "Order by Income", "Order by Free Spots" };
+            // Console.WriteLine("Choose an order option:");
+            string[,] table = new string[Program.lots.Count + 1, 4];
+            table[0, 0] = "ID";
+            table[0, 1] = "Name";
+            table[0, 2] = "Address";
+            table[0, 3] = "Hour Price";
+            int row = 1;
             foreach (Lot lot in Program.lots)
             {
-                Console.WriteLine(lot.Name);
+                table[row, 0] = lot.Id.ToString();
+                table[row, 1] = lot.Name;
+                table[row, 2] = lot.Address;
+                table[row, 3] = lot.HourPrice.ToString();
+                row++;
             }
+            Tools.DrawTable(table);
             Console.ReadKey();
+            // Tools.Menu("Order Options", options);
+            // int choice = Tools.ValidateInt(1, options.Length);
+            // Console.Clear();
+            // switch (choice)
+            // {
+            //     case 1:
+            //         SortLotsByIncome();
+            //         string[,] table = new string[Program.lots.Count + 1, 4];
+            //         table[0, 0] = "ID";
+            //         table[0, 1] = "Name";
+            //         table[0, 2] = "Address";
+            //         table[0, 3] = "Hour Price";
+            //         int row = 1;
+            //         foreach (Lot lot in Program.lots)
+            //         {
+            //             table[row, 0] = lot.Id.ToString();
+            //             table[row, 1] = lot.Name;
+            //             table[row, 2] = lot.Address;
+            //             table[row, 3] = lot.HourPrice.ToString();
+            //             row++;
+            //         }
+            //         Tools.DrawTable(table);
+            //         break;
+            //     case 2:
+            //         SortByFreeSpots();
+            //         break;
+            // }
         }
-        // public static void List()
-        // {
-        //     string[] options = { "Order by Income, Order by Free Spots" };
-        //     Console.WriteLine("Choose an order option:");
-        //     Tools.Menu("Order Options", options);
-        //     int choice = Tools.ValidateInt(1, options.Length);
-        //     Console.Clear();
-        //     switch (choice)
-        //     {
-        //         case 1:
-        //             SortLotsByIncome();
-        //             break;
-        //         case 2:
-        //             SortByFreeSpots();
-        //             break;
-        //     }
-
-        //     string[,] table = new string[Program.lots.Count + 1, 4];
-        //     table[0, 0] = "ID";
-        //     table[0, 1] = "Name";
-        //     table[0, 2] = "Address";
-        //     table[0, 3] = "Hour Price";
-        //     int row = 1;
-        //     foreach (Lot lot in Program.lots)
-        //     {
-        //         table[row, 0] = lot.Id.ToString();
-        //         table[row, 1] = lot.Name;
-        //         table[row, 2] = lot.Address;
-        //         table[row, 3] = lot.HourPrice.ToString();
-        //         row++;
-        //     }
-        //     Tools.DrawTable(table);
-        // }
         public static void SortLotsByIncome()
         {
             Program.lots = Program.lots.OrderByDescending(lot => lot.getIncome()).ToList();
