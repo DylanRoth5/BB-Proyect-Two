@@ -8,7 +8,7 @@ namespace Parking.Controllers
         {
             int Id = Program.lots.Count() + 1;
             string Name = Tools.ValidateString("Enter Lot's Name");
-            string Address = Tools.ValidateString("Enter Lot;s Address: ");
+            string Address = Tools.ValidateString("Enter Lot's Address: ");
             decimal HourPrice = Tools.ValidateDecimal("Enter the Price per Hour: ");
             Lot lot = new Lot(Id, Name, Address, HourPrice);
             int Rows = Tools.ValidateInt("Enter the amount of rows: ");
@@ -40,11 +40,8 @@ namespace Parking.Controllers
         {
             if (index != -1)
             {
-                Console.WriteLine("Which value do you want to update?");
                 string[] options = { "Name", "Address", "HourPrice", "Spots" };
-                Tools.Menu("Lot's attributes", options);
-                int choice = Tools.ValidateInt(1, options.Length);
-                Console.Clear();
+                int choice = Tools.Menu("Lot's attributes", options);
                 switch (choice)
                 {
                     case 1:
@@ -62,8 +59,7 @@ namespace Parking.Controllers
                     case 4:
                         string[] SpotListOptions = { "Add", "Delete" };
                         Console.WriteLine("Select the what action you want to make: ");
-                        int selected = Tools.ValidateInt(1, SpotListOptions.Length);
-                        Console.Clear();
+                        int selected = Tools.Menu("Update spot's matrix", SpotListOptions);
                         switch (selected)
                         {
                             case 1:
@@ -108,7 +104,6 @@ namespace Parking.Controllers
                     row++;
                 }
                 Tools.DrawTable(table);
-                Console.ReadKey();
             }
             // Tools.Menu("Order Options", options);
             // int choice = Tools.ValidateInt(1, options.Length);
@@ -152,7 +147,7 @@ namespace Parking.Controllers
             {
                 Console.WriteLine();
                 List();
-                Console.WriteLine("Seleccione una playa: ");
+                Console.WriteLine("Select a lot: ");
                 int selected = Tools.ValidateInt(1, Program.lots.Count);
                 return selected - 1;
             }
@@ -227,7 +222,7 @@ namespace Parking.Controllers
             switch (selection)
             {
                 case 1: Create(); Menu(); break;
-                case 2: List(); Menu(); break;
+                case 2: List(); Tools.HaltProgramExecution(); Menu(); break;
                 case 3: Update(Select()); Menu(); break;
                 case 4: Delete(); Menu(); break;
                 case 0: break;
