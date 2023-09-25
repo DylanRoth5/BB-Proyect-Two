@@ -8,24 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\dylan\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\UD\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dylan\\OneDrive\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
+      "projectUniqueName": "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
       "projectName": "Parking",
-      "projectPath": "C:\\Users\\dylan\\OneDrive\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
-      "packagesPath": "C:\\Users\\dylan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dylan\\OneDrive\\Documents\\GitHub\\BB-Proyect-Two\\obj\\",
+      "projectPath": "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
+      "packagesPath": "C:\\Users\\UD\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\dylan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\UD\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -33,7 +28,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

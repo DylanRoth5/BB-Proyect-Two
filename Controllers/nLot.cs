@@ -6,17 +6,12 @@ namespace Parking.Controllers
     {
         public static void Create () {
             int Id = Program.lots.Count();
-            Console.WriteLine("Ingrese el nombre de la playa");
-            string Name = Console.ReadLine();
-            Console.WriteLine("Ingrese la dirección de la playa: ");
-            string Address = Console.ReadLine();
-            Console.WriteLine("Ingrese el precio por hora de la playa: ");
-            decimal HourPrice = Tools.ValidateInt();
-            Console.WriteLine("Ingrese la cantidad de filas que tiene la playa: ");
-            int Rows = Tools.ValidateInt();
-            Console.WriteLine("Ingrese la cantidad de estacionamientos que tiene cada fila");
-            int Columns = Tools.ValidateInt();
+            string Name = Tools.ValidateString("Ingrese el nombre de la playa");
+            string Address = Tools.ValidateString("Ingrese la dirección de la playa: ");
+            decimal HourPrice = Tools.ValidateDecimal("Ingrese el precio por hora de la playa: ");
             Lot lot = new Lot(Id, Name, Address, HourPrice);
+            int Rows = Tools.ValidateInt("Ingrese la cantidad de filas que tiene la playa: ");
+            int Columns = Tools.ValidateInt("Ingrese la cantidad de estacionamientos que tiene cada fila");
             // Generate an array of all alphabet letters
             char[] alphabet = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
             for (int i = 0; i < Rows; i++)
@@ -82,6 +77,7 @@ namespace Parking.Controllers
                             nSpot.Delete(selectedSpotIndex);
                             int LotId = Program.lots[index].Id;
                             char letter = Program.spots[selectedSpotIndex].Row;
+                            Program.lots[index].SpotsMatrix[SelectRowByLetter(LotId, letter)].RemoveAt(SelectSpot(LotId));
                         break;
                     }
                     break;
@@ -116,12 +112,21 @@ namespace Parking.Controllers
         }
         public static int SelectSpot(int LotId)
         {
-            DrawLot();
+            // Takes a lot's id as parameter
+            // Shows the user the list of spots from the lot of id LotId
+            DrawLot(LotId);
+            // Ask the user to insert the row where the spot them want to
+            // select is located
             Console.WriteLine("Select a row: ");
-            char selectedRow = Tools.ValidateLetter();
+            char row = Tools.ValidateLetter();
+            // Then, ask the user to insert the number of the spot in the row
             Console.WriteLine("Select a spot number: ");
-            int selected = Tools.ValidateInt(1, Program.lots[LotId].SpotsMatrix[0].Count);
-            return 0;
+            int column = Tools.ValidateInt(1, Program.lots[LotId].SpotsMatrix[0].Count);
+            // Stores the spot object in a Spot variable so it's more legible
+            // to call the List<> Class' IndexOf() method and pass the this
+            // object as parameter instead of all the line 
+            Spot spot = Program.spots[nSpot.SelectByPosition(row, column)];
+            return Program.lots[LotId].SpotsMatrix[SelectRowByLetter(LotId, row)].IndexOf(spot);
         }
         public static int SelectRowByLetter(int LotId, char letter)
         {
@@ -142,7 +147,7 @@ namespace Parking.Controllers
             int i = Select();
             Program.lots.RemoveAt(i);
         }        
-        public static void DrawLot()
+        public static void DrawLot(int LotId)
         {
 
         }
@@ -150,7 +155,6 @@ namespace Parking.Controllers
             string[] options = new string[] { "Create",  "List", "Update", "Delete" };
             int selection = Tools.Menu("Lot Menu", options);
             switch (selection){
-                case 0: break;
                 case 1: Create(); Menu(); break;
                 case 2: 
                     // if (ThereAre()){ Modify(Select()); }
@@ -168,6 +172,7 @@ namespace Parking.Controllers
                         Console.ReadKey();
                     } 
                     Menu(); break;
+                case 0: break;
             }
         }
     }

@@ -43,6 +43,18 @@ namespace Parking;
             //If it is not a letter, it recursively executes it again until a letter is selected
             return ValidateLetter();
         }
+        
+        public static decimal ValidateDecimal(string? message){
+            Console.WriteLine(message);
+            return ValidateDecimal();
+        }
+        public static decimal ValidateDecimal(){
+            int full = ValidateInt();
+            Console.Write(".");
+            int notfull = ValidateInt();
+            decimal number = decimal.Parse($"{full}.{notfull}");
+            return number;
+        }
         public static int ValidateInt()
         {
             string text = "";
@@ -79,6 +91,10 @@ namespace Parking;
         Console.Write(new string(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, currentLineCursor);
     }
+    public static int ValidateInt(string? message){
+        Console.WriteLine(message);
+        return ValidateInt();
+    }
     public static int ValidateInt(int min, int max)
     {
         string number = "";
@@ -109,6 +125,10 @@ namespace Parking;
         ClearLine();
         Console.Write($"Type a number between {min} and {max}: ");
         return ValidateInt(min, max);
+    }
+    public static string ValidateString(string message){
+        Console.WriteLine(message);
+        return ValidateString();
     }
     public static string ValidateString()
     {
