@@ -7,12 +7,12 @@ namespace Parking.Controllers
         public static void Create()
         {
             int Id = Program.lots.Count() + 1;
-            string Name = Tools.ValidateString("Ingrese el nombre de la playa");
-            string Address = Tools.ValidateString("Ingrese la dirección de la playa: ");
-            decimal HourPrice = Tools.ValidateDecimal("Ingrese el precio por hora de la playa: ");
+            string Name = Tools.ValidateString("Enter Lot's Name");
+            string Address = Tools.ValidateString("Enter Lot;s Address: ");
+            decimal HourPrice = Tools.ValidateDecimal("Enter the Price per Hour: ");
             Lot lot = new Lot(Id, Name, Address, HourPrice);
-            int Rows = Tools.ValidateInt("Ingrese la cantidad de filas que tiene la playa: ");
-            int Columns = Tools.ValidateInt("Ingrese la cantidad de estacionamientos que tiene cada fila");
+            int Rows = Tools.ValidateInt("Enter the amount of rows: ");
+            int Columns = Tools.ValidateInt("Enter the Amount of Spots by Row");
             // Generate an array of all alphabet letters
             char[] alphabet = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
             for (int i = 0; i < Rows; i++)
@@ -138,11 +138,11 @@ namespace Parking.Controllers
             //         break;
             // }
         }
-        public static void SortLotsByIncome()
+        public static void SortLotsByIncome() //using the value gotten from the method getIncome in Lot class sorts by descending using a lambda expression
         {
             Program.lots = Program.lots.OrderByDescending(lot => lot.getIncome()).ToList();
         }
-        public static void SortByFreeSpots()
+        public static void SortByFreeSpots() //using the value gotten from the method freeSpot in Lot class sorts by descending using a lambda expression
         {
             Program.lots = Program.lots.OrderByDescending(lot => lot.FreeSpot()).ToList();
         }
