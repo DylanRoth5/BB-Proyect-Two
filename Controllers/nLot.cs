@@ -42,7 +42,6 @@ namespace Parking.Controllers
             {
                 string[] options = { "Name", "Address", "HourPrice", "Spots" };
                 int choice = Tools.Menu("Lot's attributes", options);
-                // Console.Clear();
                 switch (choice)
                 {
                     case 1:
@@ -60,8 +59,7 @@ namespace Parking.Controllers
                     case 4:
                         string[] SpotListOptions = { "Add", "Delete" };
                         Console.WriteLine("Select the what action you want to make: ");
-                        int selected = Tools.ValidateInt(1, SpotListOptions.Length);
-                        Console.Clear();
+                        int selected = Tools.Menu("Update spot's matrix", SpotListOptions);
                         switch (selected)
                         {
                             case 1:
