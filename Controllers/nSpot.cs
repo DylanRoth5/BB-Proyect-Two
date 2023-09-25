@@ -24,7 +24,10 @@ namespace Parking.Controllers
             // of the matrix
             foreach(Spot spot in Program.spots)
             {
-                if (spot.Row == char.ToUpper(row) && spot.Column == column) { return spot.Id}
+                if (spot.Row == char.ToUpper(row) && spot.Column == column)
+                {
+                    return spot.Id;
+                }
             }
             return -1;
         }
