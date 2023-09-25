@@ -57,12 +57,54 @@ namespace Parking.Controllers{
         public static void Erase()
         {
             int i = Select();
+            Program.lots[Program.tickets[i].Spot.LotId].Tickets.RemoveAt(i);
             Program.tickets.RemoveAt(i);
+            
         }
 
         public static void Modify(int i)
         {
-
+            Console.WriteLine();
+            TimeSpan hours = Program.tickets[i].Exit - Program.tickets[i].Entry;
+            decimal total = Program.lots[Program.tickets[i].Spot.LotId].HourPrice * (decimal)hours.TotalHours;
+            string[] options = new string[] {"Spot", "Entry", "Exit"};
+            Console.Clear();
+            int selection = Tools.Menu("Modify", options);
+            switch(selection)
+            {
+                case 1:
+                    Console.Write($"Ingrese el spot nuevo para {Program.tickets[i].Spot}");
+                    int lot = nLot.SelectSpot(nLot.Select());
+                    Spot spot = Program.spots[lot];
+                    Program.tickets[i].Spot = spot;
+                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Spot = spot;
+                    Modify(i);
+                    break;
+                case 2:
+                    Console.Write($"Ingrese la fecha de entrada nueva para {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
+                    DateTime entry = Tools.InputDate();
+                    Program.tickets[i].Entry = entry;
+                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Entry = entry;
+                    hours = Program.tickets[i].Exit - entry;
+                    total = Program.lots[Program.tickets[i].Spot.LotId].HourPrice * (decimal)hours.TotalHours;
+                    Program.tickets[i].Total = total;
+                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Total = total;
+                    Modify(i);
+                    break;
+                case 3:
+                    Console.Write($"Ingrese la fecha de salida nueva para {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
+                    DateTime exit = Tools.InputDate();
+                    Program.tickets[i].Exit = exit;
+                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Exit = exit;
+                    hours = exit - Program.tickets[i].Entry;
+                    total = Program.lots[Program.tickets[i].Spot.LotId].HourPrice * (decimal)hours.TotalHours;
+                    Program.tickets[i].Total = total;
+                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Total = total;
+                    Modify(i);
+                    break;
+                case 4:
+                    break;
+            }
         }
 
         public static int Select()

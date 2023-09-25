@@ -11,7 +11,7 @@ namespace Parking.Controllers
             Console.WriteLine("Ingrese la dirección de la playa: ");
             string Address = Console.ReadLine();
             Console.WriteLine("Ingrese el precio por hora de la playa: ");
-            float HourPrice = Tools.ValidateInt();
+            decimal HourPrice = Tools.ValidateInt();
             Console.WriteLine("Ingrese la cantidad de filas que tiene la playa: ");
             int Rows = Tools.ValidateInt();
             Console.WriteLine("Ingrese la cantidad de estacionamientos que tiene cada fila");

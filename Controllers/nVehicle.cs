@@ -46,7 +46,7 @@ namespace Parking.Controllers{
         public static void Modify(int i)
         {
             Console.WriteLine();
-            string[] options = new string[] {"Model", "Brand", "Plate", "Back"};
+            string[] options = new string[] {"Model", "Brand", "Plate"};
             Console.Clear();
             int selection = Tools.Menu("Modify", options);
             switch(selection)
