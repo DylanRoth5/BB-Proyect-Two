@@ -7,7 +7,7 @@ namespace Parking.Controllers
     {
         public static Spot Create(char Row, int Column, int LotId)
         {
-            int Id = Program.spots.Count;
+            int Id = Program.spots.Count + 1;
             Spot spot = new Spot(Id, Row, Column, LotId);
             Program.spots.Add(spot);
             return spot;    
