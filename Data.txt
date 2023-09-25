@@ -1,5 +1,5 @@
 //Lot:Id,Name,Address,HourPrice
 //Spot:Id,Row,Column,Occupied,LotId
 Lot:1,Asusa,Ramirez 144,15.62
-Lot:1,Asusa,Ramirez 144,15.62
-Lot:1,Asusa,Ramirez 144,15.62
+Lot:2,Damían,Rosario del Tala,15.62
+Lot:3,Don Pollo,Ramirez 144,15.62

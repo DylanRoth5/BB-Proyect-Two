@@ -32,7 +32,7 @@ public class Tools
                 string[] fields = file[i].Split(':');
                 if (recordMatcheType(type, fields, 0))
                 {
-                    string info = $"{fields[0]}:{fields[1]}";
+                    string info = "{fields[1]}";
                     result.Add(info);
                 }
             }
