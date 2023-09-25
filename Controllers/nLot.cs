@@ -38,73 +38,78 @@ namespace Parking.Controllers
         }
         public static void Update(int index)
         {
-            string[] options = { "Name", "Address", "HourPrice", "Spots" };
-            Console.WriteLine("Which value do you want to update?");
-            Tools.Menu("Lot's attributes", options);
-            int choice = Tools.ValidateInt(1, options.Length);
-            Console.Clear();
-            switch (choice)
+            if (index != -1)
             {
-                case 1:
-                    Console.WriteLine("Enter the new name for the lot: ");
-                    Program.lots[index].Name = Tools.ValidateString();
-                    break;
-                case 2:
-                    Console.WriteLine("Enter the new address of the lot: ");
-                    Program.lots[index].Address = Tools.ValidateString();
-                    break;
-                case 3:
-                    Console.WriteLine("Enter the new price per hour for the lot: ");
-                    Program.lots[index].HourPrice = Tools.ValidateInt();
-                    break;
-                case 4:
-                    string[] SpotListOptions = { "Add", "Delete" };
-                    Console.WriteLine("Select the what action you want to perform: ");
-                    int selected = Tools.ValidateInt(1, SpotListOptions.Length);
-                    Console.Clear();
-                    switch (selected)
-                    {
-                        case 1:
-                            Console.WriteLine("Select the row to which the new spot will add: ");
-                            char selectedRow = Tools.ValidateLetter();
-                            // The Lot id is equals to the its Program.lots' index + 1
-                            // The Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Count
-                            // command is used in as the column parameter of the nSpot.Create() method because the
-                            // new spot is added at the last of row
-                            Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Add(nSpot.Create(selectedRow, Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Count, index + 1));
-                            break;
-                        case 2:
-                            int selectedSpotIndex = SelectSpot(Program.lots[index].Id);
-                            nSpot.Delete(selectedSpotIndex);
-                            int LotId = Program.lots[index].Id;
-                            char letter = Program.spots[selectedSpotIndex].Row;
-                            Program.lots[index].SpotsMatrix[SelectRowByLetter(LotId, letter)].RemoveAt(SelectSpot(LotId));
-                            break;
-                    }
-                    break;
+                Console.WriteLine("Which value do you want to update?");
+                string[] options = { "Name", "Address", "HourPrice", "Spots" };
+                Tools.Menu("Lot's attributes", options);
+                int choice = Tools.ValidateInt(1, options.Length);
+                Console.Clear();
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("Type the new name for the lot: ");
+                        Program.lots[index].Name = Tools.ValidateString();
+                        break;
+                    case 2:
+                        Console.WriteLine("Type the new address of the lot: ");
+                        Program.lots[index].Address = Tools.ValidateString();
+                        break;
+                    case 3:
+                        Console.WriteLine("Type the new price per hour for the lot: ");
+                        Program.lots[index].HourPrice = Tools.ValidateInt();
+                        break;
+                    case 4:
+                        string[] SpotListOptions = { "Add", "Delete" };
+                        Console.WriteLine("Select the what action you want to make: ");
+                        int selected = Tools.ValidateInt(1, SpotListOptions.Length);
+                        Console.Clear();
+                        switch (selected)
+                        {
+                            case 1:
+                                Console.WriteLine("Select the row to which the new spot will add: ");
+                                char selectedRow = Tools.ValidateLetter();
+                                // The Lot id is equals to the its Program.lots' index + 1
+                                // The Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Count
+                                // command is used in as the column parameter of the nSpot.Create() method because the
+                                // new spot is added at the last of row
+                                Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Add(nSpot.Create(selectedRow, Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Count, index + 1));
+                                break;
+                            case 2:
+                                int selectedSpotIndex = SelectSpot(Program.lots[index].Id);
+                                nSpot.Delete(selectedSpotIndex);
+                                int LotId = Program.lots[index].Id;
+                                char letter = Program.spots[selectedSpotIndex].Row;
+                                Program.lots[index].SpotsMatrix[SelectRowByLetter(LotId, letter)].RemoveAt(SelectSpot(LotId));
+                                break;
+                        }
+                        break;
+                }
             }
-
         }
         public static void List()
         {
-            // string[] options = { "Order by Income", "Order by Free Spots" };
-            // Console.WriteLine("Choose an order option:");
-            string[,] table = new string[Program.lots.Count + 1, 4];
-            table[0, 0] = "ID";
-            table[0, 1] = "Name";
-            table[0, 2] = "Address";
-            table[0, 3] = "Hour Price";
-            int row = 1;
-            foreach (Lot lot in Program.lots)
+            if (IsThereAny())
             {
-                table[row, 0] = lot.Id.ToString();
-                table[row, 1] = lot.Name;
-                table[row, 2] = lot.Address;
-                table[row, 3] = lot.HourPrice.ToString();
-                row++;
+                // string[] options = { "Order by Income", "Order by Free Spots" };
+                // Console.WriteLine("Choose an order option:");
+                string[,] table = new string[Program.lots.Count + 1, 4];
+                table[0, 0] = "ID";
+                table[0, 1] = "Name";
+                table[0, 2] = "Address";
+                table[0, 3] = "Hour Price";
+                int row = 1;
+                foreach (Lot lot in Program.lots)
+                {
+                    table[row, 0] = lot.Id.ToString();
+                    table[row, 1] = lot.Name;
+                    table[row, 2] = lot.Address;
+                    table[row, 3] = lot.HourPrice.ToString();
+                    row++;
+                }
+                Tools.DrawTable(table);
+                Console.ReadKey();
             }
-            Tools.DrawTable(table);
-            Console.ReadKey();
             // Tools.Menu("Order Options", options);
             // int choice = Tools.ValidateInt(1, options.Length);
             // Console.Clear();
@@ -143,11 +148,19 @@ namespace Parking.Controllers
         }
         public static int Select()
         {
-            Console.WriteLine();
-            List();
-            Console.WriteLine("Select a Lot: ");
-            int selected = Tools.ValidateInt(1, Program.lots.Count);
-            return selected - 1;
+            if (IsThereAny())
+            {
+                Console.WriteLine();
+                List();
+                Console.WriteLine("Seleccione una playa: ");
+                int selected = Tools.ValidateInt(1, Program.lots.Count);
+                return selected - 1;
+            }
+            else
+            {
+                return -1;
+            }
+            
         }
         public static int SelectSpot(int LotId)
         {
@@ -194,11 +207,18 @@ namespace Parking.Controllers
         public static void Delete()
         {
             int index = Select();
-            Program.lots.RemoveAt(index);
+            if (index != -1) Program.lots.RemoveAt(index);
         }
         public static void DrawLot(int id)
         {
 
+        }
+        public static bool IsThereAny()
+        {
+            if (Program.lots.Count > 0) return true;
+            Console.WriteLine("There aren't loaded lots yet");
+            Tools.HaltProgramExecution();
+            return false;
         }
         public static void Menu()
         {
@@ -207,23 +227,9 @@ namespace Parking.Controllers
             switch (selection)
             {
                 case 1: Create(); Menu(); break;
-                case 2:
-                    List();
-                    break;
-                case 3:
-                    Update(Select());
-                    break;
-                case 4:
-                    if (Program.lots.Count > 0)
-                    {
-                        Delete();
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is not data to be deleted");
-                        Console.ReadKey();
-                    }
-                    Menu(); break;
+                case 2: List(); Menu(); break;
+                case 3: Update(Select()); Menu(); break;
+                case 4: Delete(); Menu(); break;
                 case 0: break;
             }
         }
