@@ -1,5 +1,5 @@
 using System.Data;
-using Parking.Entities;
+using Parking.Entities; 
 
 namespace Parking.Controllers
 {
@@ -11,6 +11,10 @@ namespace Parking.Controllers
             Spot spot = new Spot(Id, Row, Column, LotId);
             Program.spots.Add(spot);
             return spot;    
+        }
+        public static void Delete(int index)
+        {
+            Program.spots.RemoveAt(index);
         }
         public static int SelectByPosition()
         {
