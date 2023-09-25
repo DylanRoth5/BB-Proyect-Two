@@ -5,23 +5,25 @@ namespace Parking;
         
         public static DateTime InputDate()
         {
-            DateTime result = default(DateTime);
-            bool flag = false;
+            DateTime result;
+            bool isValid = false;
+
             do
             {
-                flag = false;
-                try
+                Console.WriteLine("Por favor, ingrese una fecha y hora en el formato dd/MM/yyyy HH:mm:ss: ");
+                string input = Console.ReadLine();
+
+                if (DateTime.TryParseExact(input, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out result))
                 {
-                    Console.WriteLine("Por favor, ingrese una fecha y hora en el formato dd/MM/yyyy HH:mm:ss: ");
-                    result = DateTime.Parse(Console.ReadLine());
+                    isValid = true;
                 }
-                catch
+                else
                 {
                     Console.WriteLine("Formato incorrecto, intente de nuevo...");
-                    flag = true;
                 }
             }
-            while (flag);
+            while (!isValid);
+
             return result;
         }
         public static char ValidateLetter(){

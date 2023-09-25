@@ -22,7 +22,7 @@ namespace Parking.Controllers{
             // Declarar la matriz sin inicializarla con datos
             string[,] matriz;
             string[] options = new string[] {"Id", "Model", "Brand", "Plate"}; 
-            matriz = new string[Program.vehicles.Count, 4]; // Inicializar la matriz con las dimensiones calculadas
+            matriz = new string[Program.vehicles.Count + 1, 4]; // Inicializar la matriz con las dimensiones calculadas
             foreach(Vehicle vehicle in Program.vehicles){
                 for (int fila = 0; fila < Program.vehicles.Count; fila++)
                 {

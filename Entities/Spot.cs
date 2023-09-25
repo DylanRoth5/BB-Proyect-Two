@@ -4,7 +4,7 @@ public class Spot
 {
     public int Id { get; set; }
     public char Row { get; set; }
-    public int Colunm { get; set; }
+    public int Column { get; set; }
     public int LotId { get; set; }
     public bool Occupied { get; set; }
 
@@ -14,7 +14,7 @@ public class Spot
     {
         this.Id = Id;
         this.Row = Row;
-        this.Colunm = Column;
+        this.Column = Column;
         this.LotId = LotId;
         Occupied = false;
     }
