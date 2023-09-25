@@ -24,7 +24,7 @@ public class Lot
         this.SpotsMatrix = new List<List<Spot>>();
         this.Tickets = new List<Ticket>();
     }
-    public decimal getIncome()
+    public decimal getIncome()   //this method gets the value from every ticket in each Lot and returns totalGains as decimal
     {
         decimal totalGains = 0;
         foreach (Ticket ticket in Tickets)
@@ -33,7 +33,7 @@ public class Lot
         }
         return totalGains;
     }
-    public int FreeSpot()
+    public int FreeSpot()   //this method count abaliable spots and returns freeSpot as int 
     {
         int freeSpots = 0;
         foreach (List<Spot> row in SpotsMatrix)

@@ -7,12 +7,12 @@ namespace Parking.Controllers
         public static void Create()
         {
             int Id = Program.lots.Count() + 1;
-            string Name = Tools.ValidateString("Ingrese el nombre de la playa");
-            string Address = Tools.ValidateString("Ingrese la dirección de la playa: ");
-            decimal HourPrice = Tools.ValidateDecimal("Ingrese el precio por hora de la playa: ");
+            string Name = Tools.ValidateString("Enter Lot's Name");
+            string Address = Tools.ValidateString("Enter Lot;s Address: ");
+            decimal HourPrice = Tools.ValidateDecimal("Enter the Price per Hour: ");
             Lot lot = new Lot(Id, Name, Address, HourPrice);
-            int Rows = Tools.ValidateInt("Ingrese la cantidad de filas que tiene la playa: ");
-            int Columns = Tools.ValidateInt("Ingrese la cantidad de estacionamientos que tiene cada fila");
+            int Rows = Tools.ValidateInt("Enter the amount of rows: ");
+            int Columns = Tools.ValidateInt("Enter the Amount of Spots by Row");
             // Generate an array of all alphabet letters
             char[] alphabet = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
             for (int i = 0; i < Rows; i++)
@@ -46,20 +46,20 @@ namespace Parking.Controllers
             switch (choice)
             {
                 case 1:
-                    Console.WriteLine("Type the new name for the lot: ");
+                    Console.WriteLine("Enter the new name for the lot: ");
                     Program.lots[index].Name = Tools.ValidateString();
                     break;
                 case 2:
-                    Console.WriteLine("Type the new address of the lot: ");
+                    Console.WriteLine("Enter the new address of the lot: ");
                     Program.lots[index].Address = Tools.ValidateString();
                     break;
                 case 3:
-                    Console.WriteLine("Type the new price per hour for the lot: ");
+                    Console.WriteLine("Enter the new price per hour for the lot: ");
                     Program.lots[index].HourPrice = Tools.ValidateInt();
                     break;
                 case 4:
                     string[] SpotListOptions = { "Add", "Delete" };
-                    Console.WriteLine("Select the what action you want to make: ");
+                    Console.WriteLine("Select the what action you want to perform: ");
                     int selected = Tools.ValidateInt(1, SpotListOptions.Length);
                     Console.Clear();
                     switch (selected)
@@ -133,11 +133,11 @@ namespace Parking.Controllers
             //         break;
             // }
         }
-        public static void SortLotsByIncome()
+        public static void SortLotsByIncome() //using the value gotten from the method getIncome in Lot class sorts by descending using a lambda expression
         {
             Program.lots = Program.lots.OrderByDescending(lot => lot.getIncome()).ToList();
         }
-        public static void SortByFreeSpots()
+        public static void SortByFreeSpots() //using the value gotten from the method freeSpot in Lot class sorts by descending using a lambda expression
         {
             Program.lots = Program.lots.OrderByDescending(lot => lot.FreeSpot()).ToList();
         }
@@ -145,7 +145,7 @@ namespace Parking.Controllers
         {
             Console.WriteLine();
             List();
-            Console.WriteLine("Seleccione una playa: ");
+            Console.WriteLine("Select a Lot: ");
             int selected = Tools.ValidateInt(1, Program.lots.Count);
             return selected - 1;
         }
