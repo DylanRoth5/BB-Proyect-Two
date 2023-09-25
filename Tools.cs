@@ -1,62 +1,60 @@
 namespace Parking;
 
-public class Tools
-{
-
-    public static DateTime InputDate()
+    public class Tools
     {
-        DateTime result = default(DateTime);
-        bool flag = false;
-        do
+        
+        public static DateTime InputDate()
         {
-            flag = false;
-            try
+            DateTime result;
+            bool isValid = false;
+
+            do
             {
                 Console.WriteLine("Por favor, ingrese una fecha y hora en el formato dd/MM/yyyy HH:mm:ss: ");
-                result = DateTime.Parse(Console.ReadLine());
+                string input = Console.ReadLine();
+
+                if (DateTime.TryParseExact(input, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out result))
+                {
+                    isValid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Formato incorrecto, intente de nuevo...");
+                }
             }
-            catch
-            {
-                Console.WriteLine("Formato incorrecto, intente de nuevo...");
-                flag = true;
-            }
+            while (!isValid);
+
+            return result;
         }
-        while (flag);
-        return result;
-    }
-    public static char ValidateLetter()
-    {
-        //Convert the letter to ASCII
-        char letter = ' ';
-        ConsoleKeyInfo consoleKeyInfo;
-        do
-        {
-            consoleKeyInfo = Console.ReadKey(intercept: true);
-            int ASCII = Convert.ToInt32(consoleKeyInfo.KeyChar);
-            if ((ASCII >= 97 && ASCII <= 122) || (ASCII >= 65 && ASCII <= 90))
-            {
-                letter = consoleKeyInfo.KeyChar;
+        public static char ValidateLetter(){
+            //Convert the letter to ASCII
+            char letter = ' ';
+            ConsoleKeyInfo consoleKeyInfo;
+            do {
+                consoleKeyInfo = Console.ReadKey(intercept: true);
+                int ASCII = Convert.ToInt32(consoleKeyInfo.KeyChar);
+                if((ASCII >= 97 && ASCII <= 122)||(ASCII >= 65 && ASCII<=90)){
+                    letter = consoleKeyInfo.KeyChar;
+                }
+            }while(letter == ' ');
+            if(letter != ' '){
+                return char.ToLower(letter);
             }
-        } while (letter == ' ');
-        if (letter != ' ')
-        {
-            return char.ToLower(letter);
+            //If it is not a letter, it recursively executes it again until a letter is selected
+            return ValidateLetter();
         }
-        //If it is not a letter, it recursively executes it again until a letter is selected
-        return ValidateLetter();
-    }
-    public static int ValidateInt()
-    {
-        string text = "";
-        ConsoleKeyInfo consoleKeyInfo;
-        do
+        public static int ValidateInt()
         {
-            consoleKeyInfo = Console.ReadKey(intercept: true);
-            if (consoleKeyInfo.KeyChar > '/' && consoleKeyInfo.KeyChar < ':')
+            string text = "";
+            ConsoleKeyInfo consoleKeyInfo;
+            do
             {
-                Console.Write(consoleKeyInfo.KeyChar);
-                text += consoleKeyInfo.KeyChar;
-            }
+                consoleKeyInfo = Console.ReadKey(intercept: true);
+                if (consoleKeyInfo.KeyChar > '/' && consoleKeyInfo.KeyChar < ':')
+                {
+                    Console.Write(consoleKeyInfo.KeyChar);
+                    text += consoleKeyInfo.KeyChar;
+                }
 
             if (consoleKeyInfo.Key == ConsoleKey.Backspace && text.Length > 0)
             {
