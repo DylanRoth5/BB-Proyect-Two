@@ -19,6 +19,7 @@ namespace Parking
             List<string> lotes = Tools.FileGetType("Lot","Data.txt");
             foreach(string lote in lotes){
                 string[] data = lote.Split(',');
+                lots.Add(new Lot(int.Parse(data[0]),data[1],data[2],decimal.Parse(data[3])));
             }
             Tools.HaltProgramExecution();
             Menu();
