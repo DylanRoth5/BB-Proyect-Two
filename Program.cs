@@ -16,12 +16,29 @@ namespace Parking
             spots = new List<Spot>();
             tickets = new List<Ticket>();
             vehicles = new List<Vehicle>();
+            Load();
+            Menu();
+            Save();
+        }
+        public static void Menu()
+        {
+            string[] options = {"Lot","Ticket","Vehicle","Save"};
+            int result = Tools.Menu("Parking Menu", options);
+            switch (result){
+                case 1: nLot.Menu(); Menu(); break;
+                case 2: nTicket.Menu(); Menu(); break;
+                case 3: nVehicle.Menu(); Menu(); break;
+                case 0: break;
+            }
+        }
+        
+        public static void Load(){
+            
             List<string> lotes = Tools.FileGetType("Lot","Data.txt");
             List<string> lugares = Tools.FileGetType("Spot","Data.txt");
             List<string> facturas = Tools.FileGetType("Ticket","Data.txt");
             List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
-            
-            Tools.HaltProgramExecution();
+
             foreach(string item in lotes){
                 string[] data = item.Split(',');
                 // Console.WriteLine($"{int.Parse(data[0])},{data[1]},{data[2]},{decimal.Parse(data[3])}");
@@ -47,19 +64,6 @@ namespace Parking
                 vehicles.Add(new Vehicle(int.Parse(data[0])));
             }
             Tools.HaltProgramExecution();
-            Menu();
-            Save();
-        }
-        public static void Menu()
-        {
-            string[] options = {"Lot","Ticket","Vehicle","Save"};
-            int result = Tools.Menu("Parking Menu", options);
-            switch (result){
-                case 1: nLot.Menu(); Menu(); break;
-                case 2: nTicket.Menu(); Menu(); break;
-                case 3: nVehicle.Menu(); Menu(); break;
-                case 0: break;
-            }
         }
         public static void Save(){
             Console.WriteLine("Saving Changes");
