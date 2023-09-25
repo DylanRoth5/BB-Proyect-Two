@@ -8,10 +8,8 @@ namespace Parking.Controllers{
             Console.WriteLine("Ingresar Id: ");
             int Id = Tools.ValidateInt();
             Console.WriteLine();
-            Console.WriteLine("Enter start date and time dd/MM/yyyy HH:mm:ss: ");
-            DateTime startDate = Tools.InputDate();
-            Console.WriteLine("Enter end date and time dd/MM/yyyy HH:mm:ss: ");
-            DateTime endDate = Tools.InputDate();
+            DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss: ");
+            DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss: ");
             int lot = nLot.SelectSpot(nLot.Select());
             Spot spot = Program.spots[lot];
             spot.Occupied = true;
@@ -35,7 +33,7 @@ namespace Parking.Controllers{
             matriz[0, 3] = options[3];
             matriz[0, 4] = options[4];
             foreach(Ticket ticket in Program.tickets){
-                for (int fila = 0; fila < Program.tickets.Count; fila++)
+                for (int fila = 1; fila < Program.tickets.Count; fila++)
                 {
                     for (int columna = 0; columna < 4; columna++)
                     {
@@ -87,8 +85,7 @@ namespace Parking.Controllers{
                     Modify(i);
                     break;
                 case 2:
-                    Console.Write($"Ingrese la fecha de entrada nueva para {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    DateTime entry = Tools.InputDate();
+                    DateTime entry = Tools.InputDate($"Ingrese la fecha de entrada nueva para {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
                     Program.tickets[i].Entry = entry;
                     Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Entry = entry;
                     hours = Program.tickets[i].Exit - entry;
@@ -98,8 +95,7 @@ namespace Parking.Controllers{
                     Modify(i);
                     break;
                 case 3:
-                    Console.Write($"Ingrese la fecha de salida nueva para {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    DateTime exit = Tools.InputDate();
+                    DateTime exit = Tools.InputDate($"Ingrese la fecha de salida nueva para {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
                     Program.tickets[i].Exit = exit;
                     Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Exit = exit;
                     hours = exit - Program.tickets[i].Entry;

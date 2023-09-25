@@ -3,14 +3,14 @@ namespace Parking;
     public class Tools
     {
         
-        public static DateTime InputDate()
+        public static DateTime InputDate(string message)
         {
             DateTime result;
             bool isValid = false;
 
             do
             {
-                Console.WriteLine("Por favor, ingrese una fecha y hora en el formato dd/MM/yyyy HH:mm:ss: ");
+                Console.WriteLine(message);
                 string input = Console.ReadLine();
 
                 if (DateTime.TryParseExact(input, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out result))

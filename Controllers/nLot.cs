@@ -17,7 +17,7 @@ namespace Parking.Controllers
             for (int i = 0; i < Rows; i++)
             {
                 List<Spot> temp = new List<Spot>();
-                for (int j = 0; j < Columns; i++)
+                for (int j = 0; j < Columns; j++)
                 {
                     // PARAMETERS
                     // Row: every spot in the one row have the same char to represent
@@ -188,6 +188,9 @@ namespace Parking.Controllers
                     // Menu();
                     break;
                 case 3:
+                    Update(Select());
+                    break;
+                case 4:
                     if (Program.lots.Count > 0) 
                     { 
                         Delete();
