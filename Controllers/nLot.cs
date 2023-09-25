@@ -82,9 +82,6 @@ namespace Parking.Controllers
                             nSpot.Delete(selectedSpotIndex);
                             int LotId = Program.lots[index].Id;
                             char letter = Program.spots[selectedSpotIndex].Row;
-                            Program.lots[index].SpotsMatrix[SelectRowByLetter(LotId, letter), ]
-
-                            
                         break;
                     }
                     break;
@@ -94,6 +91,10 @@ namespace Parking.Controllers
         public static void List()
         {
             string[,] table = new string[Program.lots.Count + 1, 4];
+            table[0, 0] = "ID";
+            table[0, 1] = "Name";
+            table[0, 2] = "Address";
+            table[0, 3] = "Hour Price";
             int row = 1;
             foreach (Lot lot in Program.lots)
             {

@@ -8,6 +8,7 @@ namespace Parking.Controllers{
             Vehicle vehicle = new Vehicle();
             Console.WriteLine("Enter id of the vehicle: ");
             vehicle.Id = Tools.ValidateInt();
+            Console.WriteLine();
             Console.WriteLine("Enter model of the vehicle: ");
             vehicle.Model = Console.ReadLine();
             Console.WriteLine("Enter brand of the vehicle: ");  
@@ -23,8 +24,12 @@ namespace Parking.Controllers{
             string[,] matriz;
             string[] options = new string[] {"Id", "Model", "Brand", "Plate"}; 
             matriz = new string[Program.vehicles.Count + 1, 4]; // Inicializar la matriz con las dimensiones calculadas
+            matriz[0, 0] = options[0];
+            matriz[0, 1] = options[1];
+            matriz[0, 2] = options[2];
+            matriz[0, 3] = options[3];
             foreach(Vehicle vehicle in Program.vehicles){
-                for (int fila = 0; fila < Program.vehicles.Count; fila++)
+                for (int fila = 1; fila < Program.vehicles.Count + 1; fila++)
                 {
                     for (int columna = 0; columna < 4; columna++)
                     {
@@ -52,17 +57,17 @@ namespace Parking.Controllers{
             switch(selection)
             {
                 case 1:
-                    Console.Write($"Ingrese el modelo nuevo para {Program.vehicles[i].Model}");
+                    Console.Write($"Ingrese el modelo nuevo para \"{Program.vehicles[i].Model}\": ");
                     Program.vehicles[i].Model = Console.ReadLine();
                     Modify(i);
                     break;
                 case 2:
-                    Console.Write($"Ingrese la marca nueva para {Program.vehicles[i].Brand}");
+                    Console.Write($"Ingrese la marca nueva para \"{Program.vehicles[i].Brand}\": ");
                     Program.vehicles[i].Brand = Console.ReadLine();
                     Modify(i);
                     break;
                 case 3:
-                    Console.Write($"Ingrese la placa nueva para {Program.vehicles[i].Plate}");
+                    Console.Write($"Ingrese la placa nueva para \"{Program.vehicles[i].Plate}\": ");
                     Program.vehicles[i].Plate = Console.ReadLine();
                     Modify(i);
                     break;
@@ -75,7 +80,7 @@ namespace Parking.Controllers{
         {
             Console.WriteLine();
             List();
-            Console.Write("Seleccione un Vehiculo: ");
+            Console.WriteLine("Seleccione un Vehiculo: ");
             int s = Tools.ValidateInt(1, Program.vehicles.Count);
             return s - 1;
         }
@@ -93,7 +98,6 @@ namespace Parking.Controllers{
                     break;
                 case 2:
                     Modify(Select());
-                    Console.ReadKey();
                     Menu();
                     break;
                 case 3:
@@ -103,7 +107,7 @@ namespace Parking.Controllers{
                     }
                     else
                     {
-                        Console.WriteLine("No existen datos a eliminar"); 
+                        Console.WriteLine("No existen datos a eliminar..."); 
                         Console.ReadKey();
                     }; 
                     Menu(); 

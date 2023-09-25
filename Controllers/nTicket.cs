@@ -7,6 +7,7 @@ namespace Parking.Controllers{
         {
             Console.WriteLine("Ingresar Id: ");
             int Id = Tools.ValidateInt();
+            Console.WriteLine();
             Console.WriteLine("Enter start date and time dd/MM/yyyy HH:mm:ss: ");
             DateTime startDate = Tools.InputDate();
             Console.WriteLine("Enter end date and time dd/MM/yyyy HH:mm:ss: ");
@@ -28,6 +29,11 @@ namespace Parking.Controllers{
             string[,] matriz;
             string[] options = new string[] {"Id", "Spot", "Entry", "Exit", "Total"}; 
             matriz = new string[Program.tickets.Count + 1, 5]; // Inicializar la matriz con las dimensiones calculadas
+            matriz[0, 0] = options[0];
+            matriz[0, 1] = options[1];
+            matriz[0, 2] = options[2];
+            matriz[0, 3] = options[3];
+            matriz[0, 4] = options[4];
             foreach(Ticket ticket in Program.tickets){
                 for (int fila = 0; fila < Program.tickets.Count; fila++)
                 {
@@ -136,10 +142,12 @@ namespace Parking.Controllers{
                     break;
                 case 4:
                     List();
+                    Console.ReadKey();
                     Menu();
                     break;
                 case 5:
                     PrintTicket(Select());
+                    Console.ReadKey();
                     Menu();
                     break;
                 case 0: break;
