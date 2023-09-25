@@ -50,6 +50,7 @@ namespace Parking;
         }
         public static decimal ValidateDecimal(){
             int full = ValidateInt();
+            Console.Write(".");
             int notfull = ValidateInt();
             decimal number = decimal.Parse($"{full}.{notfull}");
             return number;

@@ -9,10 +9,9 @@ namespace Parking.Controllers
             string Name = Tools.ValidateString("Ingrese el nombre de la playa");
             string Address = Tools.ValidateString("Ingrese la dirección de la playa: ");
             decimal HourPrice = Tools.ValidateDecimal("Ingrese el precio por hora de la playa: ");
+            Lot lot = new Lot(Id, Name, Address, HourPrice);
             int Rows = Tools.ValidateInt("Ingrese la cantidad de filas que tiene la playa: ");
             int Columns = Tools.ValidateInt("Ingrese la cantidad de estacionamientos que tiene cada fila");
-            Lot lot = new Lot(Id, Name, Address, HourPrice);
-            Console.WriteLine("adad");
             // Generate an array of all alphabet letters
             char[] alphabet = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
             for (int i = 0; i < Rows; i++)
