@@ -3,11 +3,53 @@ namespace Parking;
     public class Tools
     {
         
+        public static string FileReadAll(string filepath){
+            if(File.Exists(@filepath)){
+            string file = File.ReadAllText(filepath);
+            return file;
+            }
+            return null;
+        }
+        public static string[] FileRead(string type,int id,string filepath){
+            if(File.Exists(@filepath)){
+                string[] file = File.ReadAllLines(@filepath);
+                for (int i=0;i<file.Length;i++){
+                    string[] fields = file[i].Split(':');
+                    if(recordMatcheType(type,fields,0)){
+                        string[] data = fields[1].Split(','); 
+                        if(recordMatchesId(id,data,0)){
+                            Console.WriteLine("Record Found");
+                            Console.WriteLine($"{fields[0]}[{fields[1]}]");
+                            return fields;
+                        }
+                    }
+                }   
+            }
+            Console.WriteLine("Record not Found");
+            return null;
+        }
+
+        public static bool recordMatcheType(string type,string[] record,int position){
+            if(record[position].Equals(type)){return true;} return false;
+        }
+        public static bool recordMatchesId(int id,string[] record,int position){
+            if(record[position].Equals($"{id}")){return true;} return false;
+        }
+        public static void FileWrite(string type,string content,string filepath){
+            string info = FileReadAll(@filepath);
+            if(!info.Contains($"{type}:{content}")){
+                StreamWriter writer = new StreamWriter(@filepath,true);
+                writer.WriteLine($"{type}:{content}");
+                writer.Close();
+            }else{
+                Console.WriteLine($"{type}:{content} already exists!!");
+                Console.ReadKey();
+            }
+        }
         public static DateTime InputDate(string message)
         {
             DateTime result;
             bool isValid = false;
-
             do
             {
                 Console.WriteLine(message);
