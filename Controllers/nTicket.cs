@@ -8,10 +8,10 @@ namespace Parking.Controllers{
             Console.WriteLine("Ingresar Id: ");
             int Id = Tools.ValidateInt();
             Console.WriteLine();
-            DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss: ");
-            DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss: ");
             int lot = nLot.SelectSpot(nLot.Select());
             Spot spot = Program.spots[lot];
+            DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss: ");
+            DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss: ");
             spot.Occupied = true;
             Vehicle vehicle = Program.vehicles[nVehicle.Select()];
             TimeSpan hours = endDate - startDate;

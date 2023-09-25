@@ -84,38 +84,61 @@ namespace Parking.Controllers
             }
 
         }
+
+        public static void Delete(int index)
+        {
+            foreach(Spot spot in Program.spots){
+                if(spot.LotId == index)
+                {
+                    Program.spots.RemoveAt(spot.Id);
+                }
+            }
+            Program.lots.RemoveAt(index);
+        }
         public static void List()
         {
-            string[] options = { "Order by Income, Order by Free Spots"};
-            Console.WriteLine("Choose an order option:");
+            string[] options = { "Order by Income", "Order by Free Spots", "List"};
             Tools.Menu("Order Options", options);
             int choice = Tools.ValidateInt(1, options.Length);
-            Console.Clear();
             switch (choice)
             {
                 case 1:
                     SortLotsByIncome();
+                    PrintTable();
                     break;
                 case 2:
                     SortByFreeSpots();
+                    PrintTable();
+                    break;
+                case 3:
+                    PrintTable();
+                    break;
+                case 0:
                     break;
             }
+        }
 
-            string[,] table = new string[Program.lots.Count + 1, 4];
-            table[0, 0] = "ID";
-            table[0, 1] = "Name";
-            table[0, 2] = "Address";
-            table[0, 3] = "Hour Price";
-            int row = 1;
-            foreach (Lot lot in Program.lots)
-            {
-                table[row, 0] = lot.Id.ToString();
-                table[row, 1] = lot.Name;
-                table[row, 2] = lot.Address;
-                table[row, 3] = lot.HourPrice.ToString();
-                row++;
+        public static void PrintTable()
+        {
+            string[,] matriz;
+            string[] options = new string[] {"Id", "Name", "Address", "HourPrice"}; 
+            matriz = new string[Program.vehicles.Count + 1, 4]; // Inicializar la matriz con las dimensiones calculadas
+            matriz[0, 0] = options[0];
+            matriz[0, 1] = options[1];
+            matriz[0, 2] = options[2];
+            matriz[0, 3] = options[3];
+            foreach(Lot lot in Program.lots){
+                for (int fila = 1; fila < Program.lots.Count + 1; fila++)
+                {
+                    for (int columna = 0; columna < 4; columna++)
+                    {
+                        var propertyInfo = lot.GetType().GetProperty(options[columna]);
+                        matriz[fila, columna] = propertyInfo.GetValue(lot)?.ToString()?? " ";
+                    }
+                }
             }
-            Tools.DrawTable(table);
+            // Llama a la función para dibujar la tabla con la matriz de datos
+            Tools.DrawTable(matriz);
         }
 
         public static void SortLotsByIncome()
@@ -167,12 +190,7 @@ namespace Parking.Controllers
                 index++;
             }
             return -1;
-        }
-        public static void Delete()
-        {
-            int i = Select();
-            Program.lots.RemoveAt(i);
-        }        
+        }   
         public static void DrawLot(int LotId)
         {
 
@@ -183,24 +201,28 @@ namespace Parking.Controllers
             switch (selection){
                 case 1: Create(); Menu(); break;
                 case 2: 
-                    // if (ThereAre()){ Modify(Select()); }
-                    // else{Console.WriteLine("No existen datos a modificar");Console.ReadKey();} 
-                    // Menu();
+                    List();
+                    Console.ReadKey();
+                    Menu();
                     break;
                 case 3:
                     Update(Select());
+                    // if (ThereAre()){ Modify(Select()); }
+                    // else{Console.WriteLine("No existen datos a modificar");Console.ReadKey();} 
+                    Menu();
                     break;
                 case 4:
                     if (Program.lots.Count > 0) 
                     { 
-                        Delete();
+                        Delete(Select());
                     }
                     else
                     {
                         Console.WriteLine("There is not data to be deleted");
                         Console.ReadKey();
                     } 
-                    Menu(); break;
+                    Menu(); 
+                    break;
                 case 0: break;
             }
         }

@@ -25,28 +25,25 @@ public class Lot
     }
 
     public decimal getIncome()
+    {
+        decimal totalGains = 0;
+        foreach (Ticket ticket in Tickets)
         {
-            decimal totalGains = 0;
-            foreach (Ticket ticket in Program.tickets)
-            {
-                totalGains += ticket.Total;
-            }
-            return totalGains;
-
+            totalGains += ticket.Total;
         }
+        return totalGains;
+    }
 
     public int FreeSpot()
     {
         int totalSpots = 0;
-
-        foreach(Spot spot in Program.spots)
-        {
-            if(spot.Occupied == false)
-            {
-                totalSpots ++;
-            }
-        }
-
+        // foreach(Spot spot in SpotsMatrix)
+        // {
+        //     if(spot.Occupied == false)
+        //     {
+        //         totalSpots ++;
+        //     }
+        // }
         return totalSpots;
     }
 }

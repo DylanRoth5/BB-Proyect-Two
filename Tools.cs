@@ -118,6 +118,7 @@ namespace Parking;
             Console.Write(".");
             int notfull = ValidateInt();
             decimal number = decimal.Parse($"{full}.{notfull}");
+            Console.WriteLine();
             return number;
         }
         public static int ValidateInt()
