@@ -92,6 +92,10 @@ namespace Parking.Controllers
         public static void List()
         {
             string[,] table = new string[Program.lots.Count + 1, 4];
+            table[0, 0] = "ID";
+            table[0, 1] = "Name";
+            table[0, 2] = "Address";
+            table[0, 3] = "Hour Price";
             int row = 1;
             foreach (Lot lot in Program.lots)
             {
