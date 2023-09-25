@@ -6,17 +6,13 @@ namespace Parking.Controllers
     {
         public static void Create () {
             int Id = Program.lots.Count();
-            Console.WriteLine("Ingrese el nombre de la playa");
-            string Name = Console.ReadLine();
-            Console.WriteLine("Ingrese la dirección de la playa: ");
-            string Address = Console.ReadLine();
-            Console.WriteLine("Ingrese el precio por hora de la playa: ");
-            decimal HourPrice = Tools.ValidateInt();
-            Console.WriteLine("Ingrese la cantidad de filas que tiene la playa: ");
-            int Rows = Tools.ValidateInt();
-            Console.WriteLine("Ingrese la cantidad de estacionamientos que tiene cada fila");
-            int Columns = Tools.ValidateInt();
+            string Name = Tools.ValidateString("Ingrese el nombre de la playa");
+            string Address = Tools.ValidateString("Ingrese la dirección de la playa: ");
+            decimal HourPrice = Tools.ValidateFloat("Ingrese el precio por hora de la playa: ");
+            int Rows = Tools.ValidateInt("Ingrese la cantidad de filas que tiene la playa: ");
+            int Columns = Tools.ValidateInt("Ingrese la cantidad de estacionamientos que tiene cada fila");
             Lot lot = new Lot(Id, Name, Address, HourPrice);
+            Console.WriteLine("adad");
             // Generate an array of all alphabet letters
             char[] alphabet = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
             for (int i = 0; i < Rows; i++)
