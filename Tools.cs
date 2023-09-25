@@ -91,12 +91,20 @@ namespace Parking;
             return ValidateDecimal();
         }
         public static decimal ValidateDecimal(){
-            int full = ValidateInt();
-            Console.Write(".");
-            int notfull = ValidateInt();
-            decimal number = decimal.Parse($"{full}.{notfull}");
-            Console.WriteLine();
-            return number;
+            decimal result;
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (decimal.TryParse(input, out result))
+                {
+                    return result; // Si la conversión es exitosa, retorna el número decimal.
+                }
+                else
+                {
+                    Console.WriteLine("Entrada no válida. Por favor, ingrese un número decimal válido.");
+                }
+            }
         }
         public static int ValidateInt()
         {
