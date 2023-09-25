@@ -1,146 +1,173 @@
 namespace Parking;
 
-    public class Tools
+public class Tools
+{
+
+    public static string FileReadAll(string filepath)
     {
-        
-        public static string FileReadAll(string filepath){
-            if(File.Exists(@filepath)){
+        if (File.Exists(@filepath))
+        {
             string file = File.ReadAllText(filepath);
             return file;
-            }
-            return null;
         }
-        public static string[] FileReadAllLines(string filepath){
-            if(File.Exists(@filepath)){
+        return null;
+    }
+    public static string[] FileReadAllLines(string filepath)
+    {
+        if (File.Exists(@filepath))
+        {
             string[] file = File.ReadAllLines(@filepath);
             return file;
-            }
-            return null;
         }
-        public static List<string> FileGetType(string type,string filepath){
-            List<string> result = new List<string>();
-            if(File.Exists(@filepath)){
-                string[] file = File.ReadAllLines(@filepath);
-                for (int i=0;i<file.Length;i++){
-                    string[] fields = file[i].Split(':');
-                    if(recordMatcheType(type,fields,0)){
-                        string info = $"{fields[0]}:{fields[1]}";
-                        result.Add(info);
-                    }
-                }
-                return result;
-            }
-            Console.WriteLine("Record not Found");
-            return null;
-        }
-        public static string[] FileRead(string type,int id,string filepath){
-            if(File.Exists(@filepath)){
-                string[] file = File.ReadAllLines(@filepath);
-                for (int i=0;i<file.Length;i++){
-                    string[] fields = file[i].Split(':');
-                    if(recordMatcheType(type,fields,0)){
-                        string[] data = fields[1].Split(','); 
-                        if(recordMatchesId(id,data,0)){
-                            Console.WriteLine("Record Found");
-                            Console.WriteLine($"{fields[0]}[{fields[1]}]");
-                            return fields;
-                        }
-                    }
-                }   
-            }
-            Console.WriteLine("Record not Found");
-            return null;
-        }
-
-        public static bool recordMatcheType(string type,string[] record,int position){
-            if(record[position].Equals(type)){return true;} return false;
-        }
-        public static bool recordMatchesId(int id,string[] record,int position){
-            if(record[position].Equals($"{id}")){return true;} return false;
-        }
-        public static void FileWrite(string type,string content,string filepath){
-            string info = FileReadAll(@filepath);
-            if(!info.Contains($"{type}:{content}")){
-                StreamWriter writer = new StreamWriter(@filepath,true);
-                writer.WriteLine($"{type}:{content}");
-                writer.Close();
-            }else{
-                Console.WriteLine($"{type}:{content} already exists!!");
-                Console.ReadKey();
-            }
-        }
-        public static DateTime InputDate(string message)
+        return null;
+    }
+    public static List<string> FileGetType(string type, string filepath)
+    {
+        List<string> result = new List<string>();
+        if (File.Exists(@filepath))
         {
-            DateTime result;
-            bool isValid = false;
-            do
+            string[] file = File.ReadAllLines(@filepath);
+            for (int i = 0; i < file.Length; i++)
             {
-                Console.WriteLine(message);
-                string input = Console.ReadLine();
-
-                if (DateTime.TryParseExact(input, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out result))
+                string[] fields = file[i].Split(':');
+                if (recordMatcheType(type, fields, 0))
                 {
-                    isValid = true;
-                }
-                else
-                {
-                    Console.WriteLine("Formato incorrecto, intente de nuevo...");
+                    string info = $"{fields[0]}:{fields[1]}";
+                    result.Add(info);
                 }
             }
-            while (!isValid);
-
             return result;
         }
-        public static char ValidateLetter(){
-            //Convert the letter to ASCII
-            char letter = ' ';
-            ConsoleKeyInfo consoleKeyInfo;
-            do {
-                consoleKeyInfo = Console.ReadKey(intercept: true);
-                int ASCII = Convert.ToInt32(consoleKeyInfo.KeyChar);
-                if((ASCII >= 97 && ASCII <= 122)||(ASCII >= 65 && ASCII<=90)){
-                    letter = consoleKeyInfo.KeyChar;
-                }
-            }while(letter == ' ');
-            if(letter != ' '){
-                return char.ToLower(letter);
-            }
-            //If it is not a letter, it recursively executes it again until a letter is selected
-            return ValidateLetter();
-        }
-        
-        public static decimal ValidateDecimal(string? message){
-            Console.WriteLine(message);
-            return ValidateDecimal();
-        }
-        public static decimal ValidateDecimal(){
-            decimal result;
-            while (true)
-            {
-                string input = Console.ReadLine();
-
-                if (decimal.TryParse(input, out result))
-                {
-                    return result; // Si la conversión es exitosa, retorna el número decimal.
-                }
-                else
-                {
-                    Console.WriteLine("Entrada no válida. Por favor, ingrese un número decimal válido.");
-                }
-            }
-        }
-        public static int ValidateInt()
+        Console.WriteLine("Record not Found");
+        return null;
+    }
+    public static string[] FileRead(string type, int id, string filepath)
+    {
+        if (File.Exists(@filepath))
         {
-            string text = "";
-            ConsoleKeyInfo consoleKeyInfo;
-            do
+            string[] file = File.ReadAllLines(@filepath);
+            for (int i = 0; i < file.Length; i++)
             {
-                consoleKeyInfo = Console.ReadKey(intercept: true);
-                if (consoleKeyInfo.KeyChar > '/' && consoleKeyInfo.KeyChar < ':')
+                string[] fields = file[i].Split(':');
+                if (recordMatcheType(type, fields, 0))
                 {
-                    Console.Write(consoleKeyInfo.KeyChar);
-                    text += consoleKeyInfo.KeyChar;
+                    string[] data = fields[1].Split(',');
+                    if (recordMatchesId(id, data, 0))
+                    {
+                        Console.WriteLine("Record Found");
+                        Console.WriteLine($"{fields[0]}[{fields[1]}]");
+                        return fields;
+                    }
                 }
+            }
+        }
+        Console.WriteLine("Record not Found");
+        return null;
+    }
+
+    public static bool recordMatcheType(string type, string[] record, int position)
+    {
+        if (record[position].Equals(type)) { return true; }
+        return false;
+    }
+    public static bool recordMatchesId(int id, string[] record, int position)
+    {
+        if (record[position].Equals($"{id}")) { return true; }
+        return false;
+    }
+    public static void FileWrite(string type, string content, string filepath)
+    {
+        string info = FileReadAll(@filepath);
+        if (!info.Contains($"{type}:{content}"))
+        {
+            StreamWriter writer = new StreamWriter(@filepath, true);
+            writer.WriteLine($"{type}:{content}");
+            writer.Close();
+        }
+        else
+        {
+            Console.WriteLine($"{type}:{content} already exists!!");
+            Console.ReadKey();
+        }
+    }
+    public static DateTime InputDate(string message)
+    {
+        DateTime result;
+        bool isValid = false;
+        do
+        {
+            Console.WriteLine(message);
+            string input = Console.ReadLine();
+
+            if (DateTime.TryParseExact(input, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out result))
+            {
+                isValid = true;
+            }
+            else
+            {
+                Console.WriteLine("Formato incorrecto, intente de nuevo...");
+            }
+        }
+        while (!isValid);
+
+        return result;
+    }
+    public static char ValidateLetter()
+    {
+        //Convert the letter to ASCII
+        char letter = ' ';
+        ConsoleKeyInfo consoleKeyInfo;
+        do
+        {
+            consoleKeyInfo = Console.ReadKey(intercept: true);
+            int ASCII = Convert.ToInt32(consoleKeyInfo.KeyChar);
+            if ((ASCII >= 97 && ASCII <= 122) || (ASCII >= 65 && ASCII <= 90))
+            {
+                letter = consoleKeyInfo.KeyChar;
+            }
+        } while (letter == ' ');
+        if (letter != ' ')
+        {
+            return char.ToLower(letter);
+        }
+        //If it is not a letter, it recursively executes it again until a letter is selected
+        return ValidateLetter();
+    }
+
+    public static decimal ValidateDecimal(string? message)
+    {
+        Console.WriteLine(message);
+        return ValidateDecimal();
+    }
+    public static decimal ValidateDecimal()
+    {
+        decimal result;
+        while (true)
+        {
+            string input = Console.ReadLine();
+
+            if (decimal.TryParse(input, out result))
+            {
+                return result; // Si la conversión es exitosa, retorna el número decimal.
+            }
+            else
+            {
+                Console.WriteLine("Entrada no válida. Por favor, ingrese un número decimal válido.");
+            }
+        }
+    }
+    public static int ValidateInt()
+    {
+        string text = "";
+        ConsoleKeyInfo consoleKeyInfo;
+        do
+        {
+            consoleKeyInfo = Console.ReadKey(intercept: true);
+            if (consoleKeyInfo.KeyChar > '/' && consoleKeyInfo.KeyChar < ':')
+            {
+                Console.Write(consoleKeyInfo.KeyChar);
+                text += consoleKeyInfo.KeyChar;
+            }
 
             if (consoleKeyInfo.Key == ConsoleKey.Backspace && text.Length > 0)
             {
@@ -166,7 +193,8 @@ namespace Parking;
         Console.Write(new string(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, currentLineCursor);
     }
-    public static int ValidateInt(string? message){
+    public static int ValidateInt(string? message)
+    {
         Console.WriteLine(message);
         return ValidateInt();
     }
@@ -201,7 +229,8 @@ namespace Parking;
         Console.Write($"Type a number between {min} and {max}: ");
         return ValidateInt(min, max);
     }
-    public static string ValidateString(string message){
+    public static string ValidateString(string message)
+    {
         Console.WriteLine(message);
         return ValidateString();
     }
@@ -442,5 +471,11 @@ namespace Parking;
         Flip(ConsoleColor.Black, ConsoleColor.White); // reset console colors
         Console.Clear();
         return result;
+    }
+    public static void HaltProgramExecution()
+    {
+        Console.WriteLine();
+        Console.Write("Press <Enter> to exit... ");
+        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
     }
 }
