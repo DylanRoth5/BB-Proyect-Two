@@ -81,7 +81,7 @@ namespace Parking
             }
 
             foreach (Ticket ticket in tickets){
-                Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}","Data.txt");
+                Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id},{ticket.Vehicle.Id}","Data.txt");
                 Thread.Sleep(10);
             }
 

@@ -70,4 +70,8 @@ Spot;48,E,3,3
 Spot;49,E,4,3
 Spot;50,E,5,3
 Vehicle;1,Ford,Mustang,123-456
+Vehicle;2,Ford,fiesta,UWU-734
+Vehicle;3,Mazda,Miata,LOL-452
 Spot;51,A,1,4
+Ticket;1,2/2/2002 02:02:02,3/2/2002 02:02:02,1,1
+Ticket;1,37488,2/2/2002 02:02:02,3/2/2002 02:02:02,4.3
