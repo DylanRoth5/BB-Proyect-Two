@@ -70,3 +70,4 @@ Spot;48,E,3,3
 Spot;49,E,4,3
 Spot;50,E,5,3
 Vehicle;1,Ford,Mustang,123-456
+Spot;51,A,1,4

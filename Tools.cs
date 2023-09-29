@@ -87,7 +87,6 @@ public class Tools
         else
         {
             Console.WriteLine($"{type};{content} already exists!!");
-            Console.ReadKey();
         }
     }
     public static DateTime InputDate(string message)

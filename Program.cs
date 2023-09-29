@@ -38,9 +38,11 @@ namespace Parking
             List<string> facturas = Tools.FileGetType("Ticket","Data.txt");
             List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
 
+            Console.WriteLine("Loading...");
+
             foreach(string item in lotes){
                 string[] lotData = item.Split(',') ?? throw new ArgumentNullException("item.Split(\',\')");
-                Console.WriteLine($"{int.Parse(lotData[0])},{lotData[1]},{lotData[2]},{decimal.Parse(lotData[3])},{int.Parse(lotData[4])},{int.Parse(lotData[5])}");
+                Console.WriteLine($"    {int.Parse(lotData[0])},{lotData[1]},{lotData[2]},{decimal.Parse(lotData[3])},{int.Parse(lotData[4])},{int.Parse(lotData[5])}");
                 // lots.Add(new Lot(int.Parse(data[0]),data[1],data[2],decimal.Parse(data[3])));
                 nLot.Create(lotData[1],lotData[2],decimal.Parse(lotData[3]),int.Parse(lotData[4]),int.Parse(lotData[5]));
             }
@@ -48,6 +50,7 @@ namespace Parking
             foreach(string item in vehiculos){
                 string[] data = item.Split(',');
                 nVehicle.Add(data[1],data[2],data[3]);
+                Console.WriteLine($"    {item}");
             }
             
             foreach(string item in facturas){
@@ -55,69 +58,29 @@ namespace Parking
                 nTicket.Add(DateTime.Parse(data[1]),DateTime.Parse(data[2]), int.Parse(data[3]),int.Parse(data[4]));
             }
             
-            
-            // List<string> spaces = Tools.FileGetType("Spot","Data.txt");
-            // foreach(string item in spaces){
-            //     string[] data = item.Split(',');
-            //
-            //     foreach (Spot spot in spots)
-            //     {
-            //         if (spot.Id != int.Parse(data[0]))
-            //         {
-            //             
-            //         }
-            //     }
-            //
-            //     foreach(Lot lote in lots){
-            //         if(lote.Id == int.Parse(data[3])){
-            //             // Spot spot = new Spot(int.Parse(data[0]),char.Parse(data[1]),int.Parse(data[2]),int.Parse(data[3]));
-            //             // spots.Add(spot);
-            //             // lote.SpotsMatrix.Add();
-            //             nSpot.Create(char.Parse(data[1]),int.Parse(data[2]),int.Parse(data[3]));
-            //         }
-            //     }
-            // }
+            // No se van a cargar spots, solo se los guardara por las dudas, pero es demaciado complicado cargarlos
             
             Tools.HaltProgramExecution();
         }
         public static void Save(){
             Console.WriteLine("Saving Changes");
-            foreach (Lot lot in lots)
-            {
-                string file = Tools.FileReadAll("Data.txt");
+            foreach (Lot lot in lots){
                 int columns = 0;
                 int rows = lot.SpotsMatrix.Count;
-                foreach (List<Spot> amount in lot.SpotsMatrix) {
-                    columns = amount.Count;
-                }
-                if (!file.Contains($"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}")) {
-                    Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
-                }
-
+                foreach (List<Spot> amount in lot.SpotsMatrix) {columns = amount.Count;}
+                Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
             }
 
             foreach (Spot spot in spots){
-                string file = Tools.FileReadAll("Data.txt");
-                if (!file.Contains($"{spot.Id},{spot.Row},{spot.Column},{spot.Occupied},{spot.LotId}"))
-                {
-                    Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
-                }
+                Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
             }
 
             foreach (Ticket ticket in tickets){
-                string file = Tools.FileReadAll("Data.txt");
-                if (!file.Contains($"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}"))
-                {
-                    Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}","Data.txt");
-                }
+                Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}","Data.txt");
             }
 
             foreach (Vehicle vehicle in vehicles){
-                string file = Tools.FileReadAll("Data.txt");
-                if (!file.Contains($"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}"))
-                {
-                    Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");
-                }
+                Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");
             }
             Tools.HaltProgramExecution();
         }
