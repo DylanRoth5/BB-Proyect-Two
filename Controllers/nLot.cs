@@ -221,7 +221,20 @@ namespace Parking.Controllers
         }
         public static void DrawLot(int id)
         {
-
+            foreach (Lot lot in Program.lots)
+            {
+                if (lot.Id==id)
+                {
+                    foreach (List<Spot> zone in lot.SpotsMatrix)
+                    {
+                        Console.WriteLine();
+                        foreach (Spot spot in zone)
+                        {
+                            Console.Write($"    {spot.Row}{spot.Column}");
+                        }
+                    }
+                }
+            }
         }
         public static bool IsThereAny()
         {
