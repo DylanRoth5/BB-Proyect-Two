@@ -24,9 +24,9 @@ public class Tools
     public static List<string> FileGetType(string type, string filepath)
     {
         List<string> result = new List<string>();
-        if (File.Exists(@filepath))
+        if (File.Exists(filepath))
         {
-            string[] file = File.ReadAllLines(@filepath);
+            string[] file = File.ReadAllLines(filepath);
             for (int i = 0; i < file.Length; i++)
             {
                 string[] fields = file[i].Split(':');
@@ -45,7 +45,7 @@ public class Tools
     {
         if (File.Exists(@filepath))
         {
-            string[] file = File.ReadAllLines(@filepath);
+            string[] file = File.ReadAllLines(filepath);
             for (int i = 0; i < file.Length; i++)
             {
                 string[] fields = file[i].Split(':');
@@ -78,7 +78,7 @@ public class Tools
     public static void FileWrite(string type, string content, string filepath)
     {
         string info = FileReadAll(@filepath);
-        if (!info.Contains($"{type}:{content}"))
+        if (!(info.Contains($"{type}:{content}")))
         {
             StreamWriter writer = new StreamWriter(@filepath, true);
             writer.WriteLine($"{type}:{content}");
