@@ -39,48 +39,55 @@ namespace Parking
             List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
 
             Console.WriteLine("Loading...");
-
+            Thread.Sleep(100);
             foreach(string item in lotes){
-                string[] lotData = item.Split(',') ?? throw new ArgumentNullException("item.Split(\',\')");
-                Console.WriteLine($"    {int.Parse(lotData[0])},{lotData[1]},{lotData[2]},{decimal.Parse(lotData[3])},{int.Parse(lotData[4])},{int.Parse(lotData[5])}");
-                // lots.Add(new Lot(int.Parse(data[0]),data[1],data[2],decimal.Parse(data[3])));
+                Console.WriteLine($"    {item}");
+                string[] lotData = item.Split(',');
                 nLot.Create(lotData[1],lotData[2],decimal.Parse(lotData[3]),int.Parse(lotData[4]),int.Parse(lotData[5]));
+                Thread.Sleep(100);
             }
             
             foreach(string item in vehiculos){
+                Console.WriteLine($"    {item}");
                 string[] data = item.Split(',');
                 nVehicle.Add(data[1],data[2],data[3]);
-                Console.WriteLine($"    {item}");
+                Thread.Sleep(100);
             }
             
-            foreach(string item in facturas){
-                string[] data = item.Split(',');
-                nTicket.Add(DateTime.Parse(data[1]),DateTime.Parse(data[2]), int.Parse(data[3]),int.Parse(data[4]));
-            }
+            // foreach(string item in facturas){
+            //     Console.WriteLine($"    {item}");
+            //     string[] data = item.Split(',');
+            //     nTicket.Add(DateTime.Parse(data[1]),DateTime.Parse(data[2]), int.Parse(data[3]),int.Parse(data[4]));
+            // }
             
             // No se van a cargar spots, solo se los guardara por las dudas, pero es demaciado complicado cargarlos
             
             Tools.HaltProgramExecution();
         }
         public static void Save(){
-            Console.WriteLine("Saving Changes");
+            Console.WriteLine("Saving Changes...");
+            Thread.Sleep(100);
             foreach (Lot lot in lots){
                 int columns = 0;
                 int rows = lot.SpotsMatrix.Count;
                 foreach (List<Spot> amount in lot.SpotsMatrix) {columns = amount.Count;}
                 Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
+                Thread.Sleep(100);
             }
 
             foreach (Spot spot in spots){
                 Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
+                Thread.Sleep(100);
             }
 
             foreach (Ticket ticket in tickets){
                 Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}","Data.txt");
+                Thread.Sleep(100);
             }
 
             foreach (Vehicle vehicle in vehicles){
                 Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");
+                Thread.Sleep(100);
             }
             Tools.HaltProgramExecution();
         }
