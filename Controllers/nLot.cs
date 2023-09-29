@@ -176,7 +176,12 @@ namespace Parking.Controllers
         {
             // Takes a lot's id as parameter
             // Shows the user the list of spots from the lot of id LotId
-            DrawLot(LotId);
+            // DrawLot(LotId);
+            foreach (Spot space in Program.spots){
+                if (space.LotId==LotId){
+                    Console.WriteLine($"{space.Column}{space.Row}");
+                }
+            }
             // Ask the user to insert the row where the spot them want to
             // select is located
             Console.WriteLine("Select a row: ");
@@ -219,23 +224,9 @@ namespace Parking.Controllers
             int index = Select();
             if (index != -1) Program.lots.RemoveAt(index);
         }
-        public static void DrawLot(int id)
-        {
-            foreach (Lot lot in Program.lots)
-            {
-                if (lot.Id==id)
-                {
-                    foreach (List<Spot> zone in lot.SpotsMatrix)
-                    {
-                        Console.WriteLine();
-                        foreach (Spot spot in zone)
-                        {
-                            Console.Write($"    {spot.Row}{spot.Column}");
-                        }
-                    }
-                }
-            }
-        }
+        // public static void DrawLot(int id)
+        // {
+        // }
         public static bool IsThereAny()
         {
             if (Program.lots.Count > 0) return true;

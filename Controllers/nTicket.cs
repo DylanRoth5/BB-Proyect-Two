@@ -3,17 +3,26 @@ using Parking.Entities;
 namespace Parking.Controllers{
     public class nTicket
     {
-        public static void Add()
+        public static void Create()
         {
             int Id = Program.tickets.Count() + 1;
-            Console.WriteLine();
-            int idspot = nLot.SelectSpot(nLot.Select());
+            foreach(Spot item in Program.spots){
+                Console.WriteLine("id:"+item.Id+"   position:"+item.Row+" "+item.Column+"    lot:"+item.LotId);
+            }
+            Console.WriteLine("Selecciona un spot:");
+            int idspot = int.Parse(Console.ReadLine())-1;
             Spot spot = Program.spots[idspot];
             DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss : ");
             DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss : ");
             spot.Occupied = true;
-            Vehicle vehicle = Program.vehicles[nVehicle.Select()];
+            foreach(Vehicle item in Program.vehicles){
+                Console.WriteLine("id:"+item.Id+"   brand:"+item.Brand+"    model"+item.Model+"    plate:"+item.Plate);
+            }
+            Console.WriteLine("Select Vehicle");
+            Vehicle vehicle = Program.vehicles[int.Parse(Console.ReadLine())-1];
+            Console.WriteLine($"Selected: {vehicle.Id+vehicle.Brand+vehicle.Model+vehicle.Plate}");
             TimeSpan hours = endDate - startDate;
+            Console.WriteLine("occupied true");
             decimal total = Program.lots[spot.LotId].HourPrice * (decimal)hours.TotalHours;
             Ticket parkingTicket = new Ticket(Id, startDate, endDate, total, spot, vehicle);
             Program.tickets.Add(parkingTicket);
@@ -31,7 +40,7 @@ namespace Parking.Controllers{
             Program.tickets.Add(parkingTicket);
             Program.lots[spot.LotId].Tickets.Add(parkingTicket);
         }
-
+            // 02/02/2002 02:02:02
         public static void List()
         {
             // Declare matrix without initializing it with data
@@ -131,12 +140,12 @@ namespace Parking.Controllers{
 
         public static void Menu()
         {
-            string[] opciones = new string[] { "Add", "Modify", "Erase", "List", "Print ticket" };
+            string[] opciones = new string[] { "Create", "Modify", "Erase", "List", "Print ticket" };
             int seleccion = Tools.Menu("Ticket Menu", opciones);
             switch (seleccion)
             {
                 case 1:
-                    Add();
+                    Create();
                     Menu();
                     break;
                 case 2:
