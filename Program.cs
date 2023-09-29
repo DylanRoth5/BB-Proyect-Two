@@ -73,26 +73,40 @@ namespace Parking
             Console.WriteLine("Saving Changes");
             foreach (Lot lot in lots)
             {
+                string file = Tools.FileReadAll("Data.txt");
                 int columns = 0;
-                foreach (List<Spot> amount in lot.SpotsMatrix)
-                {
+                int rows = lot.SpotsMatrix.Count;
+                foreach (List<Spot> amount in lot.SpotsMatrix) {
                     columns = amount.Count;
                 }
-                int rows = lot.SpotsMatrix.Count;
-                Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
+                if (!file.Contains($"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}")) {
+                    Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
+                }
+
             }
 
             foreach (Spot spot in spots){
                 string file = Tools.FileReadAll("Data.txt");
-                Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.Occupied},{spot.LotId}","Data.txt");
+                if (!file.Contains($"{spot.Id},{spot.Row},{spot.Column},{spot.Occupied},{spot.LotId}"))
+                {
+                    Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.Occupied},{spot.LotId}","Data.txt");
+                }
             }
 
             foreach (Ticket ticket in tickets){
-                Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}","Data.txt");
+                string file = Tools.FileReadAll("Data.txt");
+                if (!file.Contains($"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}"))
+                {
+                    Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}","Data.txt");
+                }
             }
 
             foreach (Vehicle vehicle in vehicles){
-                Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");
+                string file = Tools.FileReadAll("Data.txt");
+                if (!file.Contains($"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}"))
+                {
+                    Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");
+                }
             }
             Tools.HaltProgramExecution();
         }
