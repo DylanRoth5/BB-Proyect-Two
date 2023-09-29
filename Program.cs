@@ -40,10 +40,10 @@ namespace Parking
             // List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
 
             foreach(string item in lotes){
-                string[] LotData = item.Split(',');
-                Console.WriteLine($"{int.Parse(LotData[0])},{LotData[1]},{LotData[2]},{decimal.Parse(LotData[3])},{int.Parse(LotData[4])},{int.Parse(LotData[5])}");
+                string[] lotData = item.Split(',') ?? throw new ArgumentNullException("item.Split(\',\')");
+                Console.WriteLine($"{int.Parse(lotData[0])},{lotData[1]},{lotData[2]},{decimal.Parse(lotData[3])},{int.Parse(lotData[4])},{int.Parse(lotData[5])}");
                 // lots.Add(new Lot(int.Parse(data[0]),data[1],data[2],decimal.Parse(data[3])));
-                nLot.Create(LotData[1],LotData[2],decimal.Parse(LotData[3]),int.Parse(LotData[4]),int.Parse(LotData[5]));
+                nLot.Create(lotData[1],lotData[2],decimal.Parse(lotData[3]),int.Parse(lotData[4]),int.Parse(lotData[5]));
             }
             
             // foreach(string item in spaces){
