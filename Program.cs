@@ -22,7 +22,7 @@ namespace Parking
         }
         public static void Menu()
         {
-            string[] options = {"Lot","Ticket","Vehicle","Save"};
+            string[] options = {"Lot","Ticket","Vehicle"};
             int result = Tools.Menu("Parking Menu", options);
             switch (result){
                 case 1: nLot.Menu(); Menu(); break;

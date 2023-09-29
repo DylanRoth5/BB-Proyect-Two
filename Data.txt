@@ -1,8 +1,22 @@
 //Lot:Id,Name,Address,HourPrice,Rows,Columns
 //Spot:Id,Row,Column,Occupied,LotId
-Lot:0,Asusa,Ramirez 144,15.62,3,3
-Lot:1,Damían,Rosario del Tala,15.62,4,4
-Lot:2,Don Pollo,Ramirez 144,15.62,5,5
+
+Lot:1,Asusa,Ramirez 144,1562,3,3
+Lot:2,Damían,Rosario del Tala,1562,4,4
+Lot:3,Don Pollo,Ramirez 144,1562,5,5
+Lot:4,MyMy,Rodriguez,152,3,4
+Spot:51,A,1,False,4
+Spot:52,A,2,False,4
+Spot:53,A,3,False,4
+Spot:54,A,4,False,4
+Spot:55,B,1,False,4
+Spot:56,B,2,False,4
+Spot:57,B,3,False,4
+Spot:58,B,4,False,4
+Spot:59,C,1,False,4
+Spot:60,C,2,False,4
+Spot:61,C,3,False,4
+Spot:62,C,4,False,4
 Spot:1,A,1,False,1
 Spot:2,A,2,False,1
 Spot:3,A,3,False,1
