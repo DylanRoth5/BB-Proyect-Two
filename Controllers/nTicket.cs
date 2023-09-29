@@ -7,19 +7,19 @@ namespace Parking.Controllers{
         {
             int Id = Program.tickets.Count() + 1;
             foreach(Spot item in Program.spots){
-                Console.WriteLine("id:"+item.Id+"   position:"+item.Row+" "+item.Column+"    lot:"+item.LotId);
+                Console.WriteLine("id:"+(item.Id-1)+"   position:"+item.Row+" "+item.Column+"    lot:"+item.LotId);
             }
             Console.WriteLine("Selecciona un spot:");
-            int idspot = int.Parse(Console.ReadLine())-1;
+            int idspot = int.Parse(Console.ReadLine());
             Spot spot = Program.spots[idspot];
             DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss : ");
             DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss : ");
             spot.Occupied = true;
             foreach(Vehicle item in Program.vehicles){
-                Console.WriteLine("id:"+item.Id+"   brand:"+item.Brand+"    model"+item.Model+"    plate:"+item.Plate);
+                Console.WriteLine("id:"+(item.Id-1)+"   brand:"+item.Brand+"    model"+item.Model+"    plate:"+item.Plate);
             }
             Console.WriteLine("Select Vehicle");
-            Vehicle vehicle = Program.vehicles[int.Parse(Console.ReadLine())-1];
+            Vehicle vehicle = Program.vehicles[int.Parse(Console.ReadLine())];
             Console.WriteLine($"Selected: {vehicle.Id+vehicle.Brand+vehicle.Model+vehicle.Plate}");
             TimeSpan hours = endDate - startDate;
             Console.WriteLine("occupied true");
