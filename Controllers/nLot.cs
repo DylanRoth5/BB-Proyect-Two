@@ -36,6 +36,21 @@ namespace Parking.Controllers
             // Add the new lot to the global list... quite an important step
             Program.lots.Add(lot);
         }
+        public static void Create(string Name, string Address, decimal HourPrice, int Rows, int Columns)
+        { // This is for loading data from txt
+            int Id = Program.lots.Count() + 1;
+            Lot lot = new Lot(Id, Name, Address, HourPrice);
+            char[] alphabet = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
+            for (int i = 0; i < Rows; i++) {
+                List<Spot> temp = new List<Spot>();
+                for (int j = 0; j < Columns; j++)
+                {
+                    temp.Add(nSpot.Create(alphabet[i], j + 1, Id));
+                }
+                lot.SpotsMatrix.Add(temp);
+            }
+            Program.lots.Add(lot);
+        }
         public static void Update(int index)
         {
             if (index != -1)
