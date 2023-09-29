@@ -44,14 +44,14 @@ namespace Parking
                 Console.WriteLine($"    {item}");
                 string[] lotData = item.Split(',');
                 nLot.Create(lotData[1],lotData[2],decimal.Parse(lotData[3]),int.Parse(lotData[4]),int.Parse(lotData[5]));
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
             
             foreach(string item in vehiculos){
                 Console.WriteLine($"    {item}");
                 string[] data = item.Split(',');
                 nVehicle.Add(data[1],data[2],data[3]);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
             
             // foreach(string item in facturas){
@@ -72,22 +72,22 @@ namespace Parking
                 int rows = lot.SpotsMatrix.Count;
                 foreach (List<Spot> amount in lot.SpotsMatrix) {columns = amount.Count;}
                 Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
 
             foreach (Spot spot in spots){
                 Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
 
             foreach (Ticket ticket in tickets){
                 Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Total},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id}.{ticket.Vehicle.Id}","Data.txt");
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
 
             foreach (Vehicle vehicle in vehicles){
                 Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
             Tools.HaltProgramExecution();
         }

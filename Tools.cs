@@ -82,6 +82,7 @@ public class Tools
         {
             StreamWriter writer = new StreamWriter(@filepath, true);
             writer.WriteLine($"{type};{content}");
+            Console.WriteLine($"{type};{content} Saved succesfuly!!");
             writer.Close();
         }
         else
