@@ -83,6 +83,7 @@ namespace Parking
             }
 
             foreach (Spot spot in spots){
+                string file = Tools.FileReadAll("Data.txt");
                 Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.Occupied},{spot.LotId}","Data.txt");
             }
 
