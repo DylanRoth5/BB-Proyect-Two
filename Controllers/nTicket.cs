@@ -5,20 +5,31 @@ namespace Parking.Controllers{
     {
         public static void Add()
         {
-            Console.WriteLine("Enter Id: ");
-            int Id = Tools.ValidateInt();
+            int Id = Program.tickets.Count() + 1;
             Console.WriteLine();
-            int lot = nLot.SelectSpot(nLot.Select());
-            Spot spot = Program.spots[lot];
-            DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss: ");
-            DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss: ");
+            int idspot = nLot.SelectSpot(nLot.Select());
+            Spot spot = Program.spots[idspot];
+            DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss : ");
+            DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss : ");
             spot.Occupied = true;
             Vehicle vehicle = Program.vehicles[nVehicle.Select()];
             TimeSpan hours = endDate - startDate;
-            decimal total = Program.lots[lot].HourPrice * (decimal)hours.TotalHours;
+            decimal total = Program.lots[spot.LotId].HourPrice * (decimal)hours.TotalHours;
             Ticket parkingTicket = new Ticket(Id, startDate, endDate, total, spot, vehicle);
             Program.tickets.Add(parkingTicket);
-            Program.lots[lot].Tickets.Add(parkingTicket);
+            Program.lots[spot.LotId].Tickets.Add(parkingTicket);
+        }
+        public static void Add(DateTime start,DateTime end,int spotId,int vehicleId)
+        {
+            int Id = Program.tickets.Count() + 1;
+            Spot spot = Program.spots[spotId];
+            spot.Occupied = true;
+            Vehicle vehicle = Program.vehicles[vehicleId];
+            TimeSpan hours = end - start;
+            decimal total = Program.lots[spot.LotId].HourPrice * (decimal)hours.TotalHours;
+            Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle);
+            Program.tickets.Add(parkingTicket);
+            Program.lots[spot.LotId].Tickets.Add(parkingTicket);
         }
 
         public static void List()

@@ -6,15 +6,22 @@ namespace Parking.Controllers{
         public static void Add()
         {
             Vehicle vehicle = new Vehicle();
-            Console.WriteLine("Enter id of the vehicle: ");
-            vehicle.Id = Tools.ValidateInt();
-            Console.WriteLine();
+            vehicle.Id = Program.vehicles.Count() + 1;
             Console.WriteLine("Enter model of the vehicle: ");
             vehicle.Model = Console.ReadLine();
             Console.WriteLine("Enter brand of the vehicle: ");  
             vehicle.Brand = Console.ReadLine();
             Console.WriteLine("Enter plate of the vehicle: ");
             vehicle.Plate = Console.ReadLine();
+            Program.vehicles.Add(vehicle);
+        }
+        public static void Add(string Brand, string Model, string Plate)
+        {
+            Vehicle vehicle = new Vehicle();
+            vehicle.Id = Program.vehicles.Count() + 1;
+            vehicle.Model = Model;
+            vehicle.Brand = Brand;
+            vehicle.Plate = Plate;
             Program.vehicles.Add(vehicle);
         }
 
@@ -103,16 +110,16 @@ namespace Parking.Controllers{
                     break;
                 case 3:
                 if (Program.vehicles.Count > 0)
-                    { 
-                        Erase(); 
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is NO data to Delete..."); 
-                        Console.ReadKey();
-                    }; 
-                    Menu(); 
-                    break;
+                { 
+                    Erase(); 
+                }
+                else
+                {
+                    Console.WriteLine("There is NO data to Delete..."); 
+                    Console.ReadKey();
+                }; 
+                Menu(); 
+                break;
                 case 4:
                     List();
                     Console.ReadKey();

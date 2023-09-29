@@ -35,9 +35,8 @@ namespace Parking
         public static void Load(){
             
             List<string> lotes = Tools.FileGetType("Lot","Data.txt");
-            // List<string> spaces = Tools.FileGetType("Spot","Data.txt");
-            // List<string> facturas = Tools.FileGetType("Ticket","Data.txt");
-            // List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
+            List<string> facturas = Tools.FileGetType("Ticket","Data.txt");
+            List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
 
             foreach(string item in lotes){
                 string[] lotData = item.Split(',') ?? throw new ArgumentNullException("item.Split(\',\')");
@@ -46,8 +45,29 @@ namespace Parking
                 nLot.Create(lotData[1],lotData[2],decimal.Parse(lotData[3]),int.Parse(lotData[4]),int.Parse(lotData[5]));
             }
             
+            foreach(string item in vehiculos){
+                string[] data = item.Split(',');
+                nVehicle.Add(data[1],data[2],data[3]);
+            }
+            
+            foreach(string item in facturas){
+                string[] data = item.Split(',');
+                nTicket.Add(DateTime.Parse(data[1]),DateTime.Parse(data[2]), int.Parse(data[3]),int.Parse(data[4]));
+            }
+            
+            
+            // List<string> spaces = Tools.FileGetType("Spot","Data.txt");
             // foreach(string item in spaces){
             //     string[] data = item.Split(',');
+            //
+            //     foreach (Spot spot in spots)
+            //     {
+            //         if (spot.Id != int.Parse(data[0]))
+            //         {
+            //             
+            //         }
+            //     }
+            //
             //     foreach(Lot lote in lots){
             //         if(lote.Id == int.Parse(data[3])){
             //             // Spot spot = new Spot(int.Parse(data[0]),char.Parse(data[1]),int.Parse(data[2]),int.Parse(data[3]));
@@ -58,15 +78,6 @@ namespace Parking
             //     }
             // }
             
-            // foreach(string item in facturas){
-            //     string[] data = item.Split(',');
-            //     tickets.Add(new Ticket(int.Parse(data[0]),DateTime.Parse(data[1]),DateTime.Parse(data[2]),decimal.Parse(data[3])));
-            // }
-            //
-            // foreach(string item in vehiculos){
-            //     string[] data = item.Split(',');
-            //     vehicles.Add(new Vehicle(int.Parse(data[0])));
-            // }
             Tools.HaltProgramExecution();
         }
         public static void Save(){
@@ -89,7 +100,7 @@ namespace Parking
                 string file = Tools.FileReadAll("Data.txt");
                 if (!file.Contains($"{spot.Id},{spot.Row},{spot.Column},{spot.Occupied},{spot.LotId}"))
                 {
-                    Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.Occupied},{spot.LotId}","Data.txt");
+                    Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
                 }
             }
 

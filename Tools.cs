@@ -16,7 +16,7 @@ public class Tools
     {
         if (File.Exists(@filepath))
         {
-            string[] file = File.ReadAllLines(@filepath);
+            string[] file = File.ReadAllLines(filepath);
             return file;
         }
         return null;
@@ -29,7 +29,7 @@ public class Tools
             string[] file = File.ReadAllLines(filepath);
             for (int i = 0; i < file.Length; i++)
             {
-                string[] fields = file[i].Split(':');
+                string[] fields = file[i].Split(';');
                 if (recordMatcheType(type, fields, 0))
                 {
                     string info = $"{fields[1]}";
@@ -48,7 +48,7 @@ public class Tools
             string[] file = File.ReadAllLines(filepath);
             for (int i = 0; i < file.Length; i++)
             {
-                string[] fields = file[i].Split(':');
+                string[] fields = file[i].Split(';');
                 if (recordMatcheType(type, fields, 0))
                 {
                     string[] data = fields[1].Split(',');
@@ -78,15 +78,15 @@ public class Tools
     public static void FileWrite(string type, string content, string filepath)
     {
         string info = FileReadAll(@filepath);
-        if (!(info.Contains($"{type}:{content}")))
+        if (!(info.Contains($"{type};{content}")))
         {
             StreamWriter writer = new StreamWriter(@filepath, true);
-            writer.WriteLine($"{type}:{content}");
+            writer.WriteLine($"{type};{content}");
             writer.Close();
         }
         else
         {
-            Console.WriteLine($"{type}:{content} already exists!!");
+            Console.WriteLine($"{type};{content} already exists!!");
             Console.ReadKey();
         }
     }
