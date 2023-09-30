@@ -45,4 +45,14 @@ public class Lot
         }
         return freeSpots;
     }
+
+    public int GetNumberOfSpots()
+    {
+        int total = 0;
+        foreach (List<Spot> row in SpotsMatrix)
+        {
+            total += row.Count;
+        }
+        return total;
+    }
 }

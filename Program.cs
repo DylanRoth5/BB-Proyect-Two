@@ -2,19 +2,14 @@
 using Parking.Controllers;
 namespace Parking
 {
-    //Holi
     internal class Program
     {
         public static List<Lot> lots;
-        public static List<Spot> spots;
-        public static List<Ticket> tickets;
         public static List<Vehicle> vehicles;
         
         static void Main(string[] args)
         {
             lots = new List<Lot>();
-            spots = new List<Spot>();
-            tickets = new List<Ticket>();
             vehicles = new List<Vehicle>();
             Load();
             Menu();
@@ -24,14 +19,14 @@ namespace Parking
         {
             string[] options = {"Lot","Ticket","Vehicle"};
             int result = Tools.Menu("Parking Menu", options);
-            switch (result){
+            switch (result)
+            {
                 case 1: nLot.Menu(); Menu(); break;
                 case 2: nTicket.Menu(); Menu(); break;
                 case 3: nVehicle.Menu(); Menu(); break;
                 case 0: break;
             }
         }
-        
         public static void Load(){
             
             List<string> lotes = Tools.FileGetType("Lot","Data.txt");
@@ -75,15 +70,15 @@ namespace Parking
                 Thread.Sleep(10);
             }
 
-            foreach (Spot spot in spots){
-                Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
-                Thread.Sleep(10);
-            }
+            // foreach (Spot spot in spots){
+            //     Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
+            //     Thread.Sleep(10);
+            // }
 
-            foreach (Ticket ticket in tickets){
-                Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id},{ticket.Vehicle.Id}","Data.txt");
-                Thread.Sleep(10);
-            }
+            // foreach (Ticket ticket in tickets){
+            //     Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id},{ticket.Vehicle.Id}","Data.txt");
+            //     Thread.Sleep(10);
+            // }
 
             foreach (Vehicle vehicle in vehicles){
                 Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");

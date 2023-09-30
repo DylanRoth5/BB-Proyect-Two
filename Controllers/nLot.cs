@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Parking.Entities;
 
 namespace Parking.Controllers
@@ -41,7 +42,8 @@ namespace Parking.Controllers
             int Id = Program.lots.Count() + 1;
             Lot lot = new Lot(Id, Name, Address, HourPrice);
             char[] alphabet = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
-            for (int i = 0; i < Rows; i++) {
+            for (int i = 0; i < Rows; i++)
+            {
                 List<Spot> temp = new List<Spot>();
                 for (int j = 0; j < Columns; j++)
                 {
@@ -78,20 +80,19 @@ namespace Parking.Controllers
                         switch (selected)
                         {
                             case 1:
-                                Console.WriteLine("Select the row to which the new spot will add: ");
+                                Console.WriteLine("Select the row to which the new spot will be add: ");
                                 char selectedRow = Tools.ValidateLetter();
-                                // The Lot id is equals to the its Program.lots' index + 1
-                                // The Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Count
-                                // command is used in as the column parameter of the nSpot.Create() method because the
-                                // new spot is added at the last of row
-                                Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Add(nSpot.Create(selectedRow, Program.lots[index].SpotsMatrix[SelectRowByLetter(index + 1, selectedRow)].Count, index + 1));
+                                // The Program.lots[index].SpotsMatrix[rowIndex].Count + 1
+                                // command is used in as the column parameter of the 
+                                // nSpot.Create() method because the new spot is added at
+                                // the last of the row
+                                int rowIndex = SelectRow(index, selectedRow);
+                                Spot spot = nSpot.Create(selectedRow, Program.lots[index].SpotsMatrix[rowIndex].Count + 1, index);
+                                Program.lots[index].SpotsMatrix[rowIndex].Add(spot);
                                 break;
                             case 2:
-                                int selectedSpotIndex = SelectSpot(Program.lots[index].Id);
-                                nSpot.Delete(selectedSpotIndex);
-                                int LotId = Program.lots[index].Id;
-                                char letter = Program.spots[selectedSpotIndex].Row;
-                                Program.lots[index].SpotsMatrix[SelectRowByLetter(LotId, letter)].RemoveAt(SelectSpot(LotId));
+                                int[] spotIndexes = SelectSpot(index);
+                                Program.lots[index].SpotsMatrix[spotIndexes[0]].RemoveAt(spotIndexes[1]);
                                 break;
                         }
                         break;
@@ -170,30 +171,27 @@ namespace Parking.Controllers
             {
                 return -1;
             }
-            
+
         }
-        public static int SelectSpot(int LotId)
+        public static int[] SelectSpot(int index)
         {
-            // Takes a lot's id as parameter
-            // Shows the user the list of spots from the lot of id LotId
-            // DrawLot(LotId);
-            foreach (Spot space in Program.spots){
-                if (space.LotId==LotId){
-                    Console.WriteLine($"{space.Column}{space.Row}");
-                }
-            }
-            // Ask the user to insert the row where the spot them want to
+            // Takes a lot's index in the Program.lots list as parameter
+            // and returns an array int[] of two elements: the first one
+            // is the numeric index of the row in the lot.SpotsMatrix and
+            // the second is the index of the selected spot in the row
+
+            // Shows the user the list of spots from the selected lot 
+            DrawLot(index);
+            // Ask the user to insert the row where the spot they want to
             // select is located
             Console.WriteLine("Select a row: ");
             char row = Tools.ValidateLetter();
+            // Searches the index of that row in the SpotMatrix of the lot
+            int rowIndex = SelectRow(index, row);
             // Then, ask the user to insert the number of the spot in the row
             Console.WriteLine("Select a spot number: ");
-            int column = Tools.ValidateInt(1, Program.lots[LotId].SpotsMatrix[0].Count);
-            // Stores the spot object in a Spot variable so it's more legible
-            // to call the List<> Class' IndexOf() method and pass the this
-            // object as parameter instead of all the line 
-            Spot spot = Program.spots[nSpot.SelectByPosition(row, column)];
-            return Program.lots[LotId].SpotsMatrix[SelectRowByLetter(LotId, row)].IndexOf(spot);
+            int column = Tools.ValidateInt(1, Program.lots[index].SpotsMatrix[rowIndex].Count);
+            return new int[] { rowIndex, column };
         }
         public static int SearchById(int id)
         {
@@ -205,17 +203,16 @@ namespace Parking.Controllers
             }
             return -1;
         }
-        public static int SelectRowByLetter(int LotId, char letter)
+        public static int SelectRow(int index, char letter)
         {
-            // Takes the id of the lot from which we want to search a row and
-            // a char type letter as input representing the name of a row and
-            // returns its index in the SpotMatrix List from the lot of id LotId
-            // in the Program.lots list 
-            int index = 0;
-            foreach (List<Spot> row in Program.lots[LotId - 1].SpotsMatrix)
+            // Takes the index in the Program.lots list of the lot from which we 
+            // want to search a row and a char type letter as input representing 
+            // the name of a row and returns its index in the SpotMatrix List
+            int rowIndex = 0;
+            foreach (List<Spot> row in Program.lots[index].SpotsMatrix)
             {
-                if (row[0].Row == char.ToUpper(letter)) { return index; };
-                index++;
+                if (row[0].Row == char.ToUpper(letter)) { return rowIndex; };
+                rowIndex++;
             }
             return -1;
         }
@@ -224,9 +221,79 @@ namespace Parking.Controllers
             int index = Select();
             if (index != -1) Program.lots.RemoveAt(index);
         }
-        // public static void DrawLot(int id)
-        // {
-        // }
+        public static void DrawLot(int index)
+        {
+            int spotHeight = 7;
+            int spotWidth = 9;
+            void PrintSpot(char topLeft, char topRight)
+            {
+                for (int i = 0; i < spotHeight; i++)
+                {
+                    if (i == 0)
+                    {
+                        Console.Write(topLeft + new string('═', spotWidth - 2) + topRight);
+                    }
+                    else
+                    {
+                        Console.Write('║' + new string('║', spotWidth - 2) + '║');
+                    }
+                    Console.WriteLine();
+                }
+            }
+            void PrintCar(int x, int y)
+            {
+                string[] carParts = new string[] {" ┌────┐ ", "╭┤────├╮", "╰┤════├╯", "╭┤    ├╮", "╰┤════├╯", " └────┘ "};
+                int i = 0;
+                foreach (string part in carParts)
+                {
+                    Tools.PrintAt(x, y + i, part);
+                    i++;
+                }
+            }
+            Console.Clear();
+            // Separates the cursor from the top and left limits
+            Console.SetCursorPosition(2, 2);
+            // Stores the lot object in a temporal variable
+            Lot lot = Program.lots[index];
+            char topLeft = ' ';
+            char topRight = ' ';
+            int x = Console.CursorLeft;
+            int x0 = x;
+            int y = Console.CursorTop;
+            for (int i = 0; i < lot.SpotsMatrix.Count; i++)
+            {
+                // Restarts the value of the x coordinate
+                x = x0;
+                y = (spotHeight + 2) * i;
+                for (int j = 0; j < lot.SpotsMatrix[i].Count; j++)
+                {
+                    if (j == 0)
+                    {
+                        topLeft = '╔';
+                    }
+                    else if (j == lot.SpotsMatrix[i].Count - 1)
+                    {
+                        topLeft = '╦';
+                        topRight = '╗';
+                    }
+                    else
+                    {
+                        topLeft = '╦';
+                    }
+                    // Prints the spot
+                    x = spotWidth * j;
+                    Console.SetCursorPosition(x, y);
+                    PrintSpot(topLeft, topRight);
+                    // If the spot.Occupied attribute is true, it means that there is a car in 
+                    // that spot
+                    Spot spot = lot.SpotsMatrix[i][j];
+                    if (spot.Occupied)
+                    {
+                        PrintCar(x - (spotWidth - 1), y - (spotHeight - 2));
+                    }
+                }
+            }
+        }
         public static bool IsThereAny()
         {
             if (Program.lots.Count > 0) return true;
@@ -236,14 +303,15 @@ namespace Parking.Controllers
         }
         public static void Menu()
         {
-            string[] options = new string[] { "Create", "List", "Update", "Delete" };
+            string[] options = new string[] { "Create", "List", "Draw", "Update", "Delete" };
             int selection = Tools.Menu("Lot Menu", options);
             switch (selection)
             {
                 case 1: Create(); Menu(); break;
                 case 2: List(); Tools.HaltProgramExecution(); Menu(); break;
-                case 3: Update(Select()); Menu(); break;
-                case 4: Delete(); Menu(); break;
+                case 3: DrawLot(Select()); Tools.HaltProgramExecution(); Menu(); break;
+                case 4: Update(Select()); Menu(); break;
+                case 5: Delete(); Menu(); break;
                 case 0: break;
             }
         }

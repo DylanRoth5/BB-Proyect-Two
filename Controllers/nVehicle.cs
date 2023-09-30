@@ -24,7 +24,6 @@ namespace Parking.Controllers{
             vehicle.Plate = Plate;
             Program.vehicles.Add(vehicle);
         }
-
         public static void List()
         {
             // Declare matrix without initializing it with data
@@ -49,41 +48,38 @@ namespace Parking.Controllers{
 
             Tools.DrawTable(matriz);
         }
-
         public static void Erase()
         {
             int i = Select();
             Program.vehicles.RemoveAt(i);
         }
-
-        public static void Modify(int i)
+        public static void Update(int i)
         {
             Console.WriteLine();
             string[] options = new string[] {"Model", "Brand", "Plate"};
             Console.Clear();
-            int selection = Tools.Menu("Modify", options);
+            int selection = Tools.Menu("Update", options);
             switch(selection)
             {
                 case 1:
                     Console.Write($"Enter new model to \"{Program.vehicles[i].Model}\": ");
                     Program.vehicles[i].Model = Console.ReadLine();
-                    Modify(i);
+                    Update(i);
                     break;
                 case 2:
                     Console.Write($"Enter new brand to \"{Program.vehicles[i].Brand}\": ");
                     Program.vehicles[i].Brand = Console.ReadLine();
-                    Modify(i);
+                    Update(i);
                     break;
                 case 3:
                     Console.Write($"Enter new Plate to \"{Program.vehicles[i].Plate}\": ");
                     Program.vehicles[i].Plate = Console.ReadLine();
-                    Modify(i);
+                    Update(i);
                     break;
                 case 4:
                     break;
             }
         }
-
         public static int Select()
         {
             Console.WriteLine();
@@ -92,10 +88,9 @@ namespace Parking.Controllers{
             int s = Tools.ValidateInt(1, Program.vehicles.Count);
             return s - 1;
         }
-
         public static void Menu()
         {
-            string[] opciones = new string[] { "Add", "Modify", "Erase", "List" };
+            string[] opciones = new string[] { "Add", "Update", "Erase", "List" };
             Console.Clear();
             int selection = Tools.Menu("Vehicle Menu", opciones);
             switch (selection)
@@ -105,7 +100,7 @@ namespace Parking.Controllers{
                     Menu();
                     break;
                 case 2:
-                    Modify(Select());
+                    Update(Select());
                     Menu();
                     break;
                 case 3:
