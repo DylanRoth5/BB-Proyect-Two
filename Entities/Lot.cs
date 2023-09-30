@@ -8,7 +8,6 @@ public class Lot
     public string Address { get; set; }
     public decimal HourPrice { get; set; }
     public List<List<Spot>> SpotsMatrix { get; set; }
-
     public List<Ticket> Tickets { get; set; }
 
     public Lot()
@@ -45,7 +44,6 @@ public class Lot
         }
         return freeSpots;
     }
-
     public int GetNumberOfSpots()
     {
         int total = 0;
