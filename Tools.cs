@@ -271,15 +271,6 @@ public class Tools
             }
             return width;
         }
-        int CalculateTotalWidth()
-        {
-            int totalWidth = 0;
-            for (int i = 0; i < matrix.GetLength(1); i++)
-            {
-                totalWidth += CalculateColumnWidth(i) + 2;
-            }
-            return totalWidth;
-        }
         char topLeft;
         char topRight;
         char bottomLeft = '╚';

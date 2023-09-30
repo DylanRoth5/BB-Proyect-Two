@@ -8,11 +8,11 @@ namespace Parking.Controllers{
             Vehicle vehicle = new Vehicle();
             vehicle.Id = Program.vehicles.Count() + 1;
             Console.WriteLine("Enter model of the vehicle: ");
-            vehicle.Model = Console.ReadLine();
+            vehicle.Model = Tools.ValidateString();
             Console.WriteLine("Enter brand of the vehicle: ");  
-            vehicle.Brand = Console.ReadLine();
+            vehicle.Brand = Tools.ValidateString();
             Console.WriteLine("Enter plate of the vehicle: ");
-            vehicle.Plate = Console.ReadLine();
+            vehicle.Plate = Tools.ValidateString();
             Program.vehicles.Add(vehicle);
         }
         public static void Add(string Brand, string Model, string Plate)
@@ -63,17 +63,17 @@ namespace Parking.Controllers{
             {
                 case 1:
                     Console.Write($"Enter new model to \"{Program.vehicles[i].Model}\": ");
-                    Program.vehicles[i].Model = Console.ReadLine();
+                    Program.vehicles[i].Model = Tools.ValidateString();
                     Update(i);
                     break;
                 case 2:
                     Console.Write($"Enter new brand to \"{Program.vehicles[i].Brand}\": ");
-                    Program.vehicles[i].Brand = Console.ReadLine();
+                    Program.vehicles[i].Brand = Tools.ValidateString();
                     Update(i);
                     break;
                 case 3:
                     Console.Write($"Enter new Plate to \"{Program.vehicles[i].Plate}\": ");
-                    Program.vehicles[i].Plate = Console.ReadLine();
+                    Program.vehicles[i].Plate = Tools.ValidateString();
                     Update(i);
                     break;
                 case 4:
