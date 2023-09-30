@@ -42,7 +42,7 @@ namespace Parking.Controllers{
         //     Program.tickets.Add(parkingTicket);
         //     Program.lots[spot.LotId].Tickets.Add(parkingTicket);
         // }
-            // 02/02/2002 02:02:02
+            //02/02/2002 02:02:02
         public static void List(int lotIndex)
         {
             // Declare matrix without initializing it with data
@@ -132,15 +132,15 @@ namespace Parking.Controllers{
         public static int Select()
         {
             Console.WriteLine();
-            List();
+            List(nLot.Select());
             Console.Write("Select a ticket: ");
-            int s = Tools.ValidateInt(1, Program.tickets.Count);
+            int s = Tools.ValidateInt(1, Program.lots[nLot.Select()].Tickets.Count);
             return s - 1;
         }
 
         public static void Menu()
         {
-            string[] opciones = new string[] { "Create", "Update", "Delete", "List", "Print ticket" };
+            string[] opciones = new string[] { "Create", "Update", "Delete", "List" };
             int seleccion = Tools.Menu("Ticket Menu", opciones);
             switch (seleccion)
             {
@@ -157,12 +157,7 @@ namespace Parking.Controllers{
                     Menu();
                     break;
                 case 4:
-                    List();
-                    Console.ReadKey();
-                    Menu();
-                    break;
-                case 5:
-                    PrintTicket(Select());
+                    List(nLot.Select());
                     Console.ReadKey();
                     Menu();
                     break;
