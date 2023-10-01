@@ -286,6 +286,7 @@ namespace Parking.Controllers
                 }
                 y += height + 4;
             }
+            Console.WriteLine();
         }
         public static bool IsThereAny()
         {
