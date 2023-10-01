@@ -7,7 +7,7 @@ Lot;1,Asusa,Ramirez 144,1562,3,3
 Lot;2,Damían,Rosario del Tala,1562,4,4
 Lot;3,Don Pollo,Ramirez 144,1562,5,5
 Lot;4,MyMy,Rodriguez,152,3,4
-Spo;51,A,1,4
+Spot;51,A,1,4
 Spot;52,A,2,4
 Spot;53,A,3,4
 Spot;54,A,4,4
