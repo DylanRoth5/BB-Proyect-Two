@@ -4,8 +4,8 @@ namespace Parking.Entities;
 public class Lot
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string Address { get; set; }
+    public string? Name { get; set; }
+    public string? Address { get; set; }
     public decimal HourPrice { get; set; }
     public List<List<Spot>> SpotsMatrix { get; set; }
     public List<Ticket> Tickets { get; set; }
@@ -13,6 +13,7 @@ public class Lot
     public Lot()
     {
         SpotsMatrix = new List<List<Spot>>();
+        Tickets = new List<Ticket>();
     }
     public Lot(int Id, string Name, string Address, decimal HourPrice)
     {

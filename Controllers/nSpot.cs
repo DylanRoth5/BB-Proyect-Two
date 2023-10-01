@@ -5,9 +5,8 @@ namespace Parking.Controllers
 {
     public class nSpot
     {
-        public static Spot Create(char Row, int Column, int LotIndex)
+        public static Spot Create(int Id, char Row, int Column)
         {
-            int Id = Program.lots[LotIndex].GetNumberOfSpots() + 1;
             Spot spot = new Spot(Id, Row, Column);
             return spot;    
         }

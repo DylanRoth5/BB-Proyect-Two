@@ -29,7 +29,8 @@ namespace Parking.Controllers
                     // Column : it's given by the variable j that loop through
                     // the columns plus one so there is no spot "0" (A1, A2,...,An).
                     // LotId: the same Id vale previously initialized is passed here
-                    temp.Add(nSpot.Create(alphabet[i], j + 1, Id));
+                    temp.Add(new Spot(lot.GetNumberOfSpots(), alphabet[i], j + 1));
+
                 }
                 // The new row is added to the matrix of spots
                 lot.SpotsMatrix.Add(temp);
@@ -47,7 +48,7 @@ namespace Parking.Controllers
                 List<Spot> temp = new List<Spot>();
                 for (int j = 0; j < Columns; j++)
                 {
-                    temp.Add(nSpot.Create(alphabet[i], j + 1, Id));
+                    temp.Add(new Spot(lot.GetNumberOfSpots(), alphabet[i], j + 1));
                 }
                 lot.SpotsMatrix.Add(temp);
             }
@@ -87,7 +88,7 @@ namespace Parking.Controllers
                                 // nSpot.Create() method because the new spot is added at
                                 // the last of the row
                                 int rowIndex = SelectRow(index, selectedRow);
-                                Spot spot = nSpot.Create(selectedRow, Program.lots[index].SpotsMatrix[rowIndex].Count + 1, index);
+                                Spot spot = new Spot(Program.lots[index].GetNumberOfSpots() + 1, selectedRow, Program.lots[index].SpotsMatrix[rowIndex].Count + 1);
                                 Program.lots[index].SpotsMatrix[rowIndex].Add(spot);
                                 break;
                             case 2:
@@ -224,18 +225,20 @@ namespace Parking.Controllers
         public static void DrawLot(int index)
         {
             int spotHeight = 7;
-            int spotWidth = 9;
-            void PrintSpot(char topLeft, char topRight)
+            int spotWidth = 10;
+            void PrintSpot(int x, int y, char topLeft, char topRight)
             {
                 for (int i = 0; i < spotHeight; i++)
                 {
                     if (i == 0)
                     {
-                        Console.Write(topLeft + new string('═', spotWidth - 2) + topRight);
+                        // Console.Write(topLeft + new string('═', spotWidth - 2) + topRight);
+                        Tools.PrintAt(x, y, topLeft + new string('═', spotWidth - 2) + topRight);
                     }
                     else
                     {
-                        Console.Write('║' + new string('║', spotWidth - 2) + '║');
+                        // Console.Write('║' + new string(' ', spotWidth - 2) + '║');
+                        Tools.PrintAt(x, y + i, '║' + new string(' ', spotWidth - 2) + '║');
                     }
                     Console.WriteLine();
                 }
@@ -258,32 +261,36 @@ namespace Parking.Controllers
             char topLeft = ' ';
             char topRight = ' ';
             int x = Console.CursorLeft;
-            int x0 = x;
+            // int x0 = x;
             int y = Console.CursorTop;
             for (int i = 0; i < lot.SpotsMatrix.Count; i++)
             {
                 // Restarts the value of the x coordinate
-                x = x0;
+                // x = x0;
                 y = (spotHeight + 2) * i;
                 for (int j = 0; j < lot.SpotsMatrix[i].Count; j++)
                 {
                     if (j == 0)
                     {
                         topLeft = '╔';
+                        PrintSpot(x, y, topLeft, topRight);
+
                     }
-                    else if (j == lot.SpotsMatrix[i].Count - 1)
-                    {
-                        topLeft = '╦';
-                        topRight = '╗';
-                    }
+                    // else if (j == lot.SpotsMatrix[i].Count - 1)
+                    // {
+                    //     topLeft = '╦';
+                    //     topRight = '╗';
+                    //     PrintSpot(x + spotWidth*j - 1, y, '╦', '╗');
+
+                    // }
                     else
                     {
-                        topLeft = '╦';
+                        PrintSpot(x + spotWidth * j - 1, y, '╦', ' ');
                     }
                     // Prints the spot
-                    x = spotWidth * j;
                     Console.SetCursorPosition(x, y);
-                    PrintSpot(topLeft, topRight);
+                    PrintSpot(x, y, topLeft, topRight);
+                    // Tools.PrintAt(x, y, topLeft + new string('═', spotWidth - 2) + topRight);
                     // If the spot.Occupied attribute is true, it means that there is a car in 
                     // that spot
                     Spot spot = lot.SpotsMatrix[i][j];

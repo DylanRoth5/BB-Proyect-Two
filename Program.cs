@@ -11,9 +11,10 @@ namespace Parking
         {
             lots = new List<Lot>();
             vehicles = new List<Vehicle>();
-            Load();
+            // Load();
+            Data();
             Menu();
-            Save();
+            // Save();
         }
         public static void Menu()
         {
@@ -26,6 +27,14 @@ namespace Parking
                 case 3: nVehicle.Menu(); Menu(); break;
                 case 0: break;
             }
+        }
+        public static void Data()
+        {
+            vehicles.Add(new Vehicle(1, "Mustang", "Ford", "11-AAAA-11"));
+            vehicles.Add(new Vehicle(1, "Miata", "Mazda", "22-BBBB-22"));
+            vehicles.Add(new Vehicle(1, "Corsa", "Chevrolet", "33-BBBB-33"));
+
+            nLot.Create("Playa Damián", "Rosario del Tala", 1150.50m, 3, 7);
         }
         public static void Load(){
             
