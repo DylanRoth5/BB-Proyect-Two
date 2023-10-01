@@ -45,7 +45,7 @@ namespace Parking
             nLot.Create("Playa Matias", "Valle Maria", 990.25m, 4, 8);
             nLot.Create("Playa Navy", "Posadas", 1300.75m, 6, 10);
 
-            nTicket.Create(1,dt1, dt2, 1, 1);
+            nTicket.Create(1,dt1, dt2,'A', 1, 1);
         }
         public static void Load(){
             
