@@ -8,7 +8,7 @@ namespace Parking.Controllers{
             Console.WriteLine("Select a lot");
             int lotIndex = nLot.Select();
             // The id increments itself
-            int Id = Program.lots[lotIndex].Tickets.Count() + 1;
+            int Id = Program.lots[lotIndex].Tickets.Count + 1;
             // Ask the user to selecte a lot using the nLot.Select() method to
             // get the index of the lot in the Program.lots list
             Console.WriteLine("Select un spot:");
@@ -16,33 +16,41 @@ namespace Parking.Controllers{
             // Stores the selected lot in a temporal variable
             // Does the same for the selected spot
             Spot spot = Program.lots[lotIndex].SpotsMatrix[spotIndexes[0]][spotIndexes[1]];
-            DateTime startDate = Tools.InputDate("Enter start date and time dd/MM/yyyy HH:mm:ss : ");
-            DateTime endDate = Tools.InputDate("Enter end date and time dd/MM/yyyy HH:mm:ss : ");
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
             spot.Occupied = true;
             // Show the vehicles loaded in the Program.vehicles list
             nVehicle.List();
             Console.WriteLine("Select a vehicle: ");
             Vehicle vehicle = Program.vehicles[Tools.ValidateInt()];
-            Console.WriteLine($"Selected: {vehicle.Id+vehicle.Brand+vehicle.Model+vehicle.Plate}");
+            Console.WriteLine($"Selected: {vehicle.Id}- {vehicle.Model}");
             TimeSpan hours = endDate - startDate;
-            // Console.WriteLine("occupied true");
             decimal total = Program.lots[lotIndex].HourPrice * (decimal)hours.TotalHours;
             Ticket parkingTicket = new Ticket(Id, startDate, endDate, total, spot, vehicle);
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
         }
-        // public static void Add(DateTime start,DateTime end,int spotId,int vehicleId)
-        // {
-        //     int Id = Program.tickets.Count() + 1;
-        //     Spot spot = Program.spots[spotId];
-        //     spot.Occupied = true;
-        //     Vehicle vehicle = Program.vehicles[vehicleId];
-        //     TimeSpan hours = end - start;
-        //     decimal total = Program.lots[spot.LotId].HourPrice * (decimal)hours.TotalHours;
-        //     Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle);
-        //     Program.tickets.Add(parkingTicket);
-        //     Program.lots[spot.LotId].Tickets.Add(parkingTicket);
-        // }
-            //02/02/2002 02:02:02
+
+        public static void Add(int lotId, DateTime start, DateTime end, int spotId, int vehicleId)
+        {
+            int Id = Program.lots[lotId].Tickets.Count + 1;
+            Spot spot = Program.lots[lotId].SpotsMatrix[0][0];
+            Vehicle vehicle = Program.vehicles[vehicleId];
+            TimeSpan hours = end - start;
+            decimal total = Program.lots[lotId].HourPrice * (decimal)hours.TotalHours;
+            Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle);
+            Program.lots[lotId].Tickets.Add(parkingTicket);
+        }
+        //02/02/2002 02:02:02
+        public static void Exit()
+        {
+            int lot = nLot.Select();
+            Ticket ticket = Program.lots[lot].Tickets[Select()];
+            ticket.Exit = DateTime.Now;
+            TimeSpan hours = ticket.Exit - ticket.Entry;
+            ticket.Total = Program.lots[lot].HourPrice * (decimal)hours.TotalHours;
+            ticket.Spot.Occupied = false;
+            Console.WriteLine("El ticket fue emitido... ");
+        }
         public static void List(int lotIndex)
         {
             // Declare matrix without initializing it with data
@@ -86,53 +94,44 @@ namespace Parking.Controllers{
             Program.lots[nLot.Select()].Tickets.RemoveAt(Select());            
         }
 
-        public static void Update(int i)
+        public static void Update(int? lotId = null, int? ticketId = null)
         {
             Console.WriteLine();
-            TimeSpan hours = Program.tickets[i].Exit - Program.tickets[i].Entry;
-            decimal total = Program.lots[Program.tickets[i].Spot.LotId].HourPrice * (decimal)hours.TotalHours;
+            int lot = (int)(lotId.HasValue? lotId : nLot.Select());
+            int idT = (int)(ticketId.HasValue ? ticketId : Select(lot));
+            Ticket ticket = Program.lots[lot].Tickets[idT];
             string[] options = new string[] {"Spot", "Entry", "Exit"};
             Console.Clear();
             int selection = Tools.Menu("Update", options);
             switch(selection)
             {
                 case 1:
-                    Console.Write($"Enter the new spot to {Program.tickets[i].Spot}");
-                    int lot = nLot.SelectSpot(nLot.Select());
-                    Spot spot = Program.spots[lot];
-                    Program.tickets[i].Spot = spot;
-                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Spot = spot;
-                    Update(i);
+                    Console.Write($"Enter the new spot to {ticket.Spot.Row}-{ticket.Spot.Column}");
+                    int newLot = nLot.Select();
+                    int[] spotIndexes = nLot.SelectSpot(newLot);
+                    ticket.Spot = Program.lots[newLot].SpotsMatrix[spotIndexes[0]][spotIndexes[1]];
+                    Update(lot, idT);
                     break;
                 case 2:
-                    DateTime entry = Tools.InputDate($"Enter new entry date to {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    Program.tickets[i].Entry = entry;
-                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Entry = entry;
-                    hours = Program.tickets[i].Exit - entry;
-                    total = Program.lots[Program.tickets[i].Spot.LotId].HourPrice * (decimal)hours.TotalHours;
-                    Program.tickets[i].Total = total;
-                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Total = total;
-                    Update(i);
+                    ticket.Entry = Tools.InputDate($"Enter new entry date to {ticket.Entry} (dd/MM/yyyy HH:mm:ss: )");
+                    ticket.Total = Program.lots[lot].HourPrice * (decimal)(ticket.Exit - ticket.Entry).TotalHours;
+                    Update(lot, idT);
                     break;
                 case 3:
-                    DateTime exit = Tools.InputDate($"Enter new exit date to {Program.tickets[i].Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    Program.tickets[i].Exit = exit;
-                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Exit = exit;
-                    hours = exit - Program.tickets[i].Entry;
-                    total = Program.lots[Program.tickets[i].Spot.LotId].HourPrice * (decimal)hours.TotalHours;
-                    Program.tickets[i].Total = total;
-                    Program.lots[Program.tickets[i].Spot.LotId].Tickets[i].Total = total;
-                    Update(i);
+                    ticket.Exit = Tools.InputDate($"Enter new entry date to {ticket.Exit} (dd/MM/yyyy HH:mm:ss: )");
+                    ticket.Total = Program.lots[lot].HourPrice * (decimal)(ticket.Exit - ticket.Entry).TotalHours;
+                    Update(lot, idT);
                     break;
                 case 4:
                     break;
             }
         }
 
-        public static int Select()
+        public static int Select(int? lot = null)
         {
             Console.WriteLine();
-            List(nLot.Select());
+            int lotId = (int)(lot.HasValue? lot : nLot.Select());
+            List(lotId);
             Console.Write("Select a ticket: ");
             int s = Tools.ValidateInt(1, Program.lots[nLot.Select()].Tickets.Count);
             return s - 1;
@@ -140,7 +139,7 @@ namespace Parking.Controllers{
 
         public static void Menu()
         {
-            string[] opciones = new string[] { "Create", "Update", "Delete", "List" };
+            string[] opciones = new string[] { "Create", "Exit", "Update", "Delete", "List" };
             int seleccion = Tools.Menu("Ticket Menu", opciones);
             switch (seleccion)
             {
@@ -149,14 +148,18 @@ namespace Parking.Controllers{
                     Menu();
                     break;
                 case 2:
-                    Update(Select());
+                    Exit();
                     Menu();
                     break;
                 case 3:
-                    Delete();
+                    Update();
                     Menu();
                     break;
                 case 4:
+                    Delete();
+                    Menu();
+                    break;
+                case 5:
                     List(nLot.Select());
                     Console.ReadKey();
                     Menu();

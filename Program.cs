@@ -55,7 +55,7 @@ namespace Parking
             //     nTicket.Add(DateTime.Parse(data[1]),DateTime.Parse(data[2]), int.Parse(data[3]),int.Parse(data[4]));
             // }
             
-            // No se van a cargar spots, solo se los guardara por las dudas, pero es demaciado complicado cargarlos
+            // No se van a cargar spots, solo se los guardara por las dudas, pero es demasiado complicado cargarlos
             
             Tools.HaltProgramExecution();
         }
