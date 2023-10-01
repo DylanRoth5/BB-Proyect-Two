@@ -185,14 +185,14 @@ namespace Parking.Controllers
             DrawLot(index);
             // Ask the user to insert the row where the spot they want to
             // select is located
-            Console.WriteLine("Select a row: ");
+            Console.Write("Select a row: ");
             char row = Tools.ValidateLetter();
             // Searches the index of that row in the SpotMatrix of the lot
             int rowIndex = SelectRow(index, row);
             // Then, ask the user to insert the number of the spot in the row
-            Console.WriteLine("Select a spot number: ");
+            Console.Write("Select a spot number: ");
             int column = Tools.ValidateInt(1, Program.lots[index].SpotsMatrix[rowIndex].Count);
-            return new int[] { rowIndex, column };
+            return new int[] { rowIndex, column - 1 };
         }
         public static int SearchById(int id)
         {
@@ -270,11 +270,11 @@ namespace Parking.Controllers
                     Spot spot = lot.SpotsMatrix[i][j];
                     if (j == 0)
                     {
-                        PrintSpot(x, y, '╔', ' ', string.Concat(spot.Row, j + 1));
+                        PrintSpot(x, y, '╔', ' ', string.Concat(spot.Row, spot.Column));
                     }
                     else
                     {
-                        PrintSpot(x, y, '╦', '╗', string.Concat(spot.Row, j + 1));
+                        PrintSpot(x, y, '╦', '╗', string.Concat(spot.Row, spot.Column));
                     }
                     // If the spot.Occupied attribute is true, it means that there is a car in 
                     // that spot
