@@ -3,7 +3,7 @@ using Parking.Entities;
 namespace Parking.Controllers{
     public class nTicket
     {
-        public static void Create()
+        public static void RegisterEntry()
         {
             Console.WriteLine("Select a lot");
             int lotIndex = nLot.Select();
@@ -30,7 +30,7 @@ namespace Parking.Controllers{
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
         }
 
-        public static void Add(int lotId, DateTime start, DateTime end, int spotId, int vehicleId)
+        public static void Create(int lotId, DateTime start, DateTime end, int spotId, int vehicleId)
         {
             int Id = (Program.lots[lotId].Tickets.Count > 0) ? Program.lots[lotId].Tickets[^1].Id + 1 : 1;
             Spot spot = Program.lots[lotId].SpotsMatrix[0][0]; //arreglar aca
@@ -41,7 +41,7 @@ namespace Parking.Controllers{
             Program.lots[lotId].Tickets.Add(parkingTicket);
         }
         //02/02/2002 02:02:02
-        public static void Exit()
+        public static void RegisterExit()
         {
             int lot = nLot.Select();
             Ticket ticket = Program.lots[lot].Tickets[Select(lot)];
@@ -139,16 +139,16 @@ namespace Parking.Controllers{
 
         public static void Menu()
         {
-            string[] opciones = new string[] { "Create", "Exit", "Update", "Delete", "List" };
+            string[] opciones = new string[] { "Register Entry", "Register Exit", "Update", "Delete", "List" };
             int seleccion = Tools.Menu("Ticket Menu", opciones);
             switch (seleccion)
             {
                 case 1:
-                    Create();
+                    RegisterEntry();
                     Menu();
                     break;
                 case 2:
-                    Exit();
+                    RegisterExit();
                     Menu();
                     break;
                 case 3:
