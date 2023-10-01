@@ -8,7 +8,7 @@ namespace Parking.Controllers{
             Console.WriteLine("Select a lot");
             int lotIndex = nLot.Select();
             // The id increments itself
-            int Id = Program.lots[lotIndex].Tickets.Count + 1;
+            int Id = Program.lots[lotIndex].Tickets[^1].Id + 1;
             // Ask the user to selecte a lot using the nLot.Select() method to
             // get the index of the lot in the Program.lots list
             Console.WriteLine("Select un spot:");
@@ -32,7 +32,7 @@ namespace Parking.Controllers{
 
         public static void Add(int lotId, DateTime start, DateTime end, int spotId, int vehicleId)
         {
-            int Id = Program.lots[lotId].Tickets.Count + 1;
+            int Id = Program.lots[lotId].Tickets[^1].Id + 1;
             Spot spot = Program.lots[lotId].SpotsMatrix[0][0];
             Vehicle vehicle = Program.vehicles[vehicleId];
             TimeSpan hours = end - start;
@@ -54,26 +54,25 @@ namespace Parking.Controllers{
         public static void List(int lotIndex)
         {
             // Declare matrix without initializing it with data
-            string[,] matriz;
-            string[] options = new string[] {"Id", "Spot", "Entry", "Exit", "Total"}; 
-            matriz = new string[Program.lots[lotIndex].Tickets.Count + 1, 5]; // Initialize the matrix with the calculated dimensions
-            matriz[0, 0] = options[0];
-            matriz[0, 1] = options[1];
-            matriz[0, 2] = options[2];
-            matriz[0, 3] = options[3];
-            matriz[0, 4] = options[4];
+            string[,] matrix;
+            string[] options = new string[] {"Index", "Spot", "Entry", "Exit", "Total", "Id"}; 
+            matrix = new string[Program.lots[lotIndex].Tickets.Count + 1, options.Length]; // Initialize the matrix with the calculated dimensions
+            for (int columna = 0; columna < options.Length; columna++)
+            {
+                matrix[0, columna] = options[columna];
+            }
+            int fila = 1;
             foreach(Ticket ticket in Program.lots[lotIndex].Tickets){
-                for (int fila = 1; fila < Program.lots[lotIndex].Tickets.Count; fila++)
-                {
-                    for (int columna = 0; columna < 4; columna++)
-                    {
-                        var propertyInfo = ticket.GetType().GetProperty(options[columna]);
-                        matriz[fila, columna] = propertyInfo.GetValue(ticket)?.ToString()?? " ";
-                    }
-                }
+                matrix[fila, 0] = fila.ToString();
+                matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
+                matrix[fila, 2] = ticket.Entry.ToString();
+                matrix[fila, 3] = ticket.Exit.ToString();
+                matrix[fila, 4] = ticket.Total.ToString();
+                matrix[fila, 5] = ticket.Id.ToString();
+                fila++;
             }
             // Call the function to draw the table with the data matrix
-            Tools.DrawTable(matriz);
+            Tools.DrawTable(matrix);
         }
 
         // public static void PrintTicket(int index)
