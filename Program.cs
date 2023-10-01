@@ -34,10 +34,9 @@ namespace Parking
         }
         public static void Data()
         {
-            vehicles.Add(new Vehicle(1, "Mustang", "Ford", "11-AAAA-11"));
-            vehicles.Add(new Vehicle(1, "Miata", "Mazda", "22-BBBB-22"));
-            vehicles.Add(new Vehicle(1, "Corsa", "Chevrolet", "33-BBBB-33"));
-
+            nVehicle.Create("Mustang", "Ford", "11-AAAA-11");
+            nVehicle.Create("Miata", "Mazda", "22-BBBB-22");
+            nVehicle.Create("Corsa", "Chevrolet", "33-BBBB-33");
             nLot.Create("Playa Damián", "Rosario del Tala", 1150.50m, 3, 7);
         }
         public static void Load(){
@@ -58,7 +57,7 @@ namespace Parking
             foreach(string item in vehiculos){
                 Console.WriteLine($"    {item}");
                 string[] data = item.Split(',');
-                nVehicle.Add(data[1],data[2],data[3]);
+                nVehicle.Create(data[1],data[2],data[3]);
                 Thread.Sleep(50);
             }
             

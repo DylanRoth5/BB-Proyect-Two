@@ -3,7 +3,7 @@ using Parking.Entities;
 namespace Parking.Controllers{
     public class nVehicle
     {
-        public static void Add()
+        public static void Create()
         {
             Vehicle vehicle = new Vehicle();
             vehicle.Id = (Program.vehicles.Count > 0)? Program.vehicles[^1].Id + 1 : 1;
@@ -15,7 +15,7 @@ namespace Parking.Controllers{
             vehicle.Plate = Tools.ValidateString();
             Program.vehicles.Add(vehicle);
         }
-        public static void Add(string Brand, string Model, string Plate)
+        public static void Create(string Brand, string Model, string Plate)
         {
             Vehicle vehicle = new Vehicle();
             vehicle.Id = (Program.vehicles.Count > 0) ? Program.vehicles[^1].Id + 1 : 1;
@@ -26,6 +26,7 @@ namespace Parking.Controllers{
         }
         public static void List()
         {
+            Console.Clear();
             // Declare matrix without initializing it with data
             string[,] matrix;
             string[] options = new string[] {"Index", "Model", "Brand", "Plate", "Id"}; 
@@ -46,7 +47,7 @@ namespace Parking.Controllers{
             // Call the function to draw the table with the data matrix
             Tools.DrawTable(matrix);
         }
-        public static void Erase()
+        public static void Delete()
         {
             Program.vehicles.RemoveAt(Select());
         }
@@ -104,7 +105,7 @@ namespace Parking.Controllers{
             switch (selection)
             {
                 case 1:
-                    Add();
+                    Create();
                     Menu();
                     break;
                 case 2:
@@ -114,7 +115,7 @@ namespace Parking.Controllers{
                 case 3:
                 if (Program.vehicles.Count > 0)
                 { 
-                    Erase(); 
+                    Delete(); 
                 }
                 else
                 {
