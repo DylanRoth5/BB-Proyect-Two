@@ -6,7 +6,7 @@ namespace Parking.Controllers{
         public static void Add()
         {
             Vehicle vehicle = new Vehicle();
-            vehicle.Id = Program.vehicles[^1].Id + 1;
+            vehicle.Id = (Program.vehicles.Count > 0)? Program.vehicles[^1].Id + 1 : 1;
             Console.WriteLine("Enter model of the vehicle: ");
             vehicle.Model = Tools.ValidateString();
             Console.WriteLine("Enter brand of the vehicle: ");  
@@ -18,7 +18,7 @@ namespace Parking.Controllers{
         public static void Add(string Brand, string Model, string Plate)
         {
             Vehicle vehicle = new Vehicle();
-            vehicle.Id = Program.vehicles[^1].Id + 1;
+            vehicle.Id = (Program.vehicles.Count > 0) ? Program.vehicles[^1].Id + 1 : 1;
             vehicle.Model = Model;
             vehicle.Brand = Brand;
             vehicle.Plate = Plate;
