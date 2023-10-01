@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Documents\\TP2 - Parking\\BB-Proyect-Two\\Parking.csproj": {}
+    "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Documents\\TP2 - Parking\\BB-Proyect-Two\\Parking.csproj": {
+    "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\TP2 - Parking\\BB-Proyect-Two\\Parking.csproj",
+        "projectUniqueName": "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
         "projectName": "Parking",
-        "projectPath": "C:\\Users\\Usuario\\Documents\\TP2 - Parking\\BB-Proyect-Two\\Parking.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Documents\\TP2 - Parking\\BB-Proyect-Two\\obj\\",
+        "projectPath": "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\Parking.csproj",
+        "packagesPath": "C:\\Users\\UD\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\UD\\Documents\\GitHub\\BB-Proyect-Two\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\UD\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
