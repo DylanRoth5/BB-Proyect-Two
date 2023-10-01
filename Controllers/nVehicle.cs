@@ -6,7 +6,7 @@ namespace Parking.Controllers{
         public static void Add()
         {
             Vehicle vehicle = new Vehicle();
-            vehicle.Id = Program.vehicles.Count() + 1;
+            vehicle.Id = Program.vehicles[^1].Id + 1;
             Console.WriteLine("Enter model of the vehicle: ");
             vehicle.Model = Tools.ValidateString();
             Console.WriteLine("Enter brand of the vehicle: ");  
@@ -18,7 +18,7 @@ namespace Parking.Controllers{
         public static void Add(string Brand, string Model, string Plate)
         {
             Vehicle vehicle = new Vehicle();
-            vehicle.Id = Program.vehicles.Count() + 1;
+            vehicle.Id = Program.vehicles[^1].Id + 1;
             vehicle.Model = Model;
             vehicle.Brand = Brand;
             vehicle.Plate = Plate;
@@ -27,31 +27,28 @@ namespace Parking.Controllers{
         public static void List()
         {
             // Declare matrix without initializing it with data
-            string[,] matriz;
-            string[] options = new string[] {"Id", "Model", "Brand", "Plate"}; 
-            matriz = new string[Program.vehicles.Count + 1, 4]; // Initialize the matrix with the calculated dimensions
-            matriz[0, 0] = options[0];
-            matriz[0, 1] = options[1];
-            matriz[0, 2] = options[2];
-            matriz[0, 3] = options[3];
-            foreach(Vehicle vehicle in Program.vehicles){
-                for (int fila = 1; fila < Program.vehicles.Count + 1; fila++)
-                {
-                    for (int columna = 0; columna < 4; columna++)
-                    {
-                        var propertyInfo = vehicle.GetType().GetProperty(options[columna]);
-                        matriz[fila, columna] = propertyInfo.GetValue(vehicle)?.ToString()?? " ";
-                    }
-                }
+            string[,] matrix;
+            string[] options = new string[] {"Index", "Model", "Brand", "Plate", "Id"}; 
+            matrix = new string[Program.vehicles.Count + 1, options.Length]; // Initialize the matrix with the calculated dimensions
+            for (int columna = 0; columna < options.Length; columna++)
+            {
+                matrix[0, columna] = options[columna];
+            }
+            int fila = 1;
+            foreach (Vehicle vehicle in Program.vehicles){
+                matrix[fila, 0] = fila.ToString();
+                matrix[fila, 1] = vehicle.Model;
+                matrix[fila, 2] = vehicle.Brand;
+                matrix[fila, 3] = vehicle.Plate;
+                matrix[fila, 4] = vehicle.Id.ToString();
+                fila++;
             }
             // Call the function to draw the table with the data matrix
-
-            Tools.DrawTable(matriz);
+            Tools.DrawTable(matrix);
         }
         public static void Erase()
         {
-            int i = Select();
-            Program.vehicles.RemoveAt(i);
+            Program.vehicles.RemoveAt(Select());
         }
         public static void Update(int i)
         {
@@ -85,9 +82,20 @@ namespace Parking.Controllers{
             Console.WriteLine();
             List();
             Console.WriteLine("Select Vehicle: ");
-            int s = Tools.ValidateInt(1, Program.vehicles.Count);
+            int s = Tools.ValidateInt();
             return s - 1;
         }
+        //public static int SearchById(int id)
+        //{
+        //    for(int i = 0; i < Program.vehicles.Count; i++)
+        //    {
+        //        if (Program.vehicles[i].Id == id)
+        //        {
+        //            return i;
+        //        }
+        //    }
+        //    return SearchById(Tools.ValidateInt("Ingresa nuevo Id a buscar:... "));
+        //}
         public static void Menu()
         {
             string[] opciones = new string[] { "Add", "Update", "Erase", "List" };
