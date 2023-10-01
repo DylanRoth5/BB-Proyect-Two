@@ -30,10 +30,10 @@ namespace Parking.Controllers{
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
         }
 
-        public static void Create(int lotId, DateTime start, DateTime end, int spotId, int vehicleId)
+        public static void Create(int lotId, DateTime start, DateTime end, char letter, int y, int vehicleId)
         {
             int Id = (Program.lots[lotId].Tickets.Count > 0) ? Program.lots[lotId].Tickets[^1].Id + 1 : 1;
-            Spot spot = Program.lots[lotId].SpotsMatrix[0][0]; //arreglar aca
+            Spot spot = Program.lots[lotId].SpotsMatrix[nLot.SelectRow(lotId, letter)][y]; 
             Vehicle vehicle = Program.vehicles[vehicleId];
             TimeSpan hours = end - start;
             decimal total = Program.lots[lotId].HourPrice * (decimal)hours.TotalHours;
