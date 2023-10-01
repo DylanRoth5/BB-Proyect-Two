@@ -45,7 +45,7 @@ namespace Parking.Controllers{
             int lot = nLot.Select();
             Ticket ticket = Program.lots[lot].Tickets[Select(lot)];
             ticket.Exit = DateTime.Now;
-            TimeSpan hours = ticket.Exit - ticket.Entry;
+            TimeSpan hours = (TimeSpan)(ticket.Exit - ticket.Entry);
             ticket.Total = Program.lots[lot].HourPrice * (decimal)hours.TotalHours;
             ticket.Spot.Occupied = false;
             Console.WriteLine("El ticket fue emitido... ");
@@ -98,7 +98,7 @@ namespace Parking.Controllers{
                     break;
                 case 2:
                     ticket.Entry = Tools.InputDate($"Enter new entry date to {ticket.Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    ticket.Total = Program.lots[lot].HourPrice * (decimal)(ticket.Exit - ticket.Entry).TotalHours;
+                    ticket.Total = Program.lots[lot].HourPrice * (decimal)((TimeSpan)(ticket.Exit - ticket.Entry)).TotalHours;
                     Update(lot, idT);
                     break;
                 case 3:
