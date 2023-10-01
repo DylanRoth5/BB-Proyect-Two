@@ -1,5 +1,6 @@
 ﻿using Parking.Entities;
 using Parking.Controllers;
+using System.Text;
 namespace Parking
 {
     internal class Program
@@ -11,6 +12,9 @@ namespace Parking
         {
             lots = new List<Lot>();
             vehicles = new List<Vehicle>();
+
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.SetBufferSize(1000, 1000);
             // Load();
             Data();
             Menu();

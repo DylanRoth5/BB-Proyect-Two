@@ -224,28 +224,30 @@ namespace Parking.Controllers
         }
         public static void DrawLot(int index)
         {
-            int spotHeight = 7;
-            int spotWidth = 10;
-            void PrintSpot(int x, int y, char topLeft, char topRight)
+            int height = 7;
+            int width = 10;
+            void PrintSpot(int x, int y, char topLeft, char topRight, string name)
             {
-                for (int i = 0; i < spotHeight; i++)
+                for (int i = 0; i < height; i++)
                 {
                     if (i == 0)
                     {
-                        // Console.Write(topLeft + new string('═', spotWidth - 2) + topRight);
-                        Tools.PrintAt(x, y, topLeft + new string('═', spotWidth - 2) + topRight);
+                        // Console.Write(topLeft + new string('═', width - 2) + topRight);
+                        Tools.PrintAt(x, y, topLeft + new string('═', width - 2) + topRight);
                     }
                     else
                     {
-                        // Console.Write('║' + new string(' ', spotWidth - 2) + '║');
-                        Tools.PrintAt(x, y + i, '║' + new string(' ', spotWidth - 2) + '║');
+                        // Console.Write('║' + new string(' ', width - 2) + '║');
+                        Tools.PrintAt(x, y + i, '║' + new string(' ', width - 2) + '║');
                     }
-                    Console.WriteLine();
+                    // Console.WriteLine();
                 }
+                Tools.PrintAt(x + (width - name.Length)/2, y + height, name);
             }
             void PrintCar(int x, int y)
             {
-                string[] carParts = new string[] {" ┌────┐ ", "╭┤────├╮", "╰┤════├╯", "╭┤    ├╮", "╰┤════├╯", " └────┘ "};
+                string[] carParts = new string[] { " ┌────┐ ", "╭┤────├╮", "╰┤════├╯", "╭┤    ├╮", "╰┤════├╯", " └────┘ " };
+
                 int i = 0;
                 foreach (string part in carParts)
                 {
@@ -258,47 +260,31 @@ namespace Parking.Controllers
             Console.SetCursorPosition(2, 2);
             // Stores the lot object in a temporal variable
             Lot lot = Program.lots[index];
-            char topLeft = ' ';
-            char topRight = ' ';
-            int x = Console.CursorLeft;
-            // int x0 = x;
-            int y = Console.CursorTop;
+            int x = Console.CursorLeft; int y = Console.CursorTop;
+            int xaux = x;
             for (int i = 0; i < lot.SpotsMatrix.Count; i++)
             {
-                // Restarts the value of the x coordinate
-                // x = x0;
-                y = (spotHeight + 2) * i;
+                x = xaux;
                 for (int j = 0; j < lot.SpotsMatrix[i].Count; j++)
                 {
+                    Spot spot = lot.SpotsMatrix[i][j];
                     if (j == 0)
                     {
-                        topLeft = '╔';
-                        PrintSpot(x, y, topLeft, topRight);
-
+                        PrintSpot(x, y, '╔', ' ', string.Concat(spot.Row, j));
                     }
-                    // else if (j == lot.SpotsMatrix[i].Count - 1)
-                    // {
-                    //     topLeft = '╦';
-                    //     topRight = '╗';
-                    //     PrintSpot(x + spotWidth*j - 1, y, '╦', '╗');
-
-                    // }
                     else
                     {
-                        PrintSpot(x + spotWidth * j - 1, y, '╦', ' ');
+                        PrintSpot(x, y, '╦', '╗', string.Concat(spot.Row, j));
                     }
-                    // Prints the spot
-                    Console.SetCursorPosition(x, y);
-                    PrintSpot(x, y, topLeft, topRight);
-                    // Tools.PrintAt(x, y, topLeft + new string('═', spotWidth - 2) + topRight);
                     // If the spot.Occupied attribute is true, it means that there is a car in 
                     // that spot
-                    Spot spot = lot.SpotsMatrix[i][j];
                     if (spot.Occupied)
                     {
-                        PrintCar(x - (spotWidth - 1), y - (spotHeight - 2));
+                        PrintCar(x + 1, y + 1);
                     }
+                    x += width - 1;
                 }
+                y += height + 4;
             }
         }
         public static bool IsThereAny()

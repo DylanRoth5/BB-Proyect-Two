@@ -251,11 +251,8 @@ public class Tools
     }
     public static void PrintAt(int x, int y, string? word)
     {
-        int nx = Console.CursorLeft;
-        int ny = Console.CursorTop;
         Console.SetCursorPosition(x, y);
         Console.Write(word);
-        Console.SetCursorPosition(nx, ny);
     }
     public static void DrawTable(string[,] matrix)
     {
