@@ -270,11 +270,11 @@ namespace Parking.Controllers
                     Spot spot = lot.SpotsMatrix[i][j];
                     if (j == 0)
                     {
-                        PrintSpot(x, y, '╔', ' ', string.Concat(spot.Row, j));
+                        PrintSpot(x, y, '╔', ' ', string.Concat(spot.Row, j + 1));
                     }
                     else
                     {
-                        PrintSpot(x, y, '╦', '╗', string.Concat(spot.Row, j));
+                        PrintSpot(x, y, '╦', '╗', string.Concat(spot.Row, j + 1));
                     }
                     // If the spot.Occupied attribute is true, it means that there is a car in 
                     // that spot
@@ -286,7 +286,7 @@ namespace Parking.Controllers
                 }
                 y += height + 4;
             }
-            Console.WriteLine();
+            Console.WriteLine("\n\n\n");
         }
         public static bool IsThereAny()
         {
