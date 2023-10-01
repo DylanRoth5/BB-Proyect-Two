@@ -1,4 +1,5 @@
 using Parking.Entities;
+using System;
 
 namespace Parking.Controllers{
     public class nTicket
@@ -17,16 +18,14 @@ namespace Parking.Controllers{
             // Does the same for the selected spot
             Spot spot = Program.lots[lotIndex].SpotsMatrix[spotIndexes[0]][spotIndexes[1]];
             DateTime startDate = DateTime.Now;
-            DateTime endDate = DateTime.Now;
             spot.Occupied = true;
             // Show the vehicles loaded in the Program.vehicles list
             nVehicle.List();
             Console.WriteLine("Select a vehicle: ");
             Vehicle vehicle = Program.vehicles[Tools.ValidateInt(1, Program.vehicles.Count - 1)];
             Console.WriteLine($"Selected: {vehicle.Id}- {vehicle.Model}");
-            TimeSpan hours = endDate - startDate;
-            decimal total = Program.lots[lotIndex].HourPrice * (decimal)hours.TotalHours;
-            Ticket parkingTicket = new Ticket(Id, startDate, endDate, total, spot, vehicle);
+            decimal total = 00.00m;
+            Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle);
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
         }
 
@@ -45,7 +44,7 @@ namespace Parking.Controllers{
             int lot = nLot.Select();
             Ticket ticket = Program.lots[lot].Tickets[Select(lot)];
             ticket.Exit = DateTime.Now;
-            TimeSpan hours = ticket.Exit - ticket.Entry;
+            TimeSpan hours = (ticket.Exit ?? DateTime.Now) - ticket.Entry;
             ticket.Total = Program.lots[lot].HourPrice * (decimal)hours.TotalHours;
             ticket.Spot.Occupied = false;
             Console.WriteLine("El ticket fue emitido... ");
@@ -65,7 +64,7 @@ namespace Parking.Controllers{
                 matrix[fila, 0] = fila.ToString();
                 matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
                 matrix[fila, 2] = ticket.Entry.ToString();
-                matrix[fila, 3] = ticket.Exit.ToString();
+                matrix[fila, 3] = ticket.Exit.ToString() ?? "--/--/-- --:--:--";
                 matrix[fila, 4] = ticket.Total.ToString();
                 matrix[fila, 5] = ticket.Vehicle.ToString();
                 matrix[fila, 6] = ticket.Id.ToString();
@@ -98,12 +97,12 @@ namespace Parking.Controllers{
                     break;
                 case 2:
                     ticket.Entry = Tools.InputDate($"Enter new entry date to {ticket.Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    ticket.Total = Program.lots[lot].HourPrice * (decimal)(ticket.Exit - ticket.Entry).TotalHours;
+                    ticket.Total = ticket.Exit.HasValue? Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours : 00.00m;
                     Update(lot, idT);
                     break;
                 case 3:
                     ticket.Exit = Tools.InputDate($"Enter new entry date to {ticket.Exit} (dd/MM/yyyy HH:mm:ss: )");
-                    ticket.Total = Program.lots[lot].HourPrice * (decimal)(ticket.Exit - ticket.Entry).TotalHours;
+                    ticket.Total = ticket.Exit.HasValue? Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours : 00.00m;
                     Update(lot, idT);
                     break;
                 case 4:
