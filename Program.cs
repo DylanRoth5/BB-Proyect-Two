@@ -88,6 +88,7 @@ namespace Parking
                 foreach (List<Spot> amount in lot.SpotsMatrix) {columns = amount.Count;}
                 Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
                 Thread.Sleep(10);
+                
             }
 
             // foreach (Spot spot in spots){
