@@ -29,7 +29,6 @@ namespace Parking.Controllers{
             Ticket parkingTicket = new Ticket(Id, startDate, endDate, total, spot, vehicle);
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
         }
-
         public static void Create(int lotId, DateTime start, DateTime end, int spotId, int vehicleId)
         {
             int Id = (Program.lots[lotId].Tickets.Count > 0) ? Program.lots[lotId].Tickets[^1].Id + 1 : 1;
@@ -40,7 +39,6 @@ namespace Parking.Controllers{
             Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle);
             Program.lots[lotId].Tickets.Add(parkingTicket);
         }
-        //02/02/2002 02:02:02
         public static void RegisterExit()
         {
             int lot = nLot.Select();
@@ -68,32 +66,17 @@ namespace Parking.Controllers{
                 matrix[fila, 2] = ticket.Entry.ToString();
                 matrix[fila, 3] = ticket.Exit.ToString();
                 matrix[fila, 4] = ticket.Total.ToString();
-                matrix[fila, 5] = ticket.Vehicle.Model;
+                matrix[fila, 5] = ticket.Vehicle.ToString();
                 matrix[fila, 6] = ticket.Id.ToString();
                 fila++;
             }
             // Call the function to draw the table with the data matrix
             Tools.DrawTable(matrix);
         }
-
-        // public static void PrintTicket(int index)
-        // {
-        //     Ticket ticket = Program.lots[];
-        //     string[,] table = new string[6, 1];
-        //     table[0, 0] = $"Id: {Program.lotds[id].Id}";
-        //     table[1, 0] = $"Lot: {Program.tickets[id].Lot.Name}";
-        //     table[2, 0] = $"Spot: {Program.tickets[id].Spot.Column}";
-        //     table[3, 0] = $"Entry: {Program.tickets[id].Entry}";
-        //     table[4, 0] = $"Exit: {Program.tickets[id].Exit}";
-        //     table[5, 0] = $"Total: {Program.tickets[id].Total}";
-        //     Tools.DrawTable(table);
-        // }
-
         public static void Delete()
         {
             Program.lots[nLot.Select()].Tickets.RemoveAt(Select());            
         }
-
         public static void Update(int? lotId = null, int? ticketId = null)
         {
             Console.WriteLine();
@@ -126,7 +109,6 @@ namespace Parking.Controllers{
                     break;
             }
         }
-
         public static int Select(int? lot = null)
         {
             Console.WriteLine();
@@ -136,7 +118,6 @@ namespace Parking.Controllers{
             int s = Tools.ValidateInt(1, Program.lots[lotId].Tickets.Count);
             return s - 1;
         }
-
         public static void Menu()
         {
             string[] opciones = new string[] { "Register Entry", "Register Exit", "Update", "Delete", "List" };

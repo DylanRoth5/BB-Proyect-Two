@@ -6,7 +6,6 @@ public class Vehicle
     public string Model { get; set; }
     public string Brand { get; set; }
     public string Plate { get; set; }
-
     public Vehicle()
     {     
     }
@@ -16,5 +15,9 @@ public class Vehicle
         this.Model = Model;
         this.Brand = Brand;
         this.Plate = Plate;
+    }
+    public override string ToString()
+    {
+        return $"{Brand}, {Model}";
     }
 }
