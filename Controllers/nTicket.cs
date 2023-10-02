@@ -1,5 +1,6 @@
 using Parking.Entities;
 using System;
+using DefaultNamespace;
 
 namespace Parking.Controllers{
     public class nTicket
@@ -80,18 +81,18 @@ namespace Parking.Controllers{
             { 
                 Tools.DrawTable(matrix);    
                 var stuff = outputCapture.Captured.ToString();
-            }
-            string[] options = { "Do It" };
-            Console.Clear();
-            int choice = Tools.Menu("Print List", options);
-            switch (choice)
-            {
-                case 1:
-                    File.WriteAllText(@"Print\\RecordTicket.txt", "");
-                    Tools.FileWrite(stuff, @"Print\\RecordTicket.txt");
-                    break;
-                case 0:
-                    break;
+                string[] confirm = { "Do It" };
+                Console.Clear();
+                int choice = Tools.Menu("Print List", confirm);
+                switch (choice)
+                {
+                    case 1:
+                        File.WriteAllText(@"Print\\RecordTicket.txt", "");
+                        Tools.FileWrite(stuff, @"Print\\RecordTicket.txt");
+                        break;
+                    case 0:
+                        break;
+                }
             }
             // Call the function to draw the table with the data matrix
         }

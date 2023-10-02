@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace DefaultNamespace;
 
 public class OutputCapture : TextWriter, IDisposable

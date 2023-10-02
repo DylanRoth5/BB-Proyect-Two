@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using Parking.Entities;
 
 namespace Parking.Controllers
@@ -121,18 +122,18 @@ namespace Parking.Controllers
                 {
                     Tools.DrawTable(table); 
                     var stuff = outputCapture.Captured.ToString();
-                }
-                string[] options = { "Do It" };
-                Console.Clear();
-                int choice = Tools.Menu("Print List", options);
-                switch (choice)
-                {
-                    case 1:
-                        File.WriteAllText(@"Print\\RecordLot.txt", "");
-                        Tools.FileWrite(stuff, @"Print\\RecordLot.txt");
-                        break;
-                    case 0:
-                        break;
+                    string[] confirm = { "Do It" };
+                    Console.Clear();
+                    int choice = Tools.Menu("Print List", confirm);
+                    switch (choice)
+                    {
+                        case 1:
+                            File.WriteAllText(@"Print\\RecordLot.txt", "");
+                            Tools.FileWrite(stuff, @"Print\\RecordLot.txt");
+                            break;
+                        case 0:
+                            break;
+                    }
                 }
             }
         }
