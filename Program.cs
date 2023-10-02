@@ -36,7 +36,6 @@ namespace Parking
             Console.OutputEncoding = Encoding.UTF8;
             Console.SetBufferSize(1000, 1000);
             Load();
-            // Data();
             Menu();
             Save();
         }
@@ -52,18 +51,18 @@ namespace Parking
                 case 0: break;
             }
         }
-        public static void Data()
-        {
-            nVehicle.Create("Mustang", "Ford", "11-AAAA-11");
-            nVehicle.Create("Miata", "Mazda", "22-BBBB-22");
-            nVehicle.Create("Corsa", "Chevrolet", "33-CCCC-33");
-
-            nLot.Create("Playa Damián", "Rosario del Tala", 1150.50m, 3, 7);
-            nLot.Create("Playa Matias", "Valle Maria", 990.25m, 4, 8);
-            nLot.Create("Playa Navy", "Posadas", 1300.75m, 6, 10);
-
-            nTicket.Create(1,new DateTime(2023, 10, 3, 7, 10, 24), new DateTime(2023, 10, 3, 9, 23, 36),'A', 1, 1);
-        }
+        // public static void Data()
+        // {
+        //     nVehicle.Create("Mustang", "Ford", "11-AAAA-11");
+        //     nVehicle.Create("Miata", "Mazda", "22-BBBB-22");
+        //     nVehicle.Create("Corsa", "Chevrolet", "33-CCCC-33");
+        //
+        //     nLot.Create("Playa Damián", "Rosario del Tala", 1150.50m, 3, 7);
+        //     nLot.Create("Playa Matias", "Valle Maria", 990.25m, 4, 8);
+        //     nLot.Create("Playa Navy", "Posadas", 1300.75m, 6, 10);
+        //
+        //     nTicket.Create(1,new DateTime(2023, 10, 3, 7, 10, 24), new DateTime(2023, 10, 3, 9, 23, 36),'A', 1, 1);
+        // }
         public static void Load(){
             
             var lotData = File.ReadAllLines(@"Data\\Lots.txt");
