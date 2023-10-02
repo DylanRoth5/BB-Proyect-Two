@@ -122,6 +122,7 @@ namespace Parking.Controllers
                 {
                     Tools.DrawTable(table); 
                     var stuff = outputCapture.Captured.ToString();
+                    Tools.HaltProgramExecution();
                     string[] confirm = { "Do It" };
                     Console.Clear();
                     int choice = Tools.Menu("Print List", confirm);
