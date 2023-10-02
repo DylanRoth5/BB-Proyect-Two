@@ -103,8 +103,6 @@ namespace Parking.Controllers
         {
             if (IsThereAny())
             {
-                // string[] options = { "Order by Income", "Order by Free Spots" };
-                // Console.WriteLine("Choose an order option:");
                 string[,] table = new string[Program.lots.Count + 1, 4];
                 table[0, 0] = "ID";
                 table[0, 1] = "Name";
@@ -121,33 +119,23 @@ namespace Parking.Controllers
                 }
                 Tools.DrawTable(table);
             }
-            // Tools.Menu("Order Options", options);
-            // int choice = Tools.ValidateInt(1, options.Length);
+        }
+        public static void Sort()
+        {
+            string[] options = { "Order by Income", "Order by Free Spots" };
+            Console.Clear();
+            int choice = Tools.Menu("Order Options", options);
             // Console.Clear();
-            // switch (choice)
-            // {
-            //     case 1:
-            //         SortLotsByIncome();
-            //         string[,] table = new string[Program.lots.Count + 1, 4];
-            //         table[0, 0] = "ID";
-            //         table[0, 1] = "Name";
-            //         table[0, 2] = "Address";
-            //         table[0, 3] = "Hour Price";
-            //         int row = 1;
-            //         foreach (Lot lot in Program.lots)
-            //         {
-            //             table[row, 0] = lot.Id.ToString();
-            //             table[row, 1] = lot.Name;
-            //             table[row, 2] = lot.Address;
-            //             table[row, 3] = lot.HourPrice.ToString();
-            //             row++;
-            //         }
-            //         Tools.DrawTable(table);
-            //         break;
-            //     case 2:
-            //         SortByFreeSpots();
-            //         break;
-            // }
+            switch (choice)
+            {
+                case 1:
+                    SortLotsByIncome();
+                    break;
+                case 2:
+                    SortByFreeSpots();
+                    break;
+            }
+            List();
         }
         public static void SortLotsByIncome() //using the value gotten from the method getIncome in Lot class sorts by descending using a lambda expression
         {
@@ -296,15 +284,16 @@ namespace Parking.Controllers
         }
         public static void Menu()
         {
-            string[] options = new string[] { "Create", "List", "Draw", "Update", "Delete" };
+            string[] options = new string[] { "Create", "List", "Order", "Draw", "Update", "Delete" };
             int selection = Tools.Menu("Lot Menu", options);
             switch (selection)
             {
                 case 1: Create(); Menu(); break;
                 case 2: List(); Tools.HaltProgramExecution(); Menu(); break;
-                case 3: DrawLot(Select()); Tools.HaltProgramExecution(); Menu(); break;
-                case 4: Update(Select()); Menu(); break;
-                case 5: Delete(); Menu(); break;
+                case 3: Sort(); Tools.HaltProgramExecution(); Menu(); break;
+                case 4: DrawLot(Select()); Tools.HaltProgramExecution(); Menu(); break;
+                case 5: Update(Select()); Menu(); break;
+                case 6: Delete(); Menu(); break;
                 case 0: break;
             }
         }
