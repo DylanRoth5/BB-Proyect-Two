@@ -1,5 +1,6 @@
 using Parking.Entities;
 using System;
+using DefaultNamespace;
 
 namespace Parking.Controllers
 {
@@ -83,9 +84,26 @@ namespace Parking.Controllers
                     }
                     fila++;
                 }
-                // Call the function to draw the table with the data matrix
-                Tools.DrawTable(matrix);
+            using (var outputCapture = new OutputCapture())
+            { 
+                Tools.DrawTable(matrix);    
+                var stuff = outputCapture.Captured.ToString();
+                Tools.HaltProgramExecution();
+                string[] confirm = { "Do It" };
+                Console.Clear();
+                int choice = Tools.Menu("Print List", confirm);
+                switch (choice)
+                {
+                    case 1:
+                        File.WriteAllText(@"Print\\RecordTicket.txt", "");
+                        Tools.FileWrite(stuff, @"Print\\RecordTicket.txt");
+                        break;
+                    case 0:
+                        break;
+                }
             }
+                // Call the function to draw the table with the data matrix
+                }
             else
             {
                 Console.WriteLine("There aren't any cars parked in this lot...");

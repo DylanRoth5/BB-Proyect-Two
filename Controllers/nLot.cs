@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using Parking.Entities;
 
 namespace Parking.Controllers
@@ -117,7 +118,24 @@ namespace Parking.Controllers
                     table[row, 3] = lot.HourPrice.ToString();
                     row++;
                 }
-                Tools.DrawTable(table);
+                using (var outputCapture = new OutputCapture())
+                {
+                    Tools.DrawTable(table); 
+                    var stuff = outputCapture.Captured.ToString();
+                    Tools.HaltProgramExecution();
+                    string[] confirm = { "Do It" };
+                    Console.Clear();
+                    int choice = Tools.Menu("Print List", confirm);
+                    switch (choice)
+                    {
+                        case 1:
+                            File.WriteAllText(@"Print\\RecordLot.txt", "");
+                            Tools.FileWrite(stuff, @"Print\\RecordLot.txt");
+                            break;
+                        case 0:
+                            break;
+                    }
+                }
             }
         }
         public static void Sort()
@@ -125,7 +143,6 @@ namespace Parking.Controllers
             string[] options = { "Order by Income", "Order by Free Spots" };
             Console.Clear();
             int choice = Tools.Menu("Order Options", options);
-            // Console.Clear();
             switch (choice)
             {
                 case 1:
