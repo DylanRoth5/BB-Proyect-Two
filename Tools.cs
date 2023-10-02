@@ -75,6 +75,23 @@ public class Tools
         if (record[position].Equals($"{id}")) { return true; }
         return false;
     }
+    
+    public static void FileWrite(string content, string filepath)
+    {
+        var info = FileReadAll(filepath);
+        if (info != null && !info.Contains($"{content}"))
+        {
+            var writer = new StreamWriter(filepath, true);
+            writer.WriteLine($"{content}");
+            Console.WriteLine($"{content} Saved successfully!!");
+            writer.Close();
+        }
+        else
+        {
+            Console.WriteLine($"{content} already exists!!");
+        }
+    }
+
     public static void FileWrite(string type, string content, string filepath)
     {
         string info = FileReadAll(@filepath);

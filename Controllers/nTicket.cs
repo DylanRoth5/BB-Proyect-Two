@@ -25,7 +25,7 @@ namespace Parking.Controllers{
             Vehicle vehicle = Program.vehicles[Tools.ValidateInt(1, Program.vehicles.Count - 1)];
             Console.WriteLine($"Selected: {vehicle.Id}- {vehicle.Model}");
             decimal total = 00.00m;
-            Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle);
+            Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle,lotIndex);
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
         }
 
@@ -36,7 +36,7 @@ namespace Parking.Controllers{
             Vehicle vehicle = Program.vehicles[vehicleId];
             TimeSpan hours = end - start;
             decimal total = Program.lots[lotId].HourPrice * (decimal)hours.TotalHours;
-            Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle);
+            Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle, lotId);
             Program.lots[lotId].Tickets.Add(parkingTicket);
         }
         public static void RegisterExit()
