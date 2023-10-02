@@ -47,7 +47,7 @@ namespace Parking.Controllers
         public static void RegisterExit()
         {
             int lot = nLot.Select();
-            Ticket ticket = Program.lots[lot].Tickets[Select(false, lot)];
+            Ticket ticket = Program.lots[lot].Tickets[Select(lot)];
             ticket.Exit = DateTime.Now;
             TimeSpan hours = (ticket.Exit ?? DateTime.Now) - ticket.Entry;
             ticket.Total = Math.Round(Program.lots[lot].HourPrice * (decimal)hours.TotalHours, 2);
@@ -56,15 +56,14 @@ namespace Parking.Controllers
             Console.WriteLine("El ticket fue registrado... ");
             Tools.HaltProgramExecution();
         }
-        public static void List(int lotIndex, Boolean all)
+        public static void List(int lotIndex)
         {
             // Declare matrix without initializing it with data
             string[,] matrix;
             string[] options = new string[] { "Index", "Spot", "Entry", "Exit", "Total", "Vehicle", "Id" };
-            int ticketsOpen = Program.lots[lotIndex].Tickets.Count(ticket => ticket.Exit == null);
-            if (ticketsOpen > 0)
+            if (Program.lots[lotIndex].Tickets.Count > 0)
             {
-                matrix = new string[all ? Program.lots[lotIndex].Tickets.Count + 1 : ticketsOpen + 1, options.Length]; // Initialize the matrix with the calculated dimensions
+                matrix = new string[Program.lots[lotIndex].Tickets.Count + 1, options.Length]; // Initialize the matrix with the calculated dimensions
                 for (int columna = 0; columna < options.Length; columna++)
                 {
                     matrix[0, columna] = options[columna];
@@ -72,16 +71,13 @@ namespace Parking.Controllers
                 int fila = 1;
                 foreach (Ticket ticket in Program.lots[lotIndex].Tickets)
                 {
-                    if (all || ticket.Exit == null)
-                    {
-                        matrix[fila, 0] = fila.ToString();
-                        matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
-                        matrix[fila, 2] = ticket.Entry.ToString();
-                        matrix[fila, 3] = ticket.Exit.ToString() ?? "--/--/-- --:--:--";
-                        matrix[fila, 4] = ticket.Total.ToString();
-                        matrix[fila, 5] = ticket.Vehicle.ToString();
-                        matrix[fila, 6] = ticket.Id.ToString();
-                    }
+                    matrix[fila, 0] = fila.ToString();
+                    matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
+                    matrix[fila, 2] = ticket.Entry.ToString();
+                    matrix[fila, 3] = ticket.Exit.ToString() ?? "--/--/-- --:--:--";
+                    matrix[fila, 4] = ticket.Total.ToString();
+                    matrix[fila, 5] = ticket.Vehicle.ToString();
+                    matrix[fila, 6] = ticket.Id.ToString();
                     fila++;
                 }
             using (var outputCapture = new OutputCapture())
@@ -111,13 +107,13 @@ namespace Parking.Controllers
         }
         public static void Delete()
         {
-            Program.lots[nLot.Select()].Tickets.RemoveAt(Select(true));
+            Program.lots[nLot.Select()].Tickets.RemoveAt(Select());
         }
         public static void Update(int? lotId = null, int? ticketId = null)
         {
             Console.WriteLine();
             int lot = (int)(lotId.HasValue ? lotId : nLot.Select());
-            int idT = (int)(ticketId.HasValue ? ticketId : Select(true, lot));
+            int idT = (int)(ticketId.HasValue ? ticketId : Select(lot));
             Ticket ticket = Program.lots[lot].Tickets[idT];
             string[] options = new string[] { "Spot", "Entry", "Exit" };
             Console.Clear();
@@ -145,11 +141,11 @@ namespace Parking.Controllers
                     break;
             }
         }
-        public static int Select(Boolean all, int? lot = null)
+        public static int Select(int? lot = null)
         {
             Console.WriteLine();
             int lotId = (int)(lot.HasValue ? lot : nLot.Select());
-            List(lotId, all);
+            List(lotId);
             Console.Write("Select a ticket: ");
             int s = Tools.ValidateInt(1, Program.lots[lotId].Tickets.Count);
             return s - 1;
@@ -177,7 +173,7 @@ namespace Parking.Controllers
                     Menu();
                     break;
                 case 5:
-                    List(nLot.Select(), true);
+                    List(nLot.Select());
                     Console.ReadKey();
                     Menu();
                     break;
