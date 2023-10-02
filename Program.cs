@@ -72,13 +72,13 @@ namespace Parking
                 string?[] data = info.Split('|');
                 nLot.Create(data[1],data[2], decimal.Parse(data[3]),int.Parse(data[4]),int.Parse(data[5]));
             }
-            var vehicleData = File.ReadAllLines(@"Data\\Vehicles.txt");
+            var vehicleData = File.ReadAllLines(@"Data\\Vehicle.txt");
             foreach (var info in vehicleData)
             {
                 string?[] data = info.Split('|');
                 nVehicle.Create(data[1], data[2], data[3]);
             }
-            var ticketData = File.ReadAllLines(@"Data\\Tickets.txt");
+            var ticketData = File.ReadAllLines(@"Data\\Ticket.txt");
             foreach (var info in ticketData)
             {
                 var data = info.Split('|');
@@ -88,9 +88,8 @@ namespace Parking
         public static void Save(){
             
             File.WriteAllText(@"Data\\Lots.txt", "");
-            File.WriteAllText(@"Data\\Vehicles.txt", "");
-            File.WriteAllText(@"Data\\Spots.txt", "");
-            File.WriteAllText(@"Data\\Tickets.txt", "");
+            File.WriteAllText(@"Data\\Vehicle.txt", "");
+            File.WriteAllText(@"Data\\Ticket.txt", "");
 
             foreach (var item in lots)
             {
@@ -98,7 +97,7 @@ namespace Parking
                 foreach (var ticket in item.Tickets) Tools.FileWrite(ticket.ToString(), @"Data\\Ticket.txt");
             }
             foreach (var item in vehicles)
-                Tools.FileWrite(item.ToString(), @"Data\\Vehicles.txt");
+                Tools.FileWrite(item.ToString(), @"Data\\Vehicle.txt");
         }
     }
 }
