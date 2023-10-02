@@ -129,37 +129,6 @@ public class Tools
 
         return result;
     }
-    // public static char ValidateLetter()
-    // {
-    //     //Convert the letter to ASCII
-    //     char letter = ' ';
-    //     ConsoleKeyInfo consoleKeyInfo;
-    //     do
-    //     {
-    //         consoleKeyInfo = Console.ReadKey(intercept: true);
-    //         int ASCII = Convert.ToInt32(consoleKeyInfo.KeyChar);
-    //         if ((ASCII >= 97 && ASCII <= 122) || (ASCII >= 65 && ASCII <= 90))
-    //         {
-    //             letter = consoleKeyInfo.KeyChar;
-    //             Console.Write(letter);
-    //         }
-    //         if (consoleKeyInfo.Key == ConsoleKey.Backspace && letter != ' ')
-    //         {
-    //             Console.CursorLeft--;
-    //             Console.Write(" ");
-    //             Console.CursorLeft--;
-    //             letter = ' ';
-    //         }
-    //     } while (consoleKeyInfo.Key != ConsoleKey.Enter || letter != ' ');
-    //     if (consoleKeyInfo.Key != ConsoleKey.Enter)
-    //     {
-    //         Console.WriteLine();
-    //         return char.ToUpper(letter);
-    //     }
-    //     //If it is not a letter, it recursively executes it again until a letter is selected
-    //     return ValidateLetter();
-    // }
-
     public static char ValidateLetter()
     {
         char inputChar = '\0'; // Initialize with a null character

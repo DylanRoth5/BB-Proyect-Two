@@ -27,6 +27,8 @@ namespace Parking.Controllers{
             decimal total = 00.00m;
             Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle,lotIndex);
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
+            Console.WriteLine("Ticket emitido... ");
+            Tools.HaltProgramExecution();
         }
 
         public static void Create(int lotId, DateTime start, DateTime end, char rowLetter, int y, int vehicleId)
@@ -38,8 +40,6 @@ namespace Parking.Controllers{
             decimal total = Math.Round(Program.lots[lotId].HourPrice * (decimal)hours.TotalHours, 2);
             Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle, lotId);
             Program.lots[lotId].Tickets.Add(parkingTicket);
-            Console.WriteLine("Ticket emitido... ");
-            Tools.HaltProgramExecution();
         }
         public static void RegisterExit()
         {
@@ -56,15 +56,16 @@ namespace Parking.Controllers{
         {
             // Declare matrix without initializing it with data
             string[,] matrix;
-            string[] options = new string[] {"Index", "Spot", "Entry", "Exit", "Total", "Vehicle", "Id"}; 
-            matrix = new string[Program.lots[lotIndex].Tickets.Count + 1, options.Length]; // Initialize the matrix with the calculated dimensions
+            string[] options = new string[] {"Index", "Spot", "Entry", "Exit", "Total", "Vehicle", "Id"};
+            int ticketsOpen = Program.lots[lotIndex].Tickets.Count(ticket => ticket.Exit == null);
+            matrix = new string[all? Program.lots[lotIndex].Tickets.Count + 1 : ticketsOpen + 1, options.Length]; // Initialize the matrix with the calculated dimensions
             for (int columna = 0; columna < options.Length; columna++)
             {
                 matrix[0, columna] = options[columna];
             }
             int fila = 1;
             foreach(Ticket ticket in Program.lots[lotIndex].Tickets){
-                if(all || !ticket.Exit.HasValue){
+                if(all || ticket.Exit == null){
                     matrix[fila, 0] = fila.ToString();
                     matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
                     matrix[fila, 2] = ticket.Entry.ToString();
@@ -72,8 +73,8 @@ namespace Parking.Controllers{
                     matrix[fila, 4] = ticket.Total.ToString();
                     matrix[fila, 5] = ticket.Vehicle.ToString();
                     matrix[fila, 6] = ticket.Id.ToString();
-                    fila++;
                 }
+                fila++;
             }
             using (var outputCapture = new OutputCapture())
             { 

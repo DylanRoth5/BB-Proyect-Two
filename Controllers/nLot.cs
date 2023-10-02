@@ -144,21 +144,60 @@ namespace Parking.Controllers
             switch (choice)
             {
                 case 1:
-                    SortLotsByIncome();
+                    if (IsThereAny())
+                    {
+                        string[,] table = new string[Program.lots.Count + 1, 5];
+                        table[0, 0] = "ID";
+                        table[0, 1] = "Name";
+                        table[0, 2] = "Address";
+                        table[0, 3] = "Hour Price";
+                        table[0, 4] = "Income";
+                        int row = 1;
+                        foreach (Lot lot in SortLotsByIncome())
+                        {
+                            table[row, 0] = lot.Id.ToString();
+                            table[row, 1] = lot.Name;
+                            table[row, 2] = lot.Address;
+                            table[row, 3] = lot.HourPrice.ToString();
+                            table[row, 4] = lot.getIncome().ToString();
+                            row++;
+                        }
+                        Tools.DrawTable(table);
+                    }
                     break;
                 case 2:
-                    SortByFreeSpots();
+                    if (IsThereAny())
+                    {
+                        string[,] table = new string[Program.lots.Count + 1, 6];
+                        table[0, 0] = "ID";
+                        table[0, 1] = "Name";
+                        table[0, 2] = "Address";
+                        table[0, 3] = "Hour Price";
+                        table[0, 4] = "Free Spots";
+                        table[0, 5] = "Occuppied Spots";
+                        int row = 1;
+                        foreach (Lot lot in SortByFreeSpots())
+                        {
+                            table[row, 0] = lot.Id.ToString();
+                            table[row, 1] = lot.Name;
+                            table[row, 2] = lot.Address;
+                            table[row, 3] = lot.HourPrice.ToString();
+                            table[row, 4] = lot.FreeSpot().ToString();
+                            table[row, 5] = (lot.GetNumberOfSpots() - lot.FreeSpot()).ToString();
+                            row++;
+                        }
+                        Tools.DrawTable(table);
+                    }
                     break;
             }
-            List();
         }
-        public static void SortLotsByIncome() //using the value gotten from the method getIncome in Lot class sorts by descending using a lambda expression
+        public static List<Lot> SortLotsByIncome() //using the value gotten from the method getIncome in Lot class sorts by descending using a lambda expression
         {
-            Program.lots = Program.lots.OrderByDescending(lot => lot.getIncome()).ToList();
+            return Program.lots.OrderByDescending(lot => lot.getIncome()).ToList();
         }
-        public static void SortByFreeSpots() //using the value gotten from the method freeSpot in Lot class sorts by descending using a lambda expression
+        public static List<Lot> SortByFreeSpots() //using the value gotten from the method freeSpot in Lot class sorts by descending using a lambda expression
         {
-            Program.lots = Program.lots.OrderByDescending(lot => lot.FreeSpot()).ToList();
+            return Program.lots.OrderByDescending(lot => lot.FreeSpot()).ToList();
         }
         public static int Select()
         {
@@ -244,7 +283,7 @@ namespace Parking.Controllers
                     }
                     // Console.WriteLine();
                 }
-                Tools.PrintAt(x + (width - name.Length)/2, y + height, name);
+                Tools.PrintAt(x + (width - name.Length) / 2, y + height, name);
             }
             void PrintCar(int x, int y)
             {
