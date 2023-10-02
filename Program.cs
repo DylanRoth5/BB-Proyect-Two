@@ -35,10 +35,10 @@ namespace Parking
 
             Console.OutputEncoding = Encoding.UTF8;
             Console.SetBufferSize(1000, 1000);
-            // Load();
+            Load();
             Data();
             Menu();
-            // Save();
+            Save();
         }
         public static void Menu()
         {
