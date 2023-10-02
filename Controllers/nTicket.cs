@@ -25,7 +25,7 @@ namespace Parking.Controllers{
             Vehicle vehicle = Program.vehicles[Tools.ValidateInt(1, Program.vehicles.Count - 1)];
             Console.WriteLine($"Selected: {vehicle.Id}- {vehicle.Model}");
             decimal total = 00.00m;
-            Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle);
+            Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle,lotIndex);
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
         }
 
@@ -35,21 +35,24 @@ namespace Parking.Controllers{
             Spot spot = Program.lots[lotId].SpotsMatrix[nLot.SelectRow(lotId, rowLetter)][y]; 
             Vehicle vehicle = Program.vehicles[vehicleId];
             TimeSpan hours = end - start;
-            decimal total = Program.lots[lotId].HourPrice * (decimal)hours.TotalHours;
-            Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle);
+            decimal total = Math.Round(Program.lots[lotId].HourPrice * (decimal)hours.TotalHours, 2);
+            Ticket parkingTicket = new Ticket(Id, start, end, total, spot, vehicle, lotId);
             Program.lots[lotId].Tickets.Add(parkingTicket);
+            Console.WriteLine("Ticket emitido... ");
+            Tools.HaltProgramExecution();
         }
         public static void RegisterExit()
         {
             int lot = nLot.Select();
-            Ticket ticket = Program.lots[lot].Tickets[Select(lot)];
+            Ticket ticket = Program.lots[lot].Tickets[Select(false, lot)];
             ticket.Exit = DateTime.Now;
             TimeSpan hours = (ticket.Exit ?? DateTime.Now) - ticket.Entry;
-            ticket.Total = Program.lots[lot].HourPrice * (decimal)hours.TotalHours;
+            ticket.Total = Math.Round(Program.lots[lot].HourPrice * (decimal)hours.TotalHours, 2);
             ticket.Spot.Occupied = false;
-            Console.WriteLine("El ticket fue emitido... ");
+            Console.WriteLine("El ticket fue registrado... ");
+            Tools.HaltProgramExecution();
         }
-        public static void List(int lotIndex)
+        public static void List(int lotIndex, Boolean all)
         {
             // Declare matrix without initializing it with data
             string[,] matrix;
@@ -61,27 +64,29 @@ namespace Parking.Controllers{
             }
             int fila = 1;
             foreach(Ticket ticket in Program.lots[lotIndex].Tickets){
-                matrix[fila, 0] = fila.ToString();
-                matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
-                matrix[fila, 2] = ticket.Entry.ToString();
-                matrix[fila, 3] = ticket.Exit.ToString() ?? "--/--/-- --:--:--";
-                matrix[fila, 4] = ticket.Total.ToString();
-                matrix[fila, 5] = ticket.Vehicle.ToString();
-                matrix[fila, 6] = ticket.Id.ToString();
-                fila++;
+                if(all || !ticket.Exit.HasValue){
+                    matrix[fila, 0] = fila.ToString();
+                    matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
+                    matrix[fila, 2] = ticket.Entry.ToString();
+                    matrix[fila, 3] = ticket.Exit.ToString() ?? "--/--/-- --:--:--";
+                    matrix[fila, 4] = ticket.Total.ToString();
+                    matrix[fila, 5] = ticket.Vehicle.ToString();
+                    matrix[fila, 6] = ticket.Id.ToString();
+                    fila++;
+                }
             }
             // Call the function to draw the table with the data matrix
             Tools.DrawTable(matrix);
         }
         public static void Delete()
         {
-            Program.lots[nLot.Select()].Tickets.RemoveAt(Select());            
+            Program.lots[nLot.Select()].Tickets.RemoveAt(Select(true));            
         }
         public static void Update(int? lotId = null, int? ticketId = null)
         {
             Console.WriteLine();
             int lot = (int)(lotId.HasValue? lotId : nLot.Select());
-            int idT = (int)(ticketId.HasValue ? ticketId : Select(lot));
+            int idT = (int)(ticketId.HasValue ? ticketId : Select(true, lot));
             Ticket ticket = Program.lots[lot].Tickets[idT];
             string[] options = new string[] {"Spot", "Entry", "Exit"};
             Console.Clear();
@@ -97,23 +102,23 @@ namespace Parking.Controllers{
                     break;
                 case 2:
                     ticket.Entry = Tools.InputDate($"Enter new entry date to {ticket.Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    ticket.Total = ticket.Exit.HasValue? Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours : 00.00m;
+                    ticket.Total = ticket.Exit.HasValue? Math.Round(Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours, 2) : 00.00m;
                     Update(lot, idT);
                     break;
                 case 3:
                     ticket.Exit = Tools.InputDate($"Enter new entry date to {ticket.Exit} (dd/MM/yyyy HH:mm:ss: )");
-                    ticket.Total = ticket.Exit.HasValue? Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours : 00.00m;
+                    ticket.Total = ticket.Exit.HasValue? Math.Round(Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours, 2) : 00.00m;
                     Update(lot, idT);
                     break;
                 case 4:
                     break;
             }
         }
-        public static int Select(int? lot = null)
+        public static int Select(Boolean all, int? lot = null)
         {
             Console.WriteLine();
             int lotId = (int)(lot.HasValue? lot : nLot.Select());
-            List(lotId);
+            List(lotId, all);
             Console.Write("Select a ticket: ");
             int s = Tools.ValidateInt(1, Program.lots[lotId].Tickets.Count);
             return s - 1;
@@ -141,7 +146,7 @@ namespace Parking.Controllers{
                     Menu();
                     break;
                 case 5:
-                    List(nLot.Select());
+                    List(nLot.Select(), true);
                     Console.ReadKey();
                     Menu();
                     break;

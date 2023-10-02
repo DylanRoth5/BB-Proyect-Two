@@ -5,6 +5,26 @@ namespace Parking
 {
     internal class Program
     {
+        
+        /*Desarrollar una aplicación de consola que permita administrar los registros de diferentes playas de estacionamientos. Cada playa tendrá una cantidad máxima de vehículos a estacionar organizados en filas y columnas. Se deberá definir cuantos autos entran por fila y cuantos por columna (Como si fuera una matriz).
+ Cada playa tendrá definido un valor por hora de estacionamiento y deberá guarda una lista de cobros realizados.
+     En cada ubicación se podrá registrar un vehículo del cual se debe guardar: marca, modelo y patente. Además, se debe ingresar la hora de ingreso a la playa para que al registrar la salida se pueda guardar el monto cobrado
+
+ La aplicación debe permitir:
+  check 1.	Crear, modificar, listar y eliminar playas
+  check 2.	Registrar el ingreso de un vehículo a la playa.
+  check 3.	Registrar la salida de un vehículo de la playa guardando el cobro realizado.
+  check 4.	Mostrar en pantalla el dibujo la playa de estacionamiento diferenciando lugares ocupados y libres.
+  check 5.	Listear playas de estacionamiento ordenadas d mayor a menor por recaudación.
+  check 6.	Listar playas de estacionamiento ordenadas de mayor a menor por cantidad de lugares libres.
+  check 7.	Los informes deben mostrarse en pantalla como tabla dibujando los bordes de la misma.
+  8.	Agregar a los informes y las opciones de listar la posibilidad de guardar el reporte en un archivo. Bloc de notas.
+  check 9.	Validar los datos ingresados para evitar errores de formato. Int, string , etc
+  10.	Crear un método que genere datos iniciales en la aplicación.
+  11.	Crear un método que permita importar desde un archivo un listado de playas de estacionamientos nuevas. */
+
+        
+        
         public static List<Lot> lots;
         public static List<Vehicle> vehicles;
         
@@ -15,10 +35,10 @@ namespace Parking
 
             Console.OutputEncoding = Encoding.UTF8;
             Console.SetBufferSize(1000, 1000);
-            // Load();
+            Load();
             Data();
             Menu();
-            // Save();
+            Save();
         }
         public static void Menu()
         {
@@ -46,62 +66,38 @@ namespace Parking
         }
         public static void Load(){
             
-            List<string> lotes = Tools.FileGetType("Lot","Data.txt");
-            List<string> facturas = Tools.FileGetType("Ticket","Data.txt");
-            List<string> vehiculos = Tools.FileGetType("Vehicle","Data.txt");
-
-            Console.WriteLine("Loading...");
-            Thread.Sleep(100);
-            foreach(string item in lotes){
-                Console.WriteLine($"    {item}");
-                string[] lotData = item.Split(',');
-                nLot.Create(lotData[1],lotData[2],decimal.Parse(lotData[3]),int.Parse(lotData[4]),int.Parse(lotData[5]));
-                Thread.Sleep(50);
+            var lotData = File.ReadAllLines(@"Data\\Lots.txt");
+            foreach (var info in lotData)
+            {
+                string?[] data = info.Split('|');
+                nLot.Create(data[1],data[2], decimal.Parse(data[3]),int.Parse(data[4]),int.Parse(data[5]));
             }
-            
-            foreach(string item in vehiculos){
-                Console.WriteLine($"    {item}");
-                string[] data = item.Split(',');
-                nVehicle.Create(data[1],data[2],data[3]);
-                Thread.Sleep(50);
+            var vehicleData = File.ReadAllLines(@"Data\\Vehicle.txt");
+            foreach (var info in vehicleData)
+            {
+                string?[] data = info.Split('|');
+                nVehicle.Create(data[1], data[2], data[3]);
             }
-            
-            // foreach(string item in facturas){
-            //     Console.WriteLine($"    {item}");
-            //     string[] data = item.Split(',');
-            //     nTicket.Add(DateTime.Parse(data[1]),DateTime.Parse(data[2]), int.Parse(data[3]),int.Parse(data[4]));
-            // }
-            
-            // No se van a cargar spots, solo se los guardara por las dudas, pero es demasiado complicado cargarlos
-            
-            Tools.HaltProgramExecution();
+            var ticketData = File.ReadAllLines(@"Data\\Ticket.txt");
+            foreach (var info in ticketData)
+            {
+                var data = info.Split('|');
+                nTicket.Create(int.Parse(data[1]), DateTime.Parse(data[2]), DateTime.Parse(data[3]), char.Parse(data[4]),int.Parse(data[5]),int.Parse(data[6]));
+            }
         }
         public static void Save(){
-            Console.WriteLine("Saving Changes...");
-            Thread.Sleep(100);
-            foreach (Lot lot in lots){
-                int columns = 0;
-                int rows = lot.SpotsMatrix.Count;
-                foreach (List<Spot> amount in lot.SpotsMatrix) {columns = amount.Count;}
-                Tools.FileWrite("Lot",$"{lot.Id},{lot.Name},{lot.Address},{lot.HourPrice},{rows},{columns}","Data.txt");
-                Thread.Sleep(10);
+            
+            File.WriteAllText(@"Data\\Lots.txt", "");
+            File.WriteAllText(@"Data\\Vehicle.txt", "");
+            File.WriteAllText(@"Data\\Ticket.txt", "");
+
+            foreach (var item in lots)
+            {
+                Tools.FileWrite(item.ToString(), @"Data\\Lots.txt");
+                foreach (var ticket in item.Tickets) Tools.FileWrite(ticket.ToString(), @"Data\\Ticket.txt");
             }
-
-            // foreach (Spot spot in spots){
-            //     Tools.FileWrite("Spot",$"{spot.Id},{spot.Row},{spot.Column},{spot.LotId}","Data.txt");
-            //     Thread.Sleep(10);
-            // }
-
-            // foreach (Ticket ticket in tickets){
-            //     Tools.FileWrite("Ticket",$"{ticket.Id},{ticket.Entry},{ticket.Exit},{ticket.Spot.Id},{ticket.Vehicle.Id}","Data.txt");
-            //     Thread.Sleep(10);
-            // }
-
-            foreach (Vehicle vehicle in vehicles){
-                Tools.FileWrite("Vehicle",$"{vehicle.Id},{vehicle.Brand},{vehicle.Model},{vehicle.Plate}","Data.txt");
-                Thread.Sleep(10);
-            }
-            Tools.HaltProgramExecution();
+            foreach (var item in vehicles)
+                Tools.FileWrite(item.ToString(), @"Data\\Vehicle.txt");
         }
     }
 }
