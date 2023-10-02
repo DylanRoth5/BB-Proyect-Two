@@ -18,6 +18,6 @@ public class Vehicle
     }
     public override string ToString()
     {
-        return $"{Brand}, {Model}";
+        return $"{Id}|{Brand}|{Model}|{Plate}";
     }
 }

@@ -54,4 +54,8 @@ public class Lot
         }
         return total;
     }
+    public override string ToString()
+    {
+        return $"{Id}|{Name}|{Address}|{HourPrice}|{SpotsMatrix.Count}|{SpotsMatrix[0].Count}|";
+    }
 }

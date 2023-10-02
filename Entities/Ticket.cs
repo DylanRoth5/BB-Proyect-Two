@@ -26,6 +26,6 @@ public class Ticket
 
     public override string ToString()
     {
-        return $"{LotId}|{Entry}|{Exit}|{Spot.Row}|{Spot.Column}|{Vehicle.Id}";
+        return $"{Id}|{LotId}|{Entry}|{Exit}|{Spot.Row}|{Spot.Column}|{Vehicle.Id}";
     }
 }
