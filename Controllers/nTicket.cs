@@ -75,8 +75,24 @@ namespace Parking.Controllers{
                     fila++;
                 }
             }
+            using (var outputCapture = new OutputCapture())
+            { 
+                Tools.DrawTable(matrix);    
+                var stuff = outputCapture.Captured.ToString();
+            }
+            string[] options = { "Do It" };
+            Console.Clear();
+            int choice = Tools.Menu("Print List", options);
+            switch (choice)
+            {
+                case 1:
+                    File.WriteAllText(@"Print\\RecordTicket.txt", "");
+                    Tools.FileWrite(stuff, @"Print\\RecordTicket.txt");
+                    break;
+                case 0:
+                    break;
+            }
             // Call the function to draw the table with the data matrix
-            Tools.DrawTable(matrix);
         }
         public static void Delete()
         {
