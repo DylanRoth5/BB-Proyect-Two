@@ -1,7 +1,8 @@
 using Parking.Entities;
 using System;
 
-namespace Parking.Controllers{
+namespace Parking.Controllers
+{
     public class nTicket
     {
         public static void RegisterEntry()
@@ -9,7 +10,7 @@ namespace Parking.Controllers{
             Console.WriteLine("Select a lot");
             int lotIndex = nLot.Select();
             // The id increments itself
-            int Id = (Program.lots[lotIndex].Tickets.Count > 0)? Program.lots[lotIndex].Tickets[^1].Id + 1 : 1;
+            int Id = (Program.lots[lotIndex].Tickets.Count > 0) ? Program.lots[lotIndex].Tickets[^1].Id + 1 : 1;
             // Ask the user to selecte a lot using the nLot.Select() method to
             // get the index of the lot in the Program.lots list
             Console.WriteLine("Select un spot:");
@@ -22,11 +23,12 @@ namespace Parking.Controllers{
             // Show the vehicles loaded in the Program.vehicles list
             nVehicle.List();
             Console.WriteLine("Select a vehicle: ");
-            Vehicle vehicle = Program.vehicles[Tools.ValidateInt(1, Program.vehicles.Count - 1)];
-            Console.WriteLine($"Selected: {vehicle.Id}- {vehicle.Model}");
+            Vehicle vehicle = Program.vehicles[Tools.ValidateInt(1, Program.vehicles.Count) - 1];
+            Console.WriteLine($"Selected: {vehicle.Id} - {vehicle.Model}");
             decimal total = 00.00m;
-            Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle,lotIndex);
+            Ticket parkingTicket = new Ticket(Id, startDate, null, total, spot, vehicle, lotIndex);
             Program.lots[lotIndex].Tickets.Add(parkingTicket);
+            Console.WriteLine();
             Console.WriteLine("Ticket emitido... ");
             Tools.HaltProgramExecution();
         }
@@ -34,7 +36,7 @@ namespace Parking.Controllers{
         public static void Create(int lotId, DateTime start, DateTime end, char rowLetter, int y, int vehicleId)
         {
             int Id = (Program.lots[lotId].Tickets.Count > 0) ? Program.lots[lotId].Tickets[^1].Id + 1 : 1;
-            Spot spot = Program.lots[lotId].SpotsMatrix[nLot.SelectRow(lotId, rowLetter)][y]; 
+            Spot spot = Program.lots[lotId].SpotsMatrix[nLot.SelectRow(lotId, rowLetter)][y];
             Vehicle vehicle = Program.vehicles[vehicleId];
             TimeSpan hours = end - start;
             decimal total = Math.Round(Program.lots[lotId].HourPrice * (decimal)hours.TotalHours, 2);
@@ -49,6 +51,7 @@ namespace Parking.Controllers{
             TimeSpan hours = (ticket.Exit ?? DateTime.Now) - ticket.Entry;
             ticket.Total = Math.Round(Program.lots[lot].HourPrice * (decimal)hours.TotalHours, 2);
             ticket.Spot.Occupied = false;
+            Console.WriteLine();
             Console.WriteLine("El ticket fue registrado... ");
             Tools.HaltProgramExecution();
         }
@@ -56,43 +59,52 @@ namespace Parking.Controllers{
         {
             // Declare matrix without initializing it with data
             string[,] matrix;
-            string[] options = new string[] {"Index", "Spot", "Entry", "Exit", "Total", "Vehicle", "Id"};
+            string[] options = new string[] { "Index", "Spot", "Entry", "Exit", "Total", "Vehicle", "Id" };
             int ticketsOpen = Program.lots[lotIndex].Tickets.Count(ticket => ticket.Exit == null);
-            matrix = new string[all? Program.lots[lotIndex].Tickets.Count + 1 : ticketsOpen + 1, options.Length]; // Initialize the matrix with the calculated dimensions
-            for (int columna = 0; columna < options.Length; columna++)
+            if (ticketsOpen > 0)
             {
-                matrix[0, columna] = options[columna];
-            }
-            int fila = 1;
-            foreach(Ticket ticket in Program.lots[lotIndex].Tickets){
-                if(all || ticket.Exit == null){
-                    matrix[fila, 0] = fila.ToString();
-                    matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
-                    matrix[fila, 2] = ticket.Entry.ToString();
-                    matrix[fila, 3] = ticket.Exit.ToString() ?? "--/--/-- --:--:--";
-                    matrix[fila, 4] = ticket.Total.ToString();
-                    matrix[fila, 5] = ticket.Vehicle.ToString();
-                    matrix[fila, 6] = ticket.Id.ToString();
+                matrix = new string[all ? Program.lots[lotIndex].Tickets.Count + 1 : ticketsOpen + 1, options.Length]; // Initialize the matrix with the calculated dimensions
+                for (int columna = 0; columna < options.Length; columna++)
+                {
+                    matrix[0, columna] = options[columna];
                 }
-                fila++;
+                int fila = 1;
+                foreach (Ticket ticket in Program.lots[lotIndex].Tickets)
+                {
+                    if (all || ticket.Exit == null)
+                    {
+                        matrix[fila, 0] = fila.ToString();
+                        matrix[fila, 1] = $"{ticket.Spot.Row}-{ticket.Spot.Column}";
+                        matrix[fila, 2] = ticket.Entry.ToString();
+                        matrix[fila, 3] = ticket.Exit.ToString() ?? "--/--/-- --:--:--";
+                        matrix[fila, 4] = ticket.Total.ToString();
+                        matrix[fila, 5] = ticket.Vehicle.ToString();
+                        matrix[fila, 6] = ticket.Id.ToString();
+                    }
+                    fila++;
+                }
+                // Call the function to draw the table with the data matrix
+                Tools.DrawTable(matrix);
             }
-            // Call the function to draw the table with the data matrix
-            Tools.DrawTable(matrix);
+            else
+            {
+                Console.WriteLine("There aren't any cars parked in this lot...");
+            }
         }
         public static void Delete()
         {
-            Program.lots[nLot.Select()].Tickets.RemoveAt(Select(true));            
+            Program.lots[nLot.Select()].Tickets.RemoveAt(Select(true));
         }
         public static void Update(int? lotId = null, int? ticketId = null)
         {
             Console.WriteLine();
-            int lot = (int)(lotId.HasValue? lotId : nLot.Select());
+            int lot = (int)(lotId.HasValue ? lotId : nLot.Select());
             int idT = (int)(ticketId.HasValue ? ticketId : Select(true, lot));
             Ticket ticket = Program.lots[lot].Tickets[idT];
-            string[] options = new string[] {"Spot", "Entry", "Exit"};
+            string[] options = new string[] { "Spot", "Entry", "Exit" };
             Console.Clear();
             int selection = Tools.Menu("Update", options);
-            switch(selection)
+            switch (selection)
             {
                 case 1:
                     Console.Write($"Enter the new spot to {ticket.Spot.Row}-{ticket.Spot.Column}");
@@ -103,12 +115,12 @@ namespace Parking.Controllers{
                     break;
                 case 2:
                     ticket.Entry = Tools.InputDate($"Enter new entry date to {ticket.Entry} (dd/MM/yyyy HH:mm:ss: )");
-                    ticket.Total = ticket.Exit.HasValue? Math.Round(Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours, 2) : 00.00m;
+                    ticket.Total = ticket.Exit.HasValue ? Math.Round(Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours, 2) : 00.00m;
                     Update(lot, idT);
                     break;
                 case 3:
                     ticket.Exit = Tools.InputDate($"Enter new entry date to {ticket.Exit} (dd/MM/yyyy HH:mm:ss: )");
-                    ticket.Total = ticket.Exit.HasValue? Math.Round(Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours, 2) : 00.00m;
+                    ticket.Total = ticket.Exit.HasValue ? Math.Round(Program.lots[lot].HourPrice * (decimal)(ticket.Exit.Value - ticket.Entry).TotalHours, 2) : 00.00m;
                     Update(lot, idT);
                     break;
                 case 4:
@@ -118,7 +130,7 @@ namespace Parking.Controllers{
         public static int Select(Boolean all, int? lot = null)
         {
             Console.WriteLine();
-            int lotId = (int)(lot.HasValue? lot : nLot.Select());
+            int lotId = (int)(lot.HasValue ? lot : nLot.Select());
             List(lotId, all);
             Console.Write("Select a ticket: ");
             int s = Tools.ValidateInt(1, Program.lots[lotId].Tickets.Count);

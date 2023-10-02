@@ -243,6 +243,7 @@ public class Tools
 
         if (number.Length > 0 && int.Parse(number) >= min && int.Parse(number) <= max)
         {
+            Console.WriteLine();
             return int.Parse(number);
         }
         ClearLine();
